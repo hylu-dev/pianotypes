@@ -1,0 +1,103 @@
+:root {
+    /* main palette */
+    --primary-text-colour: rgb(187, 175, 106);
+    --secondary-text-colour: #555;
+    --tertiary-text-colour: #333;
+    --quaternary-text-colour: #AAA;
+    --primary-bg-colour: rgb(22,22,22);
+    --secondary-bg-colour: #222;
+    --tertiary-bg-colour: rgb(28, 28, 28);
+    --quaternary-bg-colour: rgb(60, 60, 60);
+
+    /* piano styling */
+    --piano-height: clamp(5rem, 20vh, 10rem);
+    --white-key-width: calc(var(--piano-height)/3.3);
+    --white-key-border-width: .01vw;
+    --black-key-width: calc(var(--white-key-width)/2);
+
+    --white-key-colour: rgb(240, 240, 240);
+    --white-key-hover-colour: rgb(224, 255, 229);
+    --white-key-active-colour: rgb(139, 216, 139);
+    --black-key-colour: rgb(30, 30, 30);
+    --black-key-hover-colour: rgb(97, 119, 142);
+    --black-key-active-colour: rgb(90, 136, 174);
+    --key-label-size: calc(var(--piano-height)/10);
+    --key-label-font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+    --key-label-font-weight: 400;
+  }
+
+body {
+    margin: 0;
+    background-color: var(--primary-bg-colour);
+    color: var(--secondary-text-colour);
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+p {
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    color: var(--primary-text-colour);
+    font-family: Cormorant, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+}
+
+h2 {
+    color: var(--primary-text-colour);
+    font-family: Cormorant, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+
+h3 {
+    color: var(--secondary-text-colour);
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-text-colour);
+}
+
+input {
+    background: var(--tertiary-bg-colour);
+    color: var(--secondary-text-colour);
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    padding: .5ch;
+}
+
+select {
+    background: var(--primary-bg-colour);
+    color: var(--secondary-text-colour);
+    text-align: center;
+    border: 2px solid var(--quaternary-bg-colour);
+    border-radius: 2px;
+    appearance: none;
+    outline:none;
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+}
+
+select:focus {
+    color: var(--primary-text-colour);
+    border: 2px solid var(--primary-text-colour);
+}
+
+/* responsive stylings */
+*:focus {
+    outline: none;
+}
+
+::selection {
+    background: #111;
+    color: var(--quaternary-text-colour);
+    border: 5px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lato:wght@300;400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;900&display=swap');
