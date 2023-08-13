@@ -21,7 +21,8 @@
         if (e.type == "mouseup" || e.buttons > 0) dispatch('keyRelease', note);
     }
 </script>
-<div id="piano-key"
+
+<div class="piano-key"
     class:offset-key={isOffset}
     class:white-key={isWhiteKey}
     class:white-key--hover={isWhiteKey&&isHover}
@@ -36,14 +37,15 @@
     on:mouseenter={dispatchKeyPress}
     on:mousedown={dispatchKeyPress}
     on:mouseup={dispatchKeyRelease}
-    on:mouseleave={dispatchKeyRelease}>
+    on:mouseleave={dispatchKeyRelease}
+    role="none">
     {#if showHotkeys }
         <h1>{ $hotkey.getNoteKeyBinding(note) }</h1>
     {/if}
 </div>
 
 <style>
-    #piano-key {
+    .piano-key {
         box-sizing: border-box;
         display: flex;
         justify-content: center;

@@ -2,7 +2,7 @@ import { Note, Range } from "tonal";
 import { Reverb, Soundfont, SplendidGrandPiano } from "smplr";
 import { writable } from 'svelte/store';
 
-// Reactive Svelte class https://www.youtube.com/watch?v=oQY98LZIW2E -lihautan
+// Reactive Svelte class https://www.youtube.com/watch?v=oQY98LZIW2E - lihautan
 
 class PianoStore {
     constructor(minNote, maxNote) {
@@ -12,15 +12,19 @@ class PianoStore {
         this.keyboardDict = {};
         this.sustainPedal = false;
         this.instrument = 'acoustic_grand_piano';
+        this.volume = 127;
+        this.reverb = 0.2;
         this.player;
         this.ac;
-        this.lastKey = "";
+        this.lastPress = "";
+        this.lastRelease = "";
         this._store = writable(this)
-        // this.init() because of Svelte, AudioContexts aren't accessible unless used before mount.
+        // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
         this.ac = new AudioContext()
         this.updateInstrument();
+        this.updateEffects();
         this.updateKeyboard();
     }
     updateKeyboard() {
@@ -33,16 +37,18 @@ class PianoStore {
         this.player =  new Soundfont(this.ac, {
             instrument: this.instrument
         });
-        this.player.output.addEffect("reverb", new Reverb(this.ac), 0.2);
         this._store.set(this)
     }
-
+    updateEffects() {
+        this.player.output.addEffect("reverb", new Reverb(this.ac), this.reverb);
+        this.player.output.setVolume(this.volume);
+    }
     //keys
     pressKey(note, velocity=80) {
         if (!(this.keyboardDict[note] || this.keyboardDict[Note.enharmonic(note)])) { return; } // Check note is part of piano range
         this.keyboardDict[note].isPressed = this.keyboardDict[Note.enharmonic(note)].isPressed = true;
         this.player.start({ note: note, velocity: velocity });
-        this.lastKey = note;
+        this.lastPress = note;
         this._store.set(this)
     }
     releaseKey(note) {
@@ -53,6 +59,7 @@ class PianoStore {
             this.player.stop(note);
         }
         this.player.stop(Note.midi(note))
+        this.lastRelease = note;
         this._store.set(this)
     }
     getIsPressed(note) {

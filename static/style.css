@@ -13,7 +13,7 @@
     --quaternary-bg-colour: rgb(60, 60, 60);
 
     /* piano styling */
-    --piano-height: clamp(5rem, 20vh, 10rem);
+    --piano-height: clamp(5rem, 17vh, 10rem);
     --white-key-width: calc(var(--piano-height)/3.3);
     --white-key-border-width: .01vw;
     --black-key-width: calc(var(--white-key-width)/2);

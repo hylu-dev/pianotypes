@@ -1,5 +1,6 @@
 <script>
     import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
+    import RibbonPanel from '$lib/components/ribbon/RibbonPanel.svelte'
 </script>
 
 <div class="grid-container">
@@ -8,9 +9,9 @@
     <div class="icon-ribbon-panel-invert"></div>
     <div class="icon-typing-panel-invert"></div>
     </tabs> -->
+    <RibbonPanel></RibbonPanel>
     <PianoKeyboard></PianoKeyboard>
     <!-- <note-display v-if="renderDisplay" id="note-display"></note-display>
-    <ribbon-panel v-if="renderRibbonPanel" id="ribbon-panel"></ribbon-panel>
     <piano-pedal v-if="renderPedal" id="piano-pedal"></piano-pedal>
     <piano-controller v-if="renderController" id="piano-controller"></piano-controller> -->
 </div>
@@ -42,10 +43,6 @@
 }
 
 #note-display {
-    grid-area: main-panel;
-}
-
-#ribbon-panel {
     grid-area: main-panel;
 }
 
