@@ -22,7 +22,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"soundfont-player": "^0.12.0",
+		"smplr": "^0.6.1",
 		"tonal": "^5.0.0"
 	}
 }
