@@ -1,5 +1,4 @@
 <script>
-
 import RibbonLane from './RibbonLane.Svelte'
 import piano from '$lib/stores/PianoStore'
 
