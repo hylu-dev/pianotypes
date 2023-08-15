@@ -96,6 +96,9 @@ class PianoStore {
         }
         this._store.set(this);
     }
+    releaseAll() {
+        this.player.stop();
+    }
     //instrument
     setInstrument(instrument) {
         this.instrument = instrument;

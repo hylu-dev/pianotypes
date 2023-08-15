@@ -28,12 +28,17 @@
 		}, false);
     }
 
+    function stopPlayer() {
+        Player.stop()
+        $piano.releaseAll();
+    }
+
 </script>
 
 <div>
     <h2>MidiPlayer</h2>
     <input type="file" id="midiFile" name="midi" accept=".mid,.midi" on:change={loadFile}>
-    <button class:inactive={!loaded} disabled={!loaded} on:click={() => Player.stop()}>Stop</button>
+    <button class:inactive={!loaded} disabled={!loaded} on:click={stopPlayer}>Stop</button>
     <button class:inactive={!loaded} disabled={!loaded} on:click={() => Player.play()}>Play</button>
 </div>
 

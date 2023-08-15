@@ -13,7 +13,7 @@
     }
 </script>
 
-<svelte:window on:keydown={handleDefaults}/>
+<svelte:window on:keydown={handleDefaults} on:dragstart={ e => e.preventDefault()}/>
 <div class="grid-container">
     <!-- <tabs id="tabs">
     <div class="icon-filled-panel"></div>
