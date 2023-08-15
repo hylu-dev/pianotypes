@@ -82,20 +82,15 @@ function htmlEntity(str) {
 
     #options-wrapper {
         height: 100%;
-        opacity: .9;
         display: flex;
         justify-content: center;
-        background-color: var(--bg-dark-grey);
+        background-color: rgba(33, 33, 33, .9);
         color: var(--text-dark);
         z-index: 2;
         gap: 1rem;
         padding: 1rem;
         box-sizing: border-box;
-        transition: all .2s ease-out;
-    }
-
-    #options-wrapper:hover {
-        opacity: 1;
+        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 
     .options-block {
