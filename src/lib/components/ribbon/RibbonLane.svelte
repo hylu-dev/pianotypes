@@ -25,7 +25,7 @@ $: if ($isPressed) incrementIds();
 </script>
 
 <!-- Outer div serves as either an ineffectual wrapper for white keys or relative positioning point for black keys without affecting white key spacing -->
-<div class='key-wrapper' class:black-proxy={isWhiteKey}>
+<div class='key-wrapper' class:black-proxy={!isWhiteKey}>
     <div class="ribbon-lane" class:white-key={isWhiteKey} class:black-key={!isWhiteKey}>
         <!-- each ribbon block is tracked with an increasing id for removal -->
         {#each Array.from(ribbons) as id (`${note}${id}`)}
