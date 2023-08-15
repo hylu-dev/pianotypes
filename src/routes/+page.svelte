@@ -1,6 +1,6 @@
 <script>
     import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
-    import RibbonPanel from '$lib/components/ribbon/RibbonPanel.svelte'
+    import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
     import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
     import OptionsPanel from '../lib/components/OptionsTray.svelte';
 
