@@ -1,5 +1,6 @@
 <script>
     import MidiPlayer from 'midi-player-js';
+    import { Note } from "tonal";
     import piano from '$lib/stores/PianoStore'
 
     const Player = new MidiPlayer.Player();
@@ -11,6 +12,8 @@
     });
 
     Player.on('midiEvent', function(e) {
+        if (e.noteNumber < Note.midi($piano.minNote)) $piano.setMin(e.noteName);
+        if (e.noteNumber > Note.midi($piano.maxNote)) $piano.setMax(e.noteName);
         if (e.name === "Note on") {
             if (e.velocity === 0) {
                 $piano.releaseKey(e.noteName);
@@ -24,6 +27,8 @@
     });
 
     function loadFile(e) {
+        Player.stop()
+        $piano.releaseAll();
         const file = e.target.files[0];
         const reader = new FileReader();
         if (file) reader.readAsArrayBuffer(file);
@@ -32,8 +37,8 @@
 		}, false);
     }
 
-    function stopPlayer() {
-        Player.stop()
+    function pausePlayer() {
+        Player.pause()
         $piano.releaseAll();
     }
 
@@ -42,8 +47,8 @@
 <div>
     <h2>MidiPlayer</h2>
     <input type="file" id="midiFile" name="midi" accept=".mid,.midi" on:change={loadFile}>
-    <button class:inactive={!loaded} disabled={!loaded} on:click={stopPlayer}>Stop</button>
-    <button class:inactive={!loaded} disabled={!loaded} on:click={() => Player.play()}>Play</button>
+    <button class:inactive={!loaded} disabled={!loaded} on:click={pausePlayer}> &#9208;</button>
+    <button class:inactive={!loaded} disabled={!loaded} on:click={() => Player.play()}>&#9658;</button>
 </div>
 
 <style>

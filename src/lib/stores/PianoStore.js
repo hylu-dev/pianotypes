@@ -1,4 +1,4 @@
-import { Note, Range } from "tonal";
+import { Note, Midi, Range } from "tonal";
 import { Reverb, Soundfont, SplendidGrandPiano } from "smplr";
 import { writable } from 'svelte/store';
 
@@ -10,6 +10,8 @@ class PianoStore {
         this.maxNote = maxNote;
         this.keyboard = [];
         this.keyStateDict = {};
+        this._baseKeyboard = []
+        this._baseKeyStateDict = {}
         this.sustainPedal = false;
         this.softPedal = false;
         this.sostenutoPedal = false;
@@ -27,12 +29,15 @@ class PianoStore {
     init() {
         this.ac = new AudioContext()
         this.updateInstrument();
+        // generate base copies to quickly reset to on updates
+        this._baseKeyboard = Note.sortedNames(Range.chromatic([Midi.midiToNoteName(0), Midi.midiToNoteName(127)]));
+        this._baseKeyStateDict = this._baseKeyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={}, arr), {});
         this.updateKeyboard();
     }
     updateKeyboard() {
         this.player.stop()
-        this.keyboard = Note.sortedNames(Range.chromatic([this.minNote, this.maxNote]));
-        this.keyStateDict = this.keyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={}, arr), {});
+        this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote));
+        this.keyStateDict = {...this._baseKeyStateDict};
         this._store.set(this);
     }
     updateInstrument() {
@@ -49,7 +54,7 @@ class PianoStore {
     }
     //keys
     pressKey(note, velocity=80) {
-        if (!(this.keyStateDict[note] || this.keyStateDict[Note.enharmonic(note)])) { return; } // Check note is part of piano range
+        if (Note.midi(note) < Note.midi(this.minNote) || Note.midi(note) >= Note.midi(this.maxNote)) { return; } // Check note is part of piano range
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
         this.player.start({ note: note, velocity: velocity });
@@ -57,7 +62,7 @@ class PianoStore {
         this._store.set(this);
     }
     releaseKey(note) {
-        if (!(this.keyStateDict[note] || this.keyStateDict[Note.enharmonic(note)])) { return; } // Check note is part of piano range
+        if (Note.midi(note) < Note.midi(this.minNote) || Note.midi(note) >= Note.midi(this.maxNote)) { return; } // Check note is part of piano range
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
 
         if (!this.sustainPedal) {
@@ -98,6 +103,7 @@ class PianoStore {
     }
     releaseAll() {
         this.player.stop();
+        this.updateKeyboard();
     }
     //instrument
     setInstrument(instrument) {
