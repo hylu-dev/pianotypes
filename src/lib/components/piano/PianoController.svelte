@@ -45,7 +45,7 @@ function maxNoteSubmit(e) {
     </div>
     <div class="flex-row-container">
         <input type="text" id="min" maxlength="4" value={$piano.minNote} on:blur={minNoteSubmit}>
-        &#8250;
+        <span>&#8250;</span>
         <input type="text" id="max" maxlength="4" value={$piano.maxNote} on:blur={maxNoteSubmit}>
     </div>
     <div class="flex-row-container">
@@ -71,6 +71,7 @@ function maxNoteSubmit(e) {
         flex-flow: row;
         font-size: 2rem;
         line-height: 0;
+        text-align: center;
     }
 
     input[type=text] {
