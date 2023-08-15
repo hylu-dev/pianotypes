@@ -25,29 +25,33 @@ function incrementIds() {
 $: if ($isPressed) incrementIds();
 </script>
 
-<!-- each ribbon block is tracked with an increasing id for removal -->
-<div class="ribbon-lane"
-    class:offset-key={isOffset}
-    class:white-key={isWhiteKey}
-    class:black-key={!isWhiteKey}>
-    {#each Array.from(ribbons) as id (`${note}${id}`)}
-        <RibbonBlock
-        ribbonID={id}
-        isWhiteKey={isWhiteKey}
-        released={!$piano.getIsPressed(note)}
-        on:destroy={destroyRibbon}
-        ></RibbonBlock>
-    {/each}
-    <div class:glow={$piano.getIsPressed(note)}></div>
+<!-- Outer div serves as either an ineffectual wrapper for white keys or relative positioning point for black keys without affecting white key spacing -->
+<div class='key-wrapper' class:black-proxy={isWhiteKey}>
+    <div class="ribbon-lane" class:white-key={isWhiteKey} class:black-key={!isWhiteKey}>
+        <!-- each ribbon block is tracked with an increasing id for removal -->
+        {#each Array.from(ribbons) as id (`${note}${id}`)}
+            <RibbonBlock
+            ribbonID={id}
+            isWhiteKey={isWhiteKey}
+            released={!$piano.getIsPressed(note)}
+            on:destroy={destroyRibbon}
+            ></RibbonBlock>
+        {/each}
+        <div class:glow={$piano.getIsPressed(note)}></div>
+    </div>
 </div>
 
 <style>
+    .key-wrapper {
+        display: flex;
+        min-width: 0;
+    }
+
     .ribbon-lane {
         position: relative;
         display: flex;
         justify-content: center;
         height: 100%;
-        box-sizing: border-box;
     }
 
     .glow {
@@ -57,10 +61,6 @@ $: if ($isPressed) incrementIds();
         z-index: 2;
     }
 
-    .offset-key {
-        margin-right: calc(var(--black-key-width)/-2);
-    }
-
     .white-key {
         width: var(--white-key-width);
         border-left: var(--white-key-border-width) solid transparent;
@@ -68,8 +68,15 @@ $: if ($isPressed) incrementIds();
         z-index: 0
     }
 
+     /* Use as a relative positioning point for child black key without affecting white key spacing */
+    .black-proxy {
+        position: relative;
+    }
+
     .black-key {
+        position: absolute;
         width: var(--black-key-width);
+        left: calc(var(--black-key-width)/-2);
         z-index: 1
     }
 

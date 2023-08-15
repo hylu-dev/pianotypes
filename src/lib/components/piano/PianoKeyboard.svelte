@@ -3,6 +3,8 @@
     import piano from '$lib/stores/PianoStore'
     import hotkey from '$lib/stores/HotkeyStore'
     import { onMount } from 'svelte';
+    import { fly } from 'svelte/transition';
+    import { cubicOut } from 'svelte/easing';
 
     // Done onMount, otherwise AudioContext cannot be retrieved in Svelte
     onMount(() => {
@@ -39,7 +41,6 @@
 <svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
-
         {#each $piano.keyboard as note (note)}
             <PianoKey note={note} on:keyPress={clickPressKey} on:keyRelease={clickReleaseKey}></PianoKey>
         {/each}
@@ -58,6 +59,7 @@
 
     .key-container {
         height: 100%;
+        max-width: 100%;
         display: flex;
         flex-flow: row nowrap;
     }
