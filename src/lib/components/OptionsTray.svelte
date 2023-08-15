@@ -1,7 +1,7 @@
 <script>
-	import { slide } from "svelte/transition";
-import PianoController from "./piano/PianoController.svelte";
-import PianoPedal from "./piano/PianoPedal.svelte";
+import PianoController from "./widgets/PianoController.svelte";
+import PianoPedal from "./widgets/PianoPedal.svelte";
+import MidiPlayer from "./widgets/MidiPlayer.svelte";
 
 
 let hidden = true;
@@ -10,10 +10,6 @@ function toggleTray(e) {
     if (e.key === 'Tab') {
         hidden = !hidden
     }
-}
-
-function htmlEntity(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 </script> 
@@ -26,6 +22,9 @@ function htmlEntity(str) {
         </div>
         <div class="options-block">
             <PianoController></PianoController>
+        </div>
+        <div class="options-block">
+            <MidiPlayer></MidiPlayer>
         </div>
     </div>
     <button id="pull-tab" on:click={() => hidden = !hidden}>
