@@ -90,6 +90,7 @@ function toggleTray(e) {
         padding: 1rem;
         box-sizing: border-box;
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        border-radius: 0 0 .5rem .5rem;
     }
 
     .options-block {
@@ -99,6 +100,6 @@ function toggleTray(e) {
         background-color: var(--bg-darker);
         padding: 1rem;
         box-sizing: border-box;
-        border-radius: 5%;
+        border-radius: .5rem;
     }
 </style>
