@@ -9,7 +9,6 @@ export let note = '';
 let ribbons = new Set()
 let ids = 0
 let isWhiteKey = Note.accidentals(note) ? false : true;
-let isOffset = Note.accidentals(Note.transpose(note, "2m")) ? true : false; 
 const isPressed = derived(piano, ($piano) => $piano.getIsPressed(note)); // only react to keypresses for this note
 
 function destroyRibbon(id) {
@@ -17,11 +16,11 @@ function destroyRibbon(id) {
 }
 
 function incrementIds() {
-    // bandaid fix - ids are incremented on any piano key press, this helps determine which key is pressed
     ribbons.add(ids);
     ids++;
 }
 
+// ids are incremented on any piano key press
 $: if ($isPressed) incrementIds();
 </script>
 
