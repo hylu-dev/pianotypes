@@ -13,7 +13,7 @@ import { fade } from 'svelte/transition';
         place-items: center center;
         font-size: min(10rem, 12vw);
         user-select: none;
-        color: var(--tertiary-text-colour);
+        color: var(--text-dark);
         grid-area: main-panel;
     }
 </style>

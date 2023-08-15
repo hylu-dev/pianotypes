@@ -33,7 +33,7 @@
 
 nav {
     display: flex;
-    background: var(--secondary-bg-colour);
+    background: var(--bg-grey);
     border: none;
     width: 100%;
     height: 60px;
@@ -53,11 +53,11 @@ nav h1 {
 }
 
 nav h1:focus {
-    outline: 4px solid var(--primary-text-colour);
+    outline: 4px solid var(--text-gold);
 }
 
 nav a.router-link-active {
-    color: var(--primary-text-colour);
+    color: var(--text-gold);
 }
 
 nav .menu-container a{
@@ -67,7 +67,7 @@ nav .menu-container a{
 nav a:focus {
     outline: none;
     text-decoration: underline;
-    color: var(--primary-text-colour);
+    color: var(--text-gold);
     transform: scale(1.1);
 }
 
@@ -88,12 +88,12 @@ nav a:focus {
 }
 
 .icon-options:hover {
-    color: var(--primary-text-colour);
+    color: var(--text-gold);
     transform: rotate(90deg);
 }
 
 .icon-info:hover {
-    color: var(--primary-text-colour);
+    color: var(--text-gold);
     transform: rotate(360deg);
 }
 

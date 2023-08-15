@@ -45,7 +45,7 @@ function maxNoteSubmit(e) {
     </div>
     <div class="flex-row-container">
         <input type="text" id="min" maxlength="4" value={$piano.minNote} on:blur={minNoteSubmit}>
-        ›
+        &#8250;
         <input type="text" id="max" maxlength="4" value={$piano.maxNote} on:blur={maxNoteSubmit}>
     </div>
     <div class="flex-row-container">
@@ -61,8 +61,7 @@ function maxNoteSubmit(e) {
         justify-content: center;
         flex-flow: column;
         user-select: none;
-        padding: 1rem;
-        gap: 1ch;
+        gap: .6rem;
     }
 
     .flex-row-container {
@@ -70,27 +69,24 @@ function maxNoteSubmit(e) {
         justify-content: space-evenly;
         align-items: center;
         flex-flow: row;
-        font-size: 2vw;
-        border: none;
-        gap: 1vw;
+        font-size: 2rem;
+        line-height: 0;
     }
 
     input[type=text] {
         width: 4ch;
         height: 2ch;
-        font-size: 1vw;
         text-align: center;
         font-weight: 600;
     }
 
     select {
-        font-size: clamp(1vw, 1rem);
-        width: 95%;
+        width: 20ch;
     }
 
     .icon-keyboard-invert, .icon-split-keyboard-invert {
-        font-size: 2vw;
-        color: var(--secondary-text-colour);
+        font-size: 2rem;
+        color: var(--text-grey);
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 
@@ -100,6 +96,6 @@ function maxNoteSubmit(e) {
     }
 
     .icon--active {
-        color: var(--primary-text-colour);
+        color: var(--text-gold);
     }
 </style>

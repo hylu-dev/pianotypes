@@ -9,12 +9,6 @@
         $piano.init();
     });
 
-    function handleDefaults(e) {
-        // override quickfind on firefox
-        if ("'/".includes(e.key)) e.preventDefault();
-        if(e.shiftKey) e.preventDefault();
-    }
-
     // Keyboard input handlers
     function pressKey(e) {
         if (e.repeat) { return }
@@ -42,7 +36,7 @@
     }
 </script>
 
-<svelte:window on:keydown={handleDefaults} on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
+<svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
 
@@ -59,7 +53,7 @@
         justify-content: center;
         align-items: center;
         grid-area: piano;
-        background: var(--tertiary-bg-colour);
+        background: var(--bg-dark-grey);
     }
 
     .key-container {

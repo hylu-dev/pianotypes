@@ -27,7 +27,6 @@ class PianoStore {
     init() {
         this.ac = new AudioContext()
         this.updateInstrument();
-        this.updateEffects();
         this.updateKeyboard();
     }
     updateKeyboard() {
@@ -40,6 +39,7 @@ class PianoStore {
         this.player =  new Soundfont(this.ac, {
             instrument: this.instrument
         });
+        this.updateEffects();
         this._store.set(this);
         return this.instrument
     }
@@ -52,7 +52,6 @@ class PianoStore {
         if (!(this.keyStateDict[note] || this.keyStateDict[Note.enharmonic(note)])) { return; } // Check note is part of piano range
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
-        console.log(velocity);
         this.player.start({ note: note, velocity: velocity });
         this.lastPress = note;
         this._store.set(this);

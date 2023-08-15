@@ -2,9 +2,18 @@
     import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
     import RibbonPanel from '$lib/components/ribbon/RibbonPanel.svelte'
     import NoteDisplay from '$lib/components/NoteDisplay.svelte'
-    import OptionsPanel from '../lib/components/OptionsPanel.svelte';
+    import OptionsPanel from '../lib/components/OptionsTray.svelte';
+
+    function handleDefaults(e) {
+        // override quickfind on firefox
+        if ("'/".includes(e.key)) e.preventDefault();
+        if(e.shiftKey) e.preventDefault();
+        if (e.key === ' ') e.preventDefault();
+        if (e.key === 'Tab') e.preventDefault();
+    }
 </script>
 
+<svelte:window on:keydown={handleDefaults}/>
 <div class="grid-container">
     <!-- <tabs id="tabs">
     <div class="icon-filled-panel"></div>
@@ -48,11 +57,11 @@
 
 #piano-pedal {
     grid-area: piano-left;
-    background: var(--secondary-bg-colour);
+    background: var(--bg-grey);
 }
 
 #piano-controller {
     grid-area: piano-right;
-    background: var(--secondary-bg-colour);
+    background: var(--bg-grey);
 }
 </style>

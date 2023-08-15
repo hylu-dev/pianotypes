@@ -50,37 +50,40 @@ function liftSoftPedal(e) {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-bottom: 3rem;
-        padding-top: 1rem;
+        padding-bottom: 10px;
         user-select: none;
     }
 
     .pedal-box {
         display: flex;  
         flex-flow: row;
-        justify-content: center;
         align-items: flex-start;
-        gap: 1vh;
-        height: 2.5vw;
-        border-radius: .3vw;
+        gap: .5rem;
+        height: 3rem;
+        border-radius: 5%;
         box-sizing: border-box;
-        background: var(--tertiary-bg-colour);
+        background: var(--bg-dark-grey);
     }
 
     .icon-soft-pedal, .icon-sostenuto-pedal, .icon-sustain-pedal {
-        font-size: min(5vw, 5rem);
-        color: var(--tertiary-text-colour);
-        transform: rotate3d(1, 0, 0, 50deg);
+        font-size: 5rem;
+        color: var(--text-dark);
+        transform: scaleY(.5);
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 
     .icon-soft-pedal:hover, .icon-sostenuto-pedal:hover, .icon-sustain-pedal:hover {
         filter: brightness(1.3);
-        transform: rotate3d(1, 0, 0, 50deg);
+        transform: scaleY(.46);
     }
 
     .pressed {
-        color: var(--primary-text-colour);
-        transform: rotate3d(1, 0, 0, 55deg);
+        color: var(--text-gold);
+        transform: scaleY(.46)translateY(7px);
+    }
+
+    .pressed:hover {
+        color: var(--text-gold);
+        transform: scaleY(.46)translateY(7px);
     }
 </style>
