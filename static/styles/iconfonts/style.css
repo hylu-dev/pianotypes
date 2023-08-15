@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?899srx');
+  src:  url('fonts/icomoon.eot?899srx#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?899srx') format('truetype'),
+    url('fonts/icomoon.woff?899srx') format('woff'),
+    url('fonts/icomoon.svg?899srx#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-empty-panel:before {
+  content: "\e900";
+}
+.icon-filled-panel:before {
+  content: "\e901";
+}
+.icon-info:before {
+  content: "\e902";
+}
+.icon-keyboard:before {
+  content: "\e903";
+}
+.icon-keyboard-invert:before {
+  content: "\e904";
+}
+.icon-options:before {
+  content: "\e905";
+}
+.icon-ribbon-panel:before {
+  content: "\e906";
+}
+.icon-ribbon-panel-invert:before {
+  content: "\e907";
+}
+.icon-soft-pedal:before {
+  content: "\e908";
+}
+.icon-sostenuto-pedal:before {
+  content: "\e909";
+}
+.icon-split-keyboard:before {
+  content: "\e90a";
+}
+.icon-split-keyboard-invert:before {
+  content: "\e90b";
+}
+.icon-sustain-pedal:before {
+  content: "\e90c";
+}
+.icon-typing-panel:before {
+  content: "\e90d";
+}
+.icon-typing-panel-invert:before {
+  content: "\e90e";
+}

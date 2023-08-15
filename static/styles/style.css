@@ -17,10 +17,11 @@
     --white-key-width: calc(var(--piano-height)/3.3);
     --white-key-border-width: .01vw;
     --black-key-width: calc(var(--white-key-width)/2);
+    --black-key-width-resp: clamp(0, var(--black-key-width), var(--black-key-width));
 
     --white-key-colour: rgb(240, 240, 240);
     --white-key-hover-colour: rgb(224, 255, 229);
-    --white-key-active-colour: rgb(139, 216, 139);
+    --white-key-active-colour: rgb(120, 200, 110);
     --black-key-colour: rgb(30, 30, 30);
     --black-key-hover-colour: rgb(97, 119, 142);
     --black-key-active-colour: rgb(90, 136, 174);

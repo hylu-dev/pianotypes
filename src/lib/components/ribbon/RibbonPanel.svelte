@@ -7,7 +7,7 @@ import piano from '$lib/stores/PianoStore'
 
 <div id="ribbon-panel">
     <div class="lane-container">
-        {#each $piano.keyboard as note}
+        {#each $piano.keyboard as note (note)}
             <RibbonLane note={note}></RibbonLane>
         {/each}
     </div>
@@ -15,6 +15,7 @@ import piano from '$lib/stores/PianoStore'
 
 <style>
     #ribbon-panel {
+        width: 100vw;
         position: relative;
         display: flex;
         justify-content: center;

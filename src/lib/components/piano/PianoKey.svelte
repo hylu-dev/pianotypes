@@ -3,6 +3,9 @@
     import hotkey from '$lib/stores/HotkeyStore'
     import { Note } from "tonal"
     import { createEventDispatcher } from 'svelte';
+    import { fly } from 'svelte/transition';
+    import { cubicOut } from 'svelte/easing';
+    import { derived } from 'svelte/store';
 
     export let note = '';
 
@@ -12,6 +15,7 @@
     let showHotkeys = true;
     let isWhiteKey = Note.accidentals(note) ? false : true;
     let isOffset = Note.accidentals(Note.transpose(note, "2m")) ? true : false; // offset margin if key precedes a black key
+    const isPressed = derived(piano, ($piano) => $piano.getIsPressed(note));
 
     function dispatchKeyPress(e) {
         if (e.buttons > 0) dispatch('keyPress', note);
@@ -23,13 +27,14 @@
 </script>
 
 <div class="piano-key"
+    transition:fly={{ delay: 0, duration: 300, x: 0, y: 100, opacity: 0, easing: cubicOut }}
     class:offset-key={isOffset}
     class:white-key={isWhiteKey}
     class:white-key--hover={isWhiteKey&&isHover}
-    class:white-key--pressed={isWhiteKey&&$piano.getIsPressed(note)}
+    class:white-key--pressed={isWhiteKey&&$isPressed}
     class:black-key={!isWhiteKey}
     class:black-key--hover={!isWhiteKey&&isHover}
-    class:black-key--pressed={!isWhiteKey&&$piano.getIsPressed(note)}
+    class:black-key--pressed={!isWhiteKey&&$isPressed}
     on:mouseover={() => isHover=true}
     on:focus={() => isHover=true}
     on:mouseout={() =>isHover=false}
@@ -88,7 +93,7 @@
 
     .black-key {
         background: var(--black-key-colour);
-        min-width: var(--black-key-width);
+        width: var(--black-key-width);
         height: 50%;
         z-index: 3;
         box-shadow: 0px 1px 3px rgba(0,0,0,0.5);

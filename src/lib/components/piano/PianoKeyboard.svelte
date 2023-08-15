@@ -9,12 +9,14 @@
         $piano.init();
     });
 
+    function handleDefaults(e) {
+        // override quickfind on firefox
+        if ("'/".includes(e.key)) e.preventDefault();
+        if(e.shiftKey) e.preventDefault();
+    }
+
     // Keyboard input handlers
     function pressKey(e) {
-        // override quickfind on firefox
-        if ("'/".includes(e.key)) {
-            e.preventDefault();
-        }
         if (e.repeat) { return }
         let note = $hotkey.getKeyNoteBinding(e.key);
         let velocity = 80;
@@ -40,11 +42,11 @@
     }
 </script>
 
-<svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
+<svelte:window on:keydown={handleDefaults} on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
 
-        {#each $piano.keyboard as note}
+        {#each $piano.keyboard as note (note)}
             <PianoKey note={note} on:keyPress={clickPressKey} on:keyRelease={clickReleaseKey}></PianoKey>
         {/each}
     </div>
@@ -53,18 +55,16 @@
 <style>
     #piano-keyboard {
         display: flex;
-        justify-items: center;
+        max-width: 100vw;
+        justify-content: center;
         align-items: center;
         grid-area: piano;
-        box-sizing: border-box;
         background: var(--tertiary-bg-colour);
     }
 
     .key-container {
-        width: 100%;
         height: 100%;
         display: flex;
-        justify-content: center;
         flex-flow: row nowrap;
     }
 </style>

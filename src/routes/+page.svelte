@@ -2,6 +2,7 @@
     import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
     import RibbonPanel from '$lib/components/ribbon/RibbonPanel.svelte'
     import NoteDisplay from '$lib/components/NoteDisplay.svelte'
+    import OptionsPanel from '../lib/components/OptionsPanel.svelte';
 </script>
 
 <div class="grid-container">
@@ -11,6 +12,7 @@
     <div class="icon-typing-panel-invert"></div>
     </tabs> -->
     <RibbonPanel></RibbonPanel>
+    <OptionsPanel></OptionsPanel>
     <NoteDisplay></NoteDisplay>
     <PianoKeyboard></PianoKeyboard>
     <!-- <note-display v-if="renderDisplay" id="note-display"></note-display>
@@ -52,22 +54,5 @@
 #piano-controller {
     grid-area: piano-right;
     background: var(--secondary-bg-colour);
-}
-
-@media only screen and (max-width: 800px) {
-    #piano-pedal {
-    display: none;
-    }
-    #piano-keyboard {
-    grid-area: 2 / col-start / 2 / col-end;
-    width: 100vw;
-    }
-    #ribbon-panel {
-    grid-area: 1 / col-start / 1 / col-end;
-    width: 100vw;
-    }
-    #piano-controller {
-    display: none;
-    }
 }
 </style>
