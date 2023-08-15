@@ -12,7 +12,11 @@
 
     Player.on('midiEvent', function(e) {
         if (e.name === "Note on") {
-            $piano.pressKey(e.noteName, e.velocity);
+            if (e.velocity === 0) {
+                $piano.releaseKey(e.noteName);
+            } else {
+                $piano.pressKey(e.noteName, e.velocity);
+            }
         }
         if (e.name === "Note off") {
             $piano.releaseKey(e.noteName);

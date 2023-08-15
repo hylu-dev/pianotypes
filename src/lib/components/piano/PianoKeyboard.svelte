@@ -32,13 +32,9 @@
     function clickReleaseKey(e) {
         $piano.releaseKey(e.detail);
     }
-
-    function clearKeyStates() {
-        $piano.updateKeyboard()
-    }
 </script>
 
-<svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:blur={clearKeyStates}/>
+<svelte:window on:keydown={pressKey} on:keyup={releaseKey}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
         {#each $piano.keyboard as note (note)}
