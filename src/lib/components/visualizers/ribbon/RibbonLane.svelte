@@ -47,6 +47,7 @@ $: if ($isPressed) incrementIds();
     }
 
     .ribbon-lane {
+        box-sizing: border-box;
         position: relative;
         display: flex;
         justify-content: center;

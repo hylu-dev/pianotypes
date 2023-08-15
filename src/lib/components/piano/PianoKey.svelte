@@ -58,6 +58,7 @@
     }
 
     .piano-key {
+        box-sizing: border-box;
         display: flex;
         justify-content: center;
         align-items: flex-end;
@@ -111,6 +112,7 @@
     }
 
     .black-key h1 {
+        align-items: flex-end;
         color: rgba(255, 255, 255, 0.4);
         user-select: none;
         font-size: var(--key-label-size);
