@@ -77,6 +77,33 @@ input {
     padding: .5ch;
 }
 
+input[type="file"] {
+    display: none;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+button {
+    background: var(--bg-dark-grey);
+    color: var(--text-grey);
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    padding: .5ch;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: var(--bg-grey);
+    color: var(--text-gold);
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+button:active {
+    filter: brightness(.6);
+    transform: scale(1);
+}
+
 select {
     background: var(--bg-dark);
     color: var(--text-grey);
