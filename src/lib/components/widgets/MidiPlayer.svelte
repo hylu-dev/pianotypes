@@ -6,9 +6,14 @@
     const Player = new MidiPlayer.Player();
 
     let loaded = false;
+    let files = '';
+    let songProgress = 0;
+    let songTime = 0;
+    let isPlaying = false;
 
     Player.on('fileLoaded', function() {
         loaded = true;
+        songTime = Player.getSongTime;
     });
 
     Player.on('midiEvent', function(e) {
@@ -26,6 +31,11 @@
         }
     });
 
+    
+    Player.on('playing', function(currentTick) {
+        songProgress = Player.getSongPercentRemaining();
+    });
+
     function loadFile(e) {
         Player.stop()
         $piano.releaseAll();
@@ -37,25 +47,75 @@
 		}, false);
     }
 
+    function playPlayer() {
+        Player.play();
+        isPlaying = true;
+    }
+
     function pausePlayer() {
-        Player.pause()
+        Player.pause();
+        isPlaying = false;
         $piano.releaseAll();
     }
 
 </script>
 
-<div>
-    <h2>MidiPlayer</h2>
-    <input type="file" id="midiFile" name="midi" accept=".mid,.midi" on:change={loadFile}>
-    <button class:inactive={!loaded} disabled={!loaded} on:click={pausePlayer}> &#9208;</button>
-    <button class:inactive={!loaded} disabled={!loaded} on:click={() => Player.play()}>&#9658;</button>
+<div id="midi-wrapper">
+    <div class="midi-row">
+    </div>
+    <div class="midi-row">
+        <label for="file-upload" class="file-input">
+            {#if files && files[0]}
+                <span>{files[0].name}</span>
+            {:else}
+                <span>Upload Midi</span>
+            {/if}
+        </label>
+        <input type="file" id="file-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
+    </div>
+    <div class="midi-row">
+        <button class:active={!isPlaying} disabled={!loaded} on:click={pausePlayer}> &#9208;</button>
+        <button class:active={isPlaying} disabled={!loaded} on:click={playPlayer}>&#9658;</button>
+    </div>
 </div>
 
 <style>
-
-    .inactive {
-        filter: brightness(.6);
-
+    #midi-wrapper {
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-evenly;
+        gap: .6rem;
     }
 
+    .midi-row {
+        display: flex;
+        justify-content: flex-start;
+        flex-grow: 1;
+        gap: 1ch;
+    }
+
+    .active {
+        color: var(--text-gold);
+        background-color: var(--bg-light);
+    }
+
+    .file-input {
+        background: var(--bg-dark-grey);
+        color: var(--text-grey);
+        font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+        border: solid var(--bg-light);
+        text-align: center;
+        padding: .8ch;
+        font-size: .5rem;
+        box-sizing: border-box;
+        max-width: 20ch;
+        text-align: center;
+        overflow:hidden;
+    }
+
+    .file-input:hover {
+        background: var(--bg-grey);
+        color: var(--text-gold);
+    }
 </style>

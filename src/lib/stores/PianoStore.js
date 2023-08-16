@@ -26,6 +26,7 @@ class PianoStore {
         // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
+        this.ac = new AudioContext()
         this.updateInstrument();
         // generate base copies to quickly reset to on updates
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Midi.midiToNoteName(0), Midi.midiToNoteName(127)]));
@@ -38,19 +39,15 @@ class PianoStore {
     }
     updateInstrument() {
         // WARNING: Currently smplr starts to lag after switching instruments multiple times and creating multiple new Soundfont
-        this.ac = new AudioContext()
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
+        soundfont.output.addEffect("reverb", new Reverb(this.ac), this.reverb);
+        soundfont.output.setVolume(this.volume);
         soundfont.loaded().then(() => {
             this.player = soundfont
-            this.updateEffects();
             this._store.set(this)
         });
-    }
-    updateEffects() {
-        this.player.output.addEffect("reverb", new Reverb(this.ac), this.reverb);
-        this.player.output.setVolume(this.volume);
     }
     //keys
     pressKey(note, velocity=80) {
