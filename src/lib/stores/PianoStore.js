@@ -1,5 +1,5 @@
 import { Note, Midi, Range } from "tonal";
-import { Reverb, Soundfont, SplendidGrandPiano } from "smplr";
+import { Reverb, Soundfont } from "smplr";
 import { writable } from 'svelte/store';
 
 // Reactive Svelte class https://www.youtube.com/watch?v=oQY98LZIW2E - lihautan
@@ -11,7 +11,6 @@ class PianoStore {
         this.keyboard = [];
         this.keyStateDict = {};
         this._baseKeyboard = []
-        this._baseKeyStateDict = {}
         this.sustainPedal = false;
         this.softPedal = false;
         this.sostenutoPedal = false;
@@ -27,26 +26,27 @@ class PianoStore {
         // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
-        this.ac = new AudioContext()
         this.updateInstrument();
         // generate base copies to quickly reset to on updates
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Midi.midiToNoteName(0), Midi.midiToNoteName(127)]));
-        this._baseKeyStateDict = this._baseKeyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={}, arr), {});
         this.updateKeyboard();
     }
     updateKeyboard() {
-        this.player.stop()
         this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote));
-        this.keyStateDict = {...this._baseKeyStateDict};
+        this.keyStateDict = this._baseKeyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={isPressed: false}, arr), {});
         this._store.set(this);
     }
     updateInstrument() {
-        this.player =  new Soundfont(this.ac, {
+        // WARNING: Currently smplr starts to lag after switching instruments multiple times and creating multiple new Soundfont
+        this.ac = new AudioContext()
+        const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
-        this.updateEffects();
-        this._store.set(this);
-        return this.instrument
+        soundfont.loaded().then(() => {
+            this.player = soundfont
+            this.updateEffects();
+            this._store.set(this)
+        });
     }
     updateEffects() {
         this.player.output.addEffect("reverb", new Reverb(this.ac), this.reverb);
@@ -112,14 +112,14 @@ class PianoStore {
     }
     //range clamp between A0 - G#9 | midi: 21 - 127
     setMin(note) {
-        if (Note.name(note) && Note.midi(note) >= 21 && Note.midi(note) < 128) {
+        if (Note.name(note) && Note.midi(note) >= 21 && Note.midi(note) < Note.midi(this.maxNote)) {
             this.minNote = Note.simplify(note);
             this.updateKeyboard();
         }
         return this.minNote;
     }
     setMax(note) {
-        if (Note.name(note) && Note.midi(note) >= 21 && Note.midi(note) < 128) {
+        if (Note.name(note) && Note.midi(note) > Note.midi(this.minNote) && Note.midi(note) < 128) {
             this.maxNote = Note.simplify(note);
             this.updateKeyboard();
         }
