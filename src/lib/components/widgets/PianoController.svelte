@@ -3,6 +3,7 @@ import piano from '$lib/stores/PianoStore'
 import hotkey from '$lib/stores/HotkeyStore'
 import { Note } from "tonal";
 import instruments from "$lib/json/musyngkite.json"
+import { getSoundfontNames } from "smplr";
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
@@ -38,7 +39,7 @@ function maxNoteSubmit(e) {
 <div class="flex-col-container">
     <div class="flex-row-container">
         <select value={$piano.instrument} on:change={e => $piano.setInstrument(e.target.value)} on:keydown={e => e.target.blur()}>
-            {#each instruments as instr (instr)}
+            {#each getSoundfontNames() as instr (instr)}
                 <option on:click={e => e.target.parentElement.blur()}>{ instr }</option>
             {/each}
         </select>
