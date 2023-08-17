@@ -91,17 +91,6 @@ input:hover {
     color: var(--text-gold);
 }
 
-.label-container {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-}
-
-.label-container label {
-    color: var(--text-gold);
-    font-size: .6rem;
-}
-
 button {
     background: var(--bg-dark-grey);
     color: var(--text-grey);
@@ -144,6 +133,8 @@ select:hover {
     color: var(--text-gold);
 }
 
+/* Global Classes */
+
 .flex-col {
     display: flex;
     justify-content: center;
@@ -161,6 +152,18 @@ select:hover {
     gap: .6rem;
 }
 
+.label-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-container label {
+    color: var(--text-gold);
+    font-size: .6rem;
+}
+
 .icon {
     font-size: 2rem;
     color: var(--text-grey);
@@ -176,7 +179,8 @@ select:hover {
     filter: brightness(.7);
 }
 
-/* responsive stylings */
+/* Responsive Stylings */
+
 *:focus {
     outline: none;
 }
