@@ -16,23 +16,22 @@ An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
 - Adjustable key bind positioning and piano size
 - Midi playback
 
+## Controls
+
+- **Keyboard keys** to press the corresponding keys on the piano.
+- **Space** initiates the sutain pedal, hold to keep down.
+- **Space** initiates the soft pedal, hold to keep down.
+- ←→ arrow keys move the keybindings across the piano one key at a time.
+- ↓↑ arrow keys adds and removes keys to the piano range.
+- **Control** modifier can be used with pedals to lock them as well as manipulate keys by octaves instead of semitones
+
+## Roadmap
+
+- Sostenuto Pedal
+- Music Generation
+- More Visualizers
+
 ---
-
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
 ## Developing
 
