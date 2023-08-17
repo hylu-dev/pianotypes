@@ -11,7 +11,6 @@ let steps = 100;
 let trim = false;
 let error = '';
 let loading = false;
-let timeouts = [];
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -35,13 +34,7 @@ function playMidi() {
     if (fileBuffer){
         const seq = mm.midiToSequenceProto(fileBuffer);
         seq.notes.forEach(note => {
-            const time = $piano.ac.currentTime;
-            timeouts.push(setTimeout(() => {
-                $piano.dryPressKey(note.pitch, note.velocity);
-            }, note.startTime*1000));
-            $piano.player.start({ note: note.pitch, time: time+note.startTime, duration: time+note.endTime, onEnded: () => {
-                $piano.dryReleaseKey(note.pitch);
-            } });
+            schedulePiano(note.pitch, note.velocity, note.startTime, note.endTime);
         })
     }
 }
@@ -58,7 +51,7 @@ async function playGenerative() {
         music_rnn
             .continueSequence(qns, steps, temperature)
             .then(sample => {
-                playFromSample(sample)
+                playFromQuantizedSample(sample)
             }).catch(err => {
                 console.log(err);
                 error = err;
@@ -69,7 +62,7 @@ async function playGenerative() {
     }
 }
 
-function playFromSample(sample) {
+function playFromQuantizedSample(sample) {
     const secondsPerQuarterNote = 1/(sample.tempos[0]['qpm']/60);
     const stepsPerQuarter = sample.quantizationInfo['stepsPerQuarter'];
     const tempoMultiplier = secondsPerQuarterNote/stepsPerQuarter
@@ -80,12 +73,19 @@ function playFromSample(sample) {
     })
 }
 
+function schedulePiano(pitch, velocity, delay, duration) {
+    const time = $piano.ac.currentTime;
+    const timeoutId = setTimeout(() => {
+            $piano.dryPressKey(pitch, velocity);
+        }, delay*1000);
+    $piano.player.start({ note: pitch, time: time+delay, duration: time+duration, onEnded: () => {
+        $piano.dryReleaseKey(pitch);
+        clearTimeout(timeoutId);
+    } });
+}
+
 function stopPiano() {
     $piano.releaseAll();
-    timeouts.forEach(id => {
-        clearTimeout(id);
-    })
-    timeouts = [];
 }
 </script>
 
