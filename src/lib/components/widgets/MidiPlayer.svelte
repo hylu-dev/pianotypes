@@ -45,6 +45,7 @@
 
     function loadFile(e) {
         midiPlayer.stop()
+        isPlaying = false;
         $piano.releaseAll();
         const file = e.target.files[0];
         const reader = new FileReader();

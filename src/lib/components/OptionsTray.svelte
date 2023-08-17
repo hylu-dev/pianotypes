@@ -56,7 +56,7 @@ function toggleTray(e) {
         color: var(--bg-grey);
         font-size: 1.5rem;
         font-size: 2rem;
-        padding-bottom: .5rem;
+        padding-bottom: .8rem;
         line-height: 0px;
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
@@ -86,8 +86,8 @@ function toggleTray(e) {
         background-color: rgba(33, 33, 33, .9);
         color: var(--text-dark);
         z-index: 2;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 1ch;
+        padding: 1ch;
         box-sizing: border-box;
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
         border-radius: 0 0 .5rem .5rem;
