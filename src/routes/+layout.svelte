@@ -56,21 +56,6 @@ nav h1:focus {
     outline: 4px solid var(--text-gold);
 }
 
-nav a.router-link-active {
-    color: var(--text-gold);
-}
-
-nav .menu-container a{
-    transition: all .4s ease-in-out;
-}
-
-nav a:focus {
-    outline: none;
-    text-decoration: underline;
-    color: var(--text-gold);
-    transform: scale(1.1);
-}
-
 .author-links {
     display: flex;
 }
@@ -80,36 +65,6 @@ nav a:focus {
     justify-content: flex-end;
     font-size: 2rem;
     gap: 1rem;
-}
-
-.icon-options, .icon-info {
-    display: inline-block;
-    transition: all .4s ease-in-out;
-}
-
-.icon-options:hover {
-    color: var(--text-gold);
-    transform: rotate(90deg);
-}
-
-.icon-info:hover {
-    color: var(--text-gold);
-    transform: rotate(360deg);
-}
-
-.fade-enter-active, .fade-leave-active {
-    transition: all .3s ease-in-out;
-}
-.fade-enter-from, .fade-leave-to {
-    opacity: 0;
-    transform: translateY(5em);
-}
-
-@media only screen and (max-width: 600px) {
-    .title-panel {
-    padding-left: 5%;
-    justify-content: left;
-    }
 }
 </style>
 

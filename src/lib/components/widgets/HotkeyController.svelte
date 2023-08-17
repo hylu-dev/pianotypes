@@ -47,8 +47,8 @@ function splitOffsetSubmit(e) {
         </div>
     </div>
     <div class="flex-row">
-        <div class="icon icon-keyboard-invert" class:icon--active={$hotkey.mode == 1} on:click={$hotkey.setMode(1)}></div>
-        <div class="icon icon-split-keyboard-invert" class:icon--active={$hotkey.mode == 2} on:click={$hotkey.setMode(2)}></div>
+        <div class="icon icon-keyboard-invert" class:icon--active={$hotkey.mode == 1} on:click={$hotkey.setMode(1)} role="none"></div>
+        <div class="icon icon-split-keyboard-invert" class:icon--active={$hotkey.mode == 2} on:click={$hotkey.setMode(2)} role="none"></div>
     </div>
 </div>
 

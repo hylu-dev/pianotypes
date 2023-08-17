@@ -39,9 +39,9 @@ function liftSoftPedal(e) {
     />
 <div class="pedal-container">
     <div class="pedal-box">
-        <div class="icon-soft-pedal" class:pressed={$piano.softPedal} on:click={downSoftPedal}></div>
+        <div class="icon-soft-pedal" class:pressed={$piano.softPedal} on:click={downSoftPedal} role="none"></div>
         <div class="icon-sostenuto-pedal" class:pressed={$piano.sostenutoPedal}></div>
-        <div class="icon-sustain-pedal" class:pressed={$piano.sustainPedal} on:click={downSustainPedal}></div>
+        <div class="icon-sustain-pedal" class:pressed={$piano.sustainPedal} on:click={downSustainPedal} role="none"></div>
     </div>
 </div>
 
