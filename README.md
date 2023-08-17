@@ -1,3 +1,23 @@
+
+# Piano Types
+
+_Minimalist Online Piano_
+
+A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
+This serves to replace <https://github.com/hylu-dev/pianotypes>.
+
+The project is currently hosted on <https://pianotypestwo.netlify.app/>.
+An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
+
+## Features
+
+- Visual display of piano key presses
+- Multiple instrument sounds from [smplr](https://github.com/danigb/smplr)
+- Adjustable key bind positioning and piano size
+- Midi playback
+
+---
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
