@@ -2,7 +2,6 @@
 import piano from '$lib/stores/PianoStore'
 import hotkey from '$lib/stores/HotkeyStore'
 import { Note } from "tonal";
-import instruments from "$lib/json/musyngkite.json"
 import { getSoundfontNames } from "smplr";
 
 function controller(e) {

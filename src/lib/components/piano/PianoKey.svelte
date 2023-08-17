@@ -3,7 +3,7 @@
     import hotkey from '$lib/stores/HotkeyStore'
     import { Note } from "tonal"
     import { createEventDispatcher } from 'svelte';
-    import { fly, fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { cubicOut } from 'svelte/easing';
     import { derived } from 'svelte/store';
 
@@ -12,9 +12,11 @@
     const dispatch = createEventDispatcher();
 
     let isHover = false;
-    let showHotkeys = true;
     let isWhiteKey = Note.accidentals(note) ? false : true;
+    
+    const keybinding = derived(hotkey, ($hotkey) => $hotkey.getNoteKeyBinding(note));
     const isPressed = derived(piano, ($piano) => $piano.getIsPressed(note));
+    const isUpper = derived(hotkey, ($hotkey) => $hotkey.isUpper(note));
 
     function dispatchKeyPress(e) {
         if (e.buttons > 0) dispatch('keyPress', note);
@@ -29,6 +31,8 @@
 <div class='key-wrapper' class:black-proxy={!isWhiteKey}>
     <div class="piano-key"
         transition:fly={{ delay: 0, duration: 300, x: 0, y: 100, opacity: 0, easing: cubicOut }}
+        class:upper-hotkey={$isUpper&&$hotkey.showHotkeyGuides}
+        class:no-hotkey={!$keybinding&&$hotkey.showHotkeyGuides}
         class:white-key={isWhiteKey}
         class:white-key--hover={isWhiteKey&&isHover}
         class:white-key--pressed={isWhiteKey&&$isPressed}
@@ -44,14 +48,22 @@
         on:mouseup={dispatchKeyRelease}
         on:mouseleave={dispatchKeyRelease}
         role="none">
-        {#if showHotkeys }
-            <h1>{ $hotkey.getNoteKeyBinding(note) }</h1>
+        {#if $hotkey.showHotkeys }
+            <h1>{ $keybinding }</h1>
         {/if}
     </div>
 </div>
 
 
 <style>
+    .upper-hotkey  {
+        transform: translateY(-1ch);
+        filter: sepia(100%);
+    }
+    .no-hotkey {
+        filter: brightness(.5)blur(.5px);
+    }
+
     .key-wrapper {
         display: flex;
         min-width: 0;
@@ -77,7 +89,7 @@
     }
 
     .white-key h1 {
-        color: rgba(0, 0, 0, 0.3);
+        color: rgba(0, 0, 0, 0.4);
         user-select: none;
         font-size: var(--key-label-size);
         font-family: var(--key-label-font-family);

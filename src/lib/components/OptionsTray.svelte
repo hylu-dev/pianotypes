@@ -1,8 +1,9 @@
 <script>
 import PianoController from "./widgets/PianoController.svelte";
+import HotkeyController from "./widgets/HotkeyController.svelte";
 import PianoPedal from "./widgets/PianoPedal.svelte";
 import MidiPlayer from "./widgets/MidiPlayer.svelte";
-
+import MidiGenerator from "./widgets/MidiGenerator.svelte";
 
 let hidden = true;
 
@@ -24,7 +25,13 @@ function toggleTray(e) {
             <PianoController></PianoController>
         </div>
         <div class="options-block">
+            <HotkeyController></HotkeyController>
+        </div>
+        <div class="options-block">
             <MidiPlayer></MidiPlayer>
+        </div>
+        <div class="options-block">
+            <MidiGenerator></MidiGenerator>
         </div>
     </div>
     <button id="pull-tab" on:click={() => hidden = !hidden}>
