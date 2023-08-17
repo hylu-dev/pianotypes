@@ -33,7 +33,7 @@ class PianoStore {
         this.updateKeyboard();
     }
     updateKeyboard() {
-        this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote));
+        this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote)+1);
         this.keyStateDict = this._baseKeyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={isPressed: false}, arr), {});
         this._store.set(this);
     }
@@ -129,7 +129,7 @@ class PianoStore {
 	}
   }
 
-  const piano = new PianoStore('C3', 'C6');
+  const piano = new PianoStore('F2', 'G6');
 
   export const keyboard = derived(piano, ($piano) => $piano.keyboard); // only react to keyboard changes
 

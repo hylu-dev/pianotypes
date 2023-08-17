@@ -58,7 +58,7 @@
 <style>
     .upper-hotkey  {
         transform: translateY(-1ch);
-        filter: sepia(100%);
+        filter: sepia(1);
     }
     .no-hotkey {
         filter: brightness(.5)blur(.5px);

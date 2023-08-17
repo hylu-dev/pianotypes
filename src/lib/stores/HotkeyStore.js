@@ -63,10 +63,10 @@ class HotkeyStore {
             let index = this.__bindToScale(this.r1, this.r2, chromatic, 0);
             this.__bindToScale(this.r3, this.r4, chromatic, index);
         } else if (this.mode == 2) {
-            let index = this.__bindToScale(this.lr1, this.lr2, chromatic, 0);
-            index = this.__bindToScale(this.lr3, this.lr4, chromatic, index);
+            let index = this.__bindToScale(this.lr3, this.lr4, chromatic, 0);
+            index = this.__bindToScale(this.lr1, this.lr2, chromatic, index);
             index+=this.splitOffset;
-            index =this.__bindToScale(this.rr1, this.rr2, chromatic, index);
+            index = this.__bindToScale(this.rr1, this.rr2, chromatic, index);
             this.__bindToScale(this.rr3, this.rr4, chromatic, index);
         }
         this._store.set(this)
