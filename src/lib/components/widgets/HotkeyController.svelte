@@ -46,7 +46,7 @@ function splitOffsetSubmit(e) {
             <input type="number" id="guide" maxlength="2" min="0" value={$hotkey.splitOffset} on:change={splitOffsetSubmit}>
         </div>
     </div>
-    <div class="flex-row" style="justify-content: center;">
+    <div class="flex-row">
         <div class="icon icon-keyboard-invert" class:icon--active={$hotkey.mode == 1} on:click={$hotkey.setMode(1)}></div>
         <div class="icon icon-split-keyboard-invert" class:icon--active={$hotkey.mode == 2} on:click={$hotkey.setMode(2)}></div>
     </div>

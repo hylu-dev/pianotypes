@@ -38,36 +38,26 @@ function maxNoteSubmit(e) {
         </select>
     </div>
     <div class="flex-row">
+        <div class="range-container">
         <input type="text" id="min" maxlength="4" value={$piano.minNote} on:blur={minNoteSubmit}>
-        <span>&#8250;</span>
+        <span style="transform: translateY(-3px);">&#10231;</span>
         <input type="text" id="max" maxlength="4" value={$piano.maxNote} on:blur={maxNoteSubmit}>
+        </div>
+        
     </div>
 </div>
 
 <style>
-    .flex-col {
+    .range-container {
         display: flex;
-        justify-content: center;
-        flex-flow: column;
-        user-select: none;
-        gap: .6rem;
-    }
-
-    .flex-row {
-        display: flex;
-        justify-content: space-evenly;
         align-items: center;
-        flex-flow: row;
-        font-size: 2rem;
-        line-height: 0;
-        text-align: center;
+        font-size: 1.5rem;
+        gap: 1ch;
     }
 
     input[type=text] {
         width: 4ch;
         height: 2ch;
-        text-align: center;
-        font-weight: 600;
     }
 
     select {
