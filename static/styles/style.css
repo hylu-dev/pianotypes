@@ -91,7 +91,16 @@ input:hover {
     color: var(--text-gold);
 }
 
+.label-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
 
+.label-container label {
+    color: var(--text-gold);
+    font-size: .6rem;
+}
 
 button {
     background: var(--bg-dark-grey);

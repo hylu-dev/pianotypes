@@ -135,17 +135,6 @@ function stopPiano() {
         scrollbar-width: thin;
     }
 
-    .label-container {
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-    }
-
-    .small-label {
-        color: var(--text-gold);
-        font-size: .6rem;
-    }
-
     input[type=number] {
         width: 6ch;
         height: 2ch;

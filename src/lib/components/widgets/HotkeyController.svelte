@@ -27,24 +27,24 @@ function splitOffsetSubmit(e) {
 <svelte:window on:keydown={controller}/>
 <div class="flex-col">
     <div class="flex-row">
-        <div class="flex-container">
+        <div class="label-container">
             <label for="hotkey">Hotkeys:</label>
             <input id="hotkey" type="checkbox" checked={$hotkey.showHotkeys} on:change={() => $hotkey.toggleHotkeys()}>
         </div>
-        <div class="flex-container">
+        <div class="label-container">
             <label for="guide">Guides:</label>
             <input id="guide" type="checkbox" checked={$hotkey.showHotkeyGuides} on:change={() => $hotkey.toggleGuides()}>
-        </div>
+        </div>            
     </div>
     <div class="flex-row">
-        <div class="flex-container">
-            <label for="hotkey">Base:</label>
+        <div class="label-container">
             <input type="text" id="hotkey" maxlength="4" value={$hotkey.base} on:blur={hotkeyBaseSubmit}>
+            <label for="hotkey">Base:</label>
         </div>
-        <div class="flex-container">
-            <label for="guide">Split:</label>
+        <div class="label-container">
             <input type="number" id="guide" maxlength="2" min="0" value={$hotkey.splitOffset} on:change={splitOffsetSubmit}>
-        </div>
+            <label for="guide">Split:</label>
+        </div>            
     </div>
     <div class="flex-row">
         <div class="icon icon-keyboard-invert" class:icon--active={$hotkey.mode == 1} on:click={$hotkey.setMode(1)} role="none"></div>
@@ -53,11 +53,8 @@ function splitOffsetSubmit(e) {
 </div>
 
 <style>
-    .flex-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: .2rem;
+    .flex-row {
+        justify-content: space-evenly;
     }
 
     input[type=checkbox] {
@@ -67,11 +64,6 @@ function splitOffsetSubmit(e) {
     input[type=text], input[type=number] {
         width: 4ch;
         height: 2ch;
-    }
-
-    label {
-        color: var(--text-gold);
-        font-size: .8rem;
     }
 
     .icon--active {
