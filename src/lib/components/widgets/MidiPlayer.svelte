@@ -1,6 +1,6 @@
 <script>
     import MidiPlayer from 'midi-player-js';
-    import { Note, Midi } from "tonal";
+    import { Note } from "tonal";
     import piano from '$lib/stores/PianoStore'
 
     const midiPlayer = new MidiPlayer.Player();
@@ -10,6 +10,8 @@
     let songProgress = 0;
     let songTime = '';
     let isPlaying = false;
+
+    updateSongTime(0);
 
     midiPlayer.on('fileLoaded', function() {
         loaded = true;
@@ -34,14 +36,18 @@
     
     midiPlayer.on('playing', function(currentTick) {
         songProgress = 100-midiPlayer.getSongPercentRemaining();
-        let totalSeconds = midiPlayer.getSongTimeRemaining();
+        updateSongTime(midiPlayer.getSongTimeRemaining());
+        
+    });
+
+    function updateSongTime(totalSeconds) {
         let minutes = ~~(totalSeconds / 60)
         let seconds = (totalSeconds % 60).toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false
         })
         songTime = `${minutes}:${seconds}`;
-    });
+    }
 
     function loadFile(e) {
         midiPlayer.stop()
@@ -70,6 +76,7 @@
         if (songProgress < 95) {
             midiPlayer.skipToPercent(songProgress + 5);
             songProgress += 5;
+            updateSongTime(midiPlayer.getSongTimeRemaining());
         }
         $piano.releaseAll();
         if (isPlaying) midiPlayer.play();
@@ -79,6 +86,7 @@
         if (songProgress > 5) {
             midiPlayer.skipToPercent(songProgress - 5);
             songProgress -= 5;
+            updateSongTime(midiPlayer.getSongTimeRemaining());
         }
         $piano.releaseAll();
         if (isPlaying) midiPlayer.play();
@@ -162,7 +170,7 @@
         color: var(--text-grey);
         border-radius: 2px;
         font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
-        border: solid var(--bg-light);
+        border: solid 2px var(--bg-light);
         text-align: center;
         padding: .8ch;
         font-size: .5rem;

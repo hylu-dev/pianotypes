@@ -89,7 +89,7 @@
     }
 
     .white-key h1 {
-        color: rgba(0, 0, 0, 0.4);
+        color: rgba(0, 0, 0, 0.7);
         user-select: none;
         font-size: var(--key-label-size);
         font-family: var(--key-label-font-family);

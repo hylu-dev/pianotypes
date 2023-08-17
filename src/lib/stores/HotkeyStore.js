@@ -22,7 +22,7 @@ class HotkeyStore {
         this.mode = 1; // 0 for no bindings | 1 for normal mode | 2 for split mode
         this.maxNote = "G#9";
         this.base = base; // the lowest note to start mapping keybinds from
-        this.splitOffset = 9; // for split mode
+        this.splitOffset = 5; // for split mode
         this.showHotkeys = true;
         this.showHotkeyGuides = false;
         this._store = writable(this)
@@ -83,6 +83,12 @@ class HotkeyStore {
             this.base = Note.simplify(n);
             this.createBindings();
         }
+        return this.base;
+    }
+
+    setOffset(offset) {
+        this.splitOffset = offset;
+        this.createBindings();
     }
 
     getKeyNoteBinding(key) {
@@ -104,19 +110,6 @@ class HotkeyStore {
         return keybindings;
     }
 
-    updateBinding(key, note) {
-        this.bindings[key] = note;
-        this._store.set(this)
-    }
-
-    isLeftHand(binding) {
-        if (this.mode == 1) {
-            return [...this.r1, ...this.r2].includes(binding);
-        } else if (this.mode == 2) {
-            return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(binding);
-        }
-        return false;
-    }
     // Whether the binding belongs to the upper rows
     isUpper(note) {
         return this._upper.has(this.getNoteKeyBinding(note));
@@ -131,6 +124,21 @@ class HotkeyStore {
         this.showHotkeyGuides = !this.showHotkeyGuides;
         this._store.set(this)
     }
+
+    updateBinding(key, note) {
+        this.bindings[key] = note;
+        this._store.set(this)
+    }
+
+    isLeftHand(binding) {
+        if (this.mode == 1) {
+            return [...this.r1, ...this.r2].includes(binding);
+        } else if (this.mode == 2) {
+            return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(binding);
+        }
+        return false;
+    }
+
 
     // Anything with a subscribe function is a store
     subscribe(subscriber) {

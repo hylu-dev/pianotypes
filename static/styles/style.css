@@ -76,15 +76,14 @@ input {
     background: var(--bg-dark-grey);
     color: var(--text-grey);
     font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid var(--bg-light);
+    border-radius: 2px;
     text-align: center;
-    padding: .5ch;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 input[type="file"] {
     display: none;
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 input:hover {
@@ -117,7 +116,7 @@ select {
     background: var(--bg-dark);
     color: var(--text-grey);
     text-align: center;
-    border: 2px solid var(--bg-light);
+    border: 1px solid var(--bg-light);
     border-radius: 2px;
     appearance: none;
     outline:none;
@@ -134,6 +133,38 @@ select:hover {
     color: var(--text-gold);
 }
 
+.flex-col {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    user-select: none;
+    gap: .6rem;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-flow: row;
+    font-size: 2rem;
+    text-align: center;
+    gap: .6rem;
+}
+
+.icon {
+    font-size: 2rem;
+    color: var(--text-grey);
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.icon:hover {
+    color: var(--text-gold);
+}
+
+.icon:active {
+    color: var(--text-gold);
+    filter: brightness(.7);
+}
 
 /* responsive stylings */
 *:focus {
