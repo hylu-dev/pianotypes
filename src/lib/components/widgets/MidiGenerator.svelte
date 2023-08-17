@@ -11,6 +11,7 @@ let steps = 100;
 let trim = false;
 let error = '';
 let loading = false;
+let timeouts = [];
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -34,8 +35,13 @@ function playMidi() {
     if (fileBuffer){
         const seq = mm.midiToSequenceProto(fileBuffer);
         seq.notes.forEach(note => {
-        const time = $piano.ac.currentTime;
-        $piano.player.start({ note: note.pitch, time: time+note.startTime, duration: time+note.endTime });
+            const time = $piano.ac.currentTime;
+            timeouts.push(setTimeout(() => {
+                $piano.dryPressKey(note.pitch, note.velocity);
+            }, note.startTime*1000));
+            $piano.player.start({ note: note.pitch, time: time+note.startTime, duration: time+note.endTime, onEnded: () => {
+                $piano.dryReleaseKey(note.pitch);
+            } });
         })
     }
 }
@@ -76,14 +82,15 @@ function playFromSample(sample) {
 
 function stopPiano() {
     $piano.releaseAll();
+    timeouts.forEach(id => {
+        clearTimeout(id);
+    })
+    timeouts = [];
 }
 </script>
 
 {#if mm}
 <div class="flex-col container">
-    <div class="flex-row">
-        <small style="color: var(--text-gold)">MagentaJS</small>
-    </div>
     <div class="flex-row">
         <label for="midi-upload" class="file-input">
             {#if files && files[0]}

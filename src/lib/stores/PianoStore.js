@@ -1,4 +1,4 @@
-import { Note, Midi, Range } from "tonal";
+import { Note, Range } from "tonal";
 import { Reverb, Soundfont } from "smplr";
 import { writable, derived } from 'svelte/store';
 
@@ -29,7 +29,7 @@ class PianoStore {
         this.ac = new AudioContext()
         this.updateInstrument();
         // generate base copies to quickly reset on updates
-        this._baseKeyboard = Note.sortedNames(Range.chromatic([Midi.midiToNoteName(0), Midi.midiToNoteName(127)]));
+        this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
         this.updateKeyboard();
     }
     updateKeyboard() {
@@ -55,6 +55,7 @@ class PianoStore {
     }
     //keys
     pressKey(note, velocity=80) {
+        if (!Note.name(note)) note = Note.fromMidi(note);
         if (!this.isRange(note)) return
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
@@ -63,12 +64,16 @@ class PianoStore {
         this._store.set(this);
     }
     dryPressKey(note) {
+        if (!Note.name(note)) note = Note.fromMidi(note);
         if (!this.isRange(note)) return
+        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
+        this._store.set(this);
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         this.lastPress = note;
         this._store.set(this);
     }
     releaseKey(note) {
+        if (!Note.name(note)) note = Note.fromMidi(note);
         if (!this.isRange(note)) return
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
 
@@ -76,6 +81,13 @@ class PianoStore {
             this.player.stop(note);
         }
         this.player.stop(Note.midi(note))
+        this.lastRelease = note;
+        this._store.set(this);
+    }
+    dryReleaseKey(note) {
+        if (!Note.name(note)) note = Note.fromMidi(note);
+        if (!this.isRange(note)) return
+        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
         this.lastRelease = note;
         this._store.set(this);
     }
