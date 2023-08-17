@@ -24,7 +24,7 @@ App is largely interactable through mouse. The following are keyboard hotkeys.
 - **Shift**: initiates the soft pedal.
 - **←→ arrow keys**: move the keybindings across the piano one key at a time.
 - **↓↑ arrow keys**: adds and removes keys to the piano range.
-- **Control** modifier can be used with pedals to lock them as well as manipulate keys by octaves instead of semitones
+- **Control**: modifier can be used with pedals to lock them as well as manipulate keys by octaves instead of semitones
 
 ## Roadmap
 
