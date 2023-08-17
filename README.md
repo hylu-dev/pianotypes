@@ -14,15 +14,16 @@ An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
 - Visual display of piano key presses
 - Multiple instrument sounds from [smplr](https://github.com/danigb/smplr)
 - Adjustable key bind positioning and piano size
-- Midi playback
+- Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS)
 
 ## Controls
-
-- **Keyboard keys** to press the corresponding keys on the piano.
-- **Space** initiates the sutain pedal, hold to keep down.
-- **Space** initiates the soft pedal, hold to keep down.
-- ←→ arrow keys move the keybindings across the piano one key at a time.
-- ↓↑ arrow keys adds and removes keys to the piano range.
+App is largely interactable through mouse. The following are keyboard hotkeys.
+- **Tab**: Open top widget panel.
+- **Keyboard**: to press the corresponding keys on the piano.
+- **Space**: initiates the sutain pedal.
+- **Shift**: initiates the soft pedal.
+- **←→ arrow keys**: move the keybindings across the piano one key at a time.
+- **↓↑ arrow keys**: adds and removes keys to the piano range.
 - **Control** modifier can be used with pedals to lock them as well as manipulate keys by octaves instead of semitones
 
 ## Roadmap
