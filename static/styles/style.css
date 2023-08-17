@@ -44,6 +44,11 @@ p {
     font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
 }
 
+h1 h2 h3 {
+    margin: none;
+    padding: none;
+}
+
 h1 {
     color: var(--text-gold);
     font-family: Cormorant, Helvetica, Arial, sans-serif;
@@ -82,6 +87,11 @@ input[type="file"] {
     transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
+input:hover {
+    background: var(--bg-grey);
+    color: var(--text-gold);
+}
+
 button {
     background: var(--bg-dark-grey);
     color: var(--text-grey);
@@ -90,13 +100,12 @@ button {
     border-radius: 5px;
     text-align: center;
     padding: .5ch;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 button:hover {
-    transform: scale(1.05);
     background: var(--bg-grey);
     color: var(--text-gold);
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 button:active {
@@ -119,6 +128,12 @@ select:focus {
     color: var(--text-gold);
     border: 2px solid var(--text-gold);
 }
+
+select:hover {
+    background: var(--bg-grey);
+    color: var(--text-gold);
+}
+
 
 /* responsive stylings */
 *:focus {

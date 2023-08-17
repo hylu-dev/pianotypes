@@ -3,17 +3,10 @@ import PianoKey from './PianoKey.svelte'
 import piano from '$lib/stores/PianoStore'
 import hotkey from '$lib/stores/HotkeyStore'
 import { onMount } from 'svelte';
-import getSoundFont from '$lib/SoundFontPlayer'
-
-let soundfont;
 
 // Done onMount, otherwise AudioContext cannot be retrieved in Svelte
 onMount(() => {
     $piano.init();
-    const sf = getSoundFont("accordion")
-    sf.loaded().then(() => {
-            soundfont = sf
-        });
 });
 
 // Keyboard input handlers

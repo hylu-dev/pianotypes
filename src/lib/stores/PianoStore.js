@@ -28,7 +28,7 @@ class PianoStore {
     init() {
         this.ac = new AudioContext()
         this.updateInstrument();
-        // generate base copies to quickly reset to on updates
+        // generate base copies to quickly reset on updates
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Midi.midiToNoteName(0), Midi.midiToNoteName(127)]));
         this.updateKeyboard();
     }
