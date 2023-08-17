@@ -30,6 +30,7 @@ function loadFile(e) {
 }
 
 function playMidi() {
+    $piano.player.stop();
     if (fileBuffer){
         const seq = mm.midiToSequenceProto(fileBuffer);
         seq.notes.forEach(note => {
