@@ -49,9 +49,12 @@ class PianoStore {
             this._store.set(this)
         });
     }
+    isRange(note) {
+        return (Note.midi(note) >= Note.midi(this.minNote) && Note.midi(note) <= Note.midi(this.maxNote))
+    }
     //keys
     pressKey(note, velocity=80) {
-        if (Note.midi(note) < Note.midi(this.minNote) || Note.midi(note) >= Note.midi(this.maxNote)) { return; } // Check note is part of piano range
+        if (!this.isRange(note)) return
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
         this.player.start({ note: note, velocity: velocity });
@@ -59,7 +62,7 @@ class PianoStore {
         this._store.set(this);
     }
     releaseKey(note) {
-        if (Note.midi(note) < Note.midi(this.minNote) || Note.midi(note) >= Note.midi(this.maxNote)) { return; } // Check note is part of piano range
+        if (!this.isRange(note)) return
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
 
         if (!this.sustainPedal) {
