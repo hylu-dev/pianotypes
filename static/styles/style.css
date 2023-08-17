@@ -146,7 +146,6 @@ select:hover {
     justify-content: center;
     align-items: center;
     flex-flow: row;
-    font-size: 2rem;
     text-align: center;
     gap: .6rem;
 }

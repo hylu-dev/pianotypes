@@ -38,13 +38,14 @@ class PianoStore {
         this._store.set(this);
     }
     updateInstrument() {
-        // WARNING: Currently smplr starts to lag after switching instruments multiple times and creating multiple new Soundfont. Memory leak?
+        // WARNING: Currently smplr starts to lag after switching instruments multiple times. Soundfonts memory leaking?
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
         soundfont.output.addEffect("reverb", new Reverb(this.ac), this.reverb);
         soundfont.output.setVolume(this.volume);
         soundfont.loaded().then(() => {
+            if (this.player) this.player.stop()
             this.player = soundfont
             this._store.set(this)
         });
@@ -58,6 +59,12 @@ class PianoStore {
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
         this.player.start({ note: note, velocity: velocity });
+        this.lastPress = note;  
+        this._store.set(this);
+    }
+    dryPressKey(note) {
+        if (!this.isRange(note)) return
+        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         this.lastPress = note;
         this._store.set(this);
     }

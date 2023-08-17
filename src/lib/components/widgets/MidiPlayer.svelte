@@ -56,9 +56,9 @@
         const file = e.target.files[0];
         const reader = new FileReader();
         if (file) reader.readAsArrayBuffer(file);
-        reader.addEventListener("load", function () {
-			midiPlayer.loadArrayBuffer(reader.result);
-		}, false);
+        reader.onloadend = () => {
+            midiPlayer.loadArrayBuffer(reader.result);
+        }
     }
 
     function playMidi() {
@@ -94,16 +94,16 @@
 
 </script>
 
-<div id="midi-wrapper">
-    <div class="midi-row">
+<div class="flex-col">
+    <div class="flex-row">
         <small style="color: var(--text-gold)">Midi Player</small>
     </div>
-    <div class="midi-row">
+    <div class="flex-row">
         <div id="progress-container">
             <div id="progress-fill" style:width={songProgress+"%"}>{songTime}</div>
         </div>
     </div>
-    <div class="midi-row">
+    <div class="flex-row">
         <label for="file-upload" class="file-input">
             {#if files && files[0]}
                 <span>{files[0].name}</span>
@@ -113,29 +113,17 @@
         </label>
         <input type="file" id="file-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
     </div>
-    <div class="midi-row">
+    <div class="flex-row">
         <button class:disabled={!loaded} disabled={!loaded} on:click={reverseMidi}>&#171;</button>
-        <button class:active={!isPlaying&&loaded} class:disabled={!loaded} disabled={!loaded} on:click={pauseMidi}> &#9208;</button>
+        <button class:active={!isPlaying&&loaded} class:disabled={!loaded} disabled={!loaded} on:click={pauseMidi}>&#9208;</button>
         <button class:active={isPlaying} class:disabled={!loaded} disabled={!loaded} on:click={playMidi}>&#9658;</button>
         <button class:disabled={!loaded} disabled={!loaded} on:click={skipMidi}>&#187;</button>
     </div>
 </div>
 
 <style>
-    #midi-wrapper {
-        height: 100%;
+    .flex-col {
         width: 120px;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-evenly;
-        gap: .6rem;
-    }
-
-    .midi-row {
-        display: flex;
-        justify-content: center;
-        flex-grow: 1;
-        gap: 1ch;
     }
 
     #progress-container {
