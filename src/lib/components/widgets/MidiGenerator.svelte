@@ -6,8 +6,9 @@ let mm;
 let music_rnn;
 let files = '';
 let fileBuffer;
-
-let isGenerating = false;
+let temperature = 1;
+let steps = 100;
+let trim = false;
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -39,12 +40,10 @@ function playMidi() {
 async function playGenerative() {
     let seq = mm.midiToSequenceProto(fileBuffer);
     seq = mm.sequences.mergeInstruments(seq);
-    seq = mm.sequences.trim(seq, 0, 120);
+    if (trim) seq = mm.sequences.trim(seq, 0, 60);
     const qns = mm.sequences.quantizeNoteSequence(seq, 4);
-    const rnn_steps = 100;
-    const rnn_temperature = 1.;
     music_rnn
-    .continueSequence(qns, rnn_steps, rnn_temperature)
+    .continueSequence(qns, steps, temperature)
     .then(sample => {
         playFromSample(sample)
     }).catch(err => {
@@ -66,13 +65,12 @@ function playFromSample(sample) {
 function stopPiano() {
     $piano.releaseAll();
 }
-
 </script>
 
 {#if mm}
 <div class="flex-col container">
     <div class="flex-row">
-        <small style="color: var(--text-gold)">Magenta</small>
+        <small style="color: var(--text-gold)">MagentaJS</small>
     </div>
     <div class="flex-row">
         <label for="midi-upload" class="file-input">
@@ -83,10 +81,13 @@ function stopPiano() {
             {/if}
         </label>
         <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
-    </div>
-    <div class="flex-row">
         <button class:disabled={!fileBuffer} on:click={stopPiano}>&#9208;</button>
         <button class:disabled={!fileBuffer} on:click={playMidi}>&#9658;</button>
+    </div>
+    <div class="flex-row">
+        <input type="number" id="min" maxlength="3" bind:value={steps}>
+        <input type="number" id="min" maxlength="1" bind:value={temperature}>
+        <input id="hotkey" type="checkbox" bind:checked={trim} on:change={() => this.trim = !trim}>
     </div>
     <div class="flex-row">
         <button on:click={playGenerative}>Generate</button>
@@ -95,38 +96,44 @@ function stopPiano() {
 {/if}
 
 <style>
-.flex-col {
-    width: 200px;
-}
+    input[type=number] {
+        width: 6ch;
+        height: 2ch;
+    }
 
-.flex-row {
-    justify-content: start;
-}
 
-.disabled {
-    pointer-events: none;
-    opacity: .5;
-    filter:contrast(2);
-}
+    .flex-col {
+        width: 150px;
+    }
 
-.file-input {
-    background: var(--bg-dark);
-    color: var(--text-grey);
-    border-radius: 2px;
-    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
-    border: solid 2px var(--bg-light);
-    text-align: center;
-    padding: .8ch;
-    font-size: .5rem;
-    box-sizing: border-box;
-    width: 100%;
-    white-space: nowrap;
-    text-align: center;
-    overflow:hidden;
-}
+    .flex-row {
+        justify-content: center;
+    }
 
-.file-input:hover {
-    background: var(--bg-grey);
-    color: var(--text-gold);
-}
+    .disabled {
+        pointer-events: none;
+        opacity: .5;
+        filter:contrast(2);
+    }
+
+    .file-input {
+        background: var(--bg-dark);
+        color: var(--text-grey);
+        border-radius: 2px;
+        font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+        border: solid 2px var(--bg-light);
+        text-align: center;
+        padding: .8ch;
+        font-size: .5rem;
+        box-sizing: border-box;
+        width: 100%;
+        white-space: nowrap;
+        text-align: center;
+        overflow:hidden;
+    }
+
+    .file-input:hover {
+        background: var(--bg-grey);
+        color: var(--text-gold);
+    }
 </style>

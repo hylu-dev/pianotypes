@@ -65,10 +65,6 @@ function splitOffsetSubmit(e) {
         height: 2ch;
     }
 
-    input[type=checkbox] {
-        margin: 0;
-    }
-
     label {
         color: var(--text-gold);
         font-size: .8rem;
