@@ -1,7 +1,6 @@
-
 # Piano Types
 
-_Minimalist Online Piano_
+## *Minimalist Online Piano*
 
 A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
 This serves to replace <https://github.com/hylu-dev/pianotypes>.
@@ -17,7 +16,9 @@ An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
 - Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS)
 
 ## Controls
+
 App is largely interactable through mouse. The following are keyboard hotkeys.
+
 - **Tab**: Open top widget panel.
 - **Keyboard**: to press the corresponding keys on the piano.
 - **Space**: initiates the sutain pedal.
