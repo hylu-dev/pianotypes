@@ -28,22 +28,22 @@ function splitOffsetSubmit(e) {
 <div class="flex-col">
     <div class="flex-row">
         <div class="label-container">
-            <label for="hotkey">Hotkeys:</label>
             <input id="hotkey" type="checkbox" checked={$hotkey.showHotkeys} on:change={() => $hotkey.toggleHotkeys()}>
+            <label for="hotkey">Hotkeys</label>
         </div>
         <div class="label-container">
-            <label for="guide">Guides:</label>
             <input id="guide" type="checkbox" checked={$hotkey.showHotkeyGuides} on:change={() => $hotkey.toggleGuides()}>
+            <label for="hotkey">Guides</label>
         </div>            
     </div>
     <div class="flex-row">
         <div class="label-container">
             <input type="text" id="hotkey" maxlength="4" value={$hotkey.base} on:blur={hotkeyBaseSubmit}>
-            <label for="hotkey">Base:</label>
+            <label for="hotkey">Base</label>
         </div>
         <div class="label-container">
             <input type="number" id="guide" maxlength="2" min="0" value={$hotkey.splitOffset} on:change={splitOffsetSubmit}>
-            <label for="guide">Split:</label>
+            <label for="guide">Split</label>
         </div>            
     </div>
     <div class="flex-row">
