@@ -5,7 +5,7 @@
 A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
 This serves to replace <https://github.com/hylu-dev/pianotypes>.
 
-The project is currently hosted on <https://pianotypestwo.netlify.app/>.
+The project is currently hosted on <https://pianotypes.netlify.app/>.
 An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
 
 ## Features
