@@ -87,7 +87,7 @@ function stopPiano() {
     <div class="flex-row">
         <input type="number" id="min" maxlength="3" bind:value={steps}>
         <input type="number" id="min" maxlength="1" bind:value={temperature}>
-        <input id="hotkey" type="checkbox" bind:checked={trim} on:change={() => this.trim = !trim}>
+        <input id="hotkey" type="checkbox" bind:checked={trim} on:change={() => trim = !trim}>
     </div>
     <div class="flex-row">
         <button on:click={playGenerative}>Generate</button>
