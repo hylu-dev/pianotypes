@@ -60,6 +60,10 @@ function splitOffsetSubmit(e) {
         gap: .2rem;
     }
 
+    input[type=checkbox] {
+        margin: none;
+    }
+
     input[type=text], input[type=number] {
         width: 4ch;
         height: 2ch;

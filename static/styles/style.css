@@ -91,9 +91,7 @@ input:hover {
     color: var(--text-gold);
 }
 
-input[type=checkbox] {
-    margin: 0;
-}
+
 
 button {
     background: var(--bg-dark-grey);

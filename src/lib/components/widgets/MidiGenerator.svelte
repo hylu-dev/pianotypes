@@ -9,6 +9,8 @@ let fileBuffer;
 let temperature = 1;
 let steps = 100;
 let trim = false;
+let error = '';
+let loading = false;
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -38,17 +40,26 @@ function playMidi() {
 }
 
 async function playGenerative() {
-    let seq = mm.midiToSequenceProto(fileBuffer);
-    seq = mm.sequences.mergeInstruments(seq);
-    if (trim) seq = mm.sequences.trim(seq, 0, 60);
-    const qns = mm.sequences.quantizeNoteSequence(seq, 4);
-    music_rnn
-    .continueSequence(qns, steps, temperature)
-    .then(sample => {
-        playFromSample(sample)
-    }).catch(err => {
+    loading = true;
+    error = '';
+    let seq, qns;
+    try {
+        seq = mm.midiToSequenceProto(fileBuffer);
+        seq = mm.sequences.mergeInstruments(seq);
+        if (trim) seq = mm.sequences.trim(seq, 0, 60);
+        qns = mm.sequences.quantizeNoteSequence(seq, 4);
+        music_rnn
+            .continueSequence(qns, steps, temperature)
+            .then(sample => {
+                playFromSample(sample)
+            }).catch(err => {
+                console.log(err);
+                error = err;
+            })
+    } catch (err) {
         console.log(err);
-    });
+        error = err;
+    }
 }
 
 function playFromSample(sample) {
@@ -85,25 +96,62 @@ function stopPiano() {
         <button class:disabled={!fileBuffer} on:click={playMidi}>&#9658;</button>
     </div>
     <div class="flex-row">
-        <input type="number" id="min" maxlength="3" bind:value={steps}>
-        <input type="number" id="min" maxlength="1" bind:value={temperature}>
-        <input id="hotkey" type="checkbox" bind:checked={trim} on:change={() => trim = !trim}>
+        <div class="label-container">
+            <input type="number" id="steps" maxlength="3" bind:value={steps}>
+            <label for="steps" class="small-label">Steps</label>
+        </div>
+        <div class="label-container">
+            <input type="number" id="temp" maxlength="1" bind:value={temperature}>
+            <label for="temp" class="small-label">Temperature</label>
+        </div>
+        <div class="label-container">
+            <input id="trim" type="checkbox" bind:checked={trim}>
+            <label for="trim" class="small-label">Trim</label>    
+        </div>
     </div>
     <div class="flex-row">
-        <button on:click={playGenerative}>Generate</button>
+        <button class:disabled={!fileBuffer} class="temp-active" on:click={playGenerative}>Generate</button>
     </div>
+    
 </div>
+{#if error}<div class="flex-col error">{error}</div>{/if}
 {/if}
 
 <style>
+    .temp-active:active {
+        filter: invert(1);
+    }
+
+    .error {
+        font-size: .5em;
+        color:red;
+        text-align: center;
+        white-space: wrap;
+        width: 50px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+    }
+
+    .label-container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+
+    .small-label {
+        color: var(--text-gold);
+        font-size: .6rem;
+    }
+
     input[type=number] {
         width: 6ch;
         height: 2ch;
     }
 
-
     .flex-col {
-        width: 150px;
+        max-width: 150px;
     }
 
     .flex-row {

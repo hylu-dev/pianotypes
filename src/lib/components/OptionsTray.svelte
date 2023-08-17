@@ -108,5 +108,6 @@ function toggleTray(e) {
         padding: 1rem;
         box-sizing: border-box;
         border-radius: .5rem;
+        gap: 1rem;
     }
 </style>
