@@ -7,8 +7,8 @@ let music_rnn;
 let files = '';
 let fileBuffer;
 let temperature = 1;
-let steps = 100;
-let trim = false;
+let steps = 200;
+let trim = true;
 let error = '';
 let loading = false;
 
@@ -66,10 +66,12 @@ function playFromQuantizedSample(sample) {
     const secondsPerQuarterNote = 1/(sample.tempos[0]['qpm']/60);
     const stepsPerQuarter = sample.quantizationInfo['stepsPerQuarter'];
     const tempoMultiplier = secondsPerQuarterNote/stepsPerQuarter
+    console.log(sample);
     sample.notes.forEach(note => {
-        let duration = (note.quantizedEndStep - note.quantizedStartStep)*tempoMultiplier;
-        let time = $piano.ac.currentTime + note.quantizedStartStep*tempoMultiplier;
+        let duration = note.quantizedEndStep*tempoMultiplier;
+        let time = note.quantizedStartStep*tempoMultiplier;
         schedulePiano(note.pitch, note.velocity, time, duration);
+        //$piano.player.start({ note: note.pitch, time, duration: duration });
     })
 }
 
