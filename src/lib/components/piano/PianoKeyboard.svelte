@@ -1,6 +1,6 @@
 <script>
 import PianoKey from './PianoKey.svelte'   
-import piano from '$lib/stores/PianoStore'
+import piano, { keyboard } from '$lib/stores/PianoStore'
 import hotkey from '$lib/stores/HotkeyStore'
 import { onMount } from 'svelte';
 
@@ -42,7 +42,7 @@ function resetPiano(e) {
 <svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:keydown={resetPiano}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
-        {#each $piano.keyboard as note (note)}
+        {#each $keyboard as note (note)}
             <PianoKey note={note} on:keyPress={clickPressKey} on:keyRelease={clickReleaseKey}></PianoKey>
         {/each}
     </div>

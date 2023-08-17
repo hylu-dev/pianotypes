@@ -1,12 +1,12 @@
 <script>
 import RibbonLane from './RibbonLane.svelte'
-import piano from '$lib/stores/PianoStore'
+import { keyboard } from '$lib/stores/PianoStore'
 
 </script>
 
 <div id="ribbon-panel">
     <div class="lane-container">
-        {#each $piano.keyboard as note (note)}
+        {#each $keyboard as note (note)}
             <RibbonLane note={note}></RibbonLane>
         {/each}
     </div>

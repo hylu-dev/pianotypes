@@ -1,6 +1,6 @@
 import { Note, Midi, Range } from "tonal";
 import { Reverb, Soundfont } from "smplr";
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 
 // Reactive Svelte class https://www.youtube.com/watch?v=oQY98LZIW2E - lihautan
 
@@ -38,7 +38,7 @@ class PianoStore {
         this._store.set(this);
     }
     updateInstrument() {
-        // WARNING: Currently smplr starts to lag after switching instruments multiple times and creating multiple new Soundfont
+        // WARNING: Currently smplr starts to lag after switching instruments multiple times and creating multiple new Soundfont. Memory leak?
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
@@ -130,4 +130,7 @@ class PianoStore {
   }
 
   const piano = new PianoStore('C3', 'C6');
+
+  export const keyboard = derived(piano, ($piano) => $piano.keyboard); // only react to keyboard changes
+
   export default piano;
