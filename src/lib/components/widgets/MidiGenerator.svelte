@@ -69,7 +69,7 @@ function playFromQuantizedSample(sample) {
     sample.notes.forEach(note => {
         let duration = (note.quantizedEndStep - note.quantizedStartStep)*tempoMultiplier;
         let time = $piano.ac.currentTime + note.quantizedStartStep*tempoMultiplier;
-        $piano.player.start({ note: note.pitch, time, duration: duration });
+        schedulePiano(note.pitch, note.velocity, time, duration);
     })
 }
 
