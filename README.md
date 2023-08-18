@@ -13,9 +13,9 @@ An older video demo can be viewed on <https://www.hylu.dev/projects.html#section
 - Adjustable key bind positioning and piano size
 - Split hotkey bindings to play across a larger range
 - Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS) with media controls
- - Midi input is fed into piano in real-time
+  - Midi input is fed into piano in real-time
 - MagentaJS music generation via midi
- - Includes improved scheduled midi playback at the cost of real-time input
+  - Includes improved scheduled midi playback at the cost of real-time input
 
 ## Controls
 
