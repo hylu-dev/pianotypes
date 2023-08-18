@@ -29,6 +29,9 @@
     --key-label-size: calc(var(--piano-height)/10);
     --key-label-font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
     --key-label-font-weight: 400;
+
+    scrollbar-color: var(--bg-dark-grey);
+    scrollbar-width: thin;
   }
 
 body {

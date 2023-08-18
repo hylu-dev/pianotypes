@@ -142,7 +142,6 @@ function stopPiano() {
         box-sizing: border-box;
         overflow-y: auto;
         overflow-x: hidden;
-        scrollbar-width: thin;
     }
 
     input[type=number] {
