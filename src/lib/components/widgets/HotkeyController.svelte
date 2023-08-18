@@ -11,10 +11,11 @@ function controller(e) {
     } else if (e.keyCode === 39) {
         $piano.updateKeyboard();
         $hotkey.setBase(Note.transpose($hotkey.base, interval))
-    }
-    if (e.key === '`') {
-        $hotkey.toggleGuides()
-    }
+    } else if (e.key === '`') {
+        $hotkey.toggleSplit();
+    } else if (e.key === 'Backspace') {
+        $hotkey.toggleGuides();
+    } 
 }
 
 function hotkeyBaseSubmit(e) {
@@ -50,8 +51,8 @@ function splitOffsetSubmit(e) {
         </div>            
     </div>
     <div class="flex-row">
-        <div class="icon icon-keyboard-invert" class:icon--active={$hotkey.mode == 1} on:click={$hotkey.setMode(1)} role="none"></div>
-        <div class="icon icon-split-keyboard-invert" class:icon--active={$hotkey.mode == 2} on:click={$hotkey.setMode(2)} role="none"></div>
+        <div class="icon icon-keyboard-invert" class:icon--active={!$hotkey.splitMode} on:click={() => $hotkey.toggleSplit()} role="none"></div>
+        <div class="icon icon-split-keyboard-invert" class:icon--active={$hotkey.splitMode} on:click={() => $hotkey.toggleSplit()} role="none"></div>
     </div>
 </div>
 

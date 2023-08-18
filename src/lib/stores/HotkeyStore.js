@@ -19,7 +19,7 @@ class HotkeyStore {
         this.rr2 = this.r2.slice(this.r2.length/2, this.r2.length);
         this.rr3 = this.r3.slice(this.r3.length/2, this.r3.length);
         this.rr4 = this.r4.slice(this.r4.length/2, this.r4.length);
-        this.mode = 1; // 0 for no bindings | 1 for normal mode | 2 for split mode
+        this.splitMode = false;
         this.maxNote = "G#9";
         this.base = base; // the lowest note to start mapping keybinds from
         this.splitOffset = 5; // for split mode
@@ -59,10 +59,10 @@ class HotkeyStore {
     createBindings() {
         this.bindings = {}
         let chromatic = Scale.rangeOf('C chromatic')(this.base, this.maxNote);
-        if (this.mode == 1) {
+        if (!this.splitMode) {
             let index = this.__bindToScale(this.r1, this.r2, chromatic, 0);
             this.__bindToScale(this.r3, this.r4, chromatic, index);
-        } else if (this.mode == 2) {
+        } else {
             let index = this.__bindToScale(this.lr3, this.lr4, chromatic, 0);
             index = this.__bindToScale(this.lr1, this.lr2, chromatic, index);
             index+=this.splitOffset;
@@ -72,8 +72,8 @@ class HotkeyStore {
         this._store.set(this)
     }
 
-    setMode(mode) {
-        this.mode = mode;
+    toggleSplit() {
+        this.splitMode = !this.splitMode;
         this.createBindings();
     }
 
@@ -131,12 +131,10 @@ class HotkeyStore {
     }
 
     isLeftHand(binding) {
-        if (this.mode == 1) {
+        if (!this.splitMode) {
             return [...this.r1, ...this.r2].includes(binding);
-        } else if (this.mode == 2) {
-            return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(binding);
-        }
-        return false;
+        } 
+        return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(binding);
     }
 
 
