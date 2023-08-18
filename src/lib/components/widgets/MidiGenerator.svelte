@@ -32,7 +32,8 @@ function loadFile(e) {
 function playMidi() {
     $piano.player.stop();
     if (fileBuffer){
-        const seq = mm.midiToSequenceProto(fileBuffer);
+        let seq = mm.midiToSequenceProto(fileBuffer);
+        if (trim) seq = mm.sequences.trim(seq, 0, 60);
         console.log(`Playing ${seq.notes.length} notes`)
         seq.notes.forEach(note => {
             schedulePiano(note.pitch, note.velocity, note.startTime, note.endTime);
