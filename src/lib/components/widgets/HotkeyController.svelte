@@ -5,12 +5,15 @@ import { Note } from "tonal";
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
-    if (e.keyCode == 37) {
+    if (e.keyCode === 37) {
         $piano.updateKeyboard();
         $hotkey.setBase(Note.transpose($hotkey.base, "-"+interval))
-    } else if (e.keyCode == 39) {
+    } else if (e.keyCode === 39) {
         $piano.updateKeyboard();
         $hotkey.setBase(Note.transpose($hotkey.base, interval))
+    }
+    if (e.key === '`') {
+        $hotkey.toggleGuides()
     }
 }
 

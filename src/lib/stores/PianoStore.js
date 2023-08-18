@@ -144,6 +144,14 @@ class PianoStore {
         this.instrument = instrument;
         this.updateInstrument();
     }
+    stepRange(interval) {
+        let newMax = Note.transpose(this.maxNote, interval);
+        interval = interval.includes('-') ? interval.substr(1) : '-'+interval;
+        let newMin = Note.transpose(this.minNote, interval);
+        this.isRange(newMax) ? this.maxNote = newMax : this.maxNote = Note.fromMidi(127);
+        this.isRange(newMin) ? this.minNote = newMin : this.minNote = Note.fromMidi(21);
+        this.updateKeyboard();
+    }
     setMin(note) {
         note = this._normalize(note);
         if (this.isRange(note) && (Note.midi(note) < Note.midi(this.maxNote))) {

@@ -14,19 +14,17 @@ import { keyboard } from '$lib/stores/PianoStore'
 
 <style>
     #ribbon-panel {
-        width: 100vw;
-        position: relative;
         display: flex;
+        max-width: 100vw;
         justify-content: center;
         align-items: flex-end;
         grid-area: main-panel;
     }
 
     .lane-container {
-        width: 100%;
+        max-width: 100%;
         height: 100%;
         display: flex;
-        justify-content: center;
-        flex-flow: row;
+        flex-flow: row nowrap;
     }
 </style>

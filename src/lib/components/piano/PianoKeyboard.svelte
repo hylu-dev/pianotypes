@@ -29,15 +29,9 @@ function clickReleaseKey(e) {
     $piano.releaseKey(e.detail);
 }   
 
-function resetPiano(e) {
-    if (e.key === 'Enter') {
-        console.log('RESET');
-        $piano.init();
-    }
-}
 </script>
 
-<svelte:window on:keydown={pressKey} on:keyup={releaseKey} on:keydown={resetPiano}/>
+<svelte:window on:keydown={pressKey} on:keyup={releaseKey}/>
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
         {#each $keyboard as note (note)}

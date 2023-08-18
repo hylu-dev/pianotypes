@@ -7,12 +7,10 @@ function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
     if (e.keyCode == 38) {
         $piano.updateKeyboard();
-        $piano.setMax(Note.transpose($piano.maxNote, interval))
-        $piano.setMin(Note.transpose($piano.minNote, "-"+interval))
+        $piano.stepRange(interval);
     } else if (e.keyCode == 40) {
         $piano.updateKeyboard();
-        $piano.setMax(Note.transpose($piano.maxNote, "-"+interval))
-        $piano.setMin(Note.transpose($piano.minNote, interval))
+        $piano.stepRange("-"+interval);
     }
 }
 
