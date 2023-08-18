@@ -6,7 +6,7 @@ let mm;
 let music_rnn;
 let files = '';
 let fileBuffer;
-let temperature = 1;
+let temperature = .7;
 let steps = 200;
 let trim = true;
 let error = '';
@@ -36,7 +36,7 @@ function playMidiFromFile() {
         if (trim) seq = mm.sequences.trim(seq, 0, 60);
         console.log(`Playing ${seq.notes.length} notes`)
         seq.notes.forEach(note => {
-            schedulePiano(note.pitch, note.velocity, note.startTime, note.endTime);
+            $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
         })
     }
 }
@@ -68,23 +68,11 @@ function playFromQuantizedSample(sample) {
     const secondsPerQuarterNote = 1/(sample.tempos[0]['qpm']/60);
     const stepsPerQuarter = sample.quantizationInfo['stepsPerQuarter'];
     const tempoMultiplier = secondsPerQuarterNote/stepsPerQuarter
-    console.log(sample);
     sample.notes.forEach(note => {
         let duration = note.quantizedEndStep*tempoMultiplier;
         let time = note.quantizedStartStep*tempoMultiplier;
-        schedulePiano(note.pitch, note.velocity, time, duration);
+        $piano.scheduleKey(note.pitch, undefined, time, duration);
     })
-}
-
-function schedulePiano(pitch, velocity, delay, duration) {
-    const time = $piano.ac.currentTime;
-    const timeoutId = setTimeout(() => {
-            $piano.dryPressKey(pitch);
-        }, delay*1000);
-    $piano.player.start({ note: pitch, velocity: velocity, time: time+delay, duration: time+duration, onEnded: () => {
-        $piano.dryReleaseKey(pitch);
-        clearTimeout(timeoutId);
-    } });
 }
 
 function stopPiano() {

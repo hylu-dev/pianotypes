@@ -33,9 +33,14 @@ class PianoStore {
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
         this.updateKeyboard();
     }
+    _normalize(note) {
+        if (!Note.name(note)) note = Note.fromMidi(note);
+        return Note.simplify(note);
+    }
     updateKeyboard() {
         this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote)+1);
-        this.keyStateDict = this._baseKeyboard.reduce((arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={isPressed: false}, arr), {});
+        this.keyStateDict = this._baseKeyboard.reduce(
+            (arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={}, arr), {});
         this._store.set(this);
     }
     updateInstrument() {
@@ -62,41 +67,44 @@ class PianoStore {
         this.reverb = value;
         this.player.output.sendEffect("reverb", value);
     }
+    // range clamp between A0 - G9 | midi: 21 - 127
     isRange(note) {
-        return (Note.midi(note) >= Note.midi(this.minNote) && Note.midi(note) <= Note.midi(this.maxNote))
+        return (Note.midi(note) >= 21 && Note.midi(note) <= 127)
     }
     //keys
-    pressKey(note, velocity=this.velocity) {
-        if (!Note.name(note)) note = Note.fromMidi(note);
-        velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
-        this.player.start({ note: note, velocity: velocity });
-        this.dryPressKey(note);
-    }
-    dryPressKey(note) {
-        if (!Note.name(note)) note = Note.fromMidi(note);
+    pressKey(note, velocity=this.velocity, dry=false) {
+        note = this._normalize(note);
         if (Note.midi(note) < Note.midi(this.minNote)) this.setMin(note);
         if (Note.midi(note) > Note.midi(this.maxNote)) this.setMax(note);
-        if (!this.isRange(note)) return
-        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
-        this._store.set(this);
-        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
+        if (!this.isRange(note)) return;
+        velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
+        if (!dry) this.player.start({ note: note, velocity: velocity });
+        this.keyStateDict[note].isPressed = true;
         this.lastPress = note;
         this._store.set(this);
     }
-    releaseKey(note) {
-        if (!Note.name(note)) note = Note.fromMidi(note);
-        if (!this.sustainPedal) {
+    releaseKey(note, dry=false) {
+        note = this._normalize(note);
+        if (!this.isRange(note)) return;
+
+        this.keyStateDict[note].isPressed = false;
+        this.lastRelease = note;
+        if (!this.sustainPedal && !dry) {
             this.player.stop(note);
         }
-        this.player.stop(Note.midi(note))
-        this.dryReleaseKey(note);
-    }
-    dryReleaseKey(note) {
-        if (!Note.name(note)) note = Note.fromMidi(note);
-        if (!this.isRange(note)) return
-        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
-        this.lastRelease = note;
         this._store.set(this);
+    }
+    scheduleKey(note, velocity=this.velocity, delay, duration) {
+        note = this._normalize(note);
+        velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
+        const time = this.ac.currentTime;
+        const timeoutId = setTimeout(() => {
+            this.pressKey(note, undefined, true);
+        }, delay*1000);
+        this.player.start({ note: note, velocity: velocity, time: time+delay, duration: duration, onEnded: () => {
+            this.releaseKey(note, true);
+            clearTimeout(timeoutId)
+        } });
     }
     getIsPressed(note) {
         if (this.keyStateDict[note]) return this.keyStateDict[note].isPressed;
@@ -136,16 +144,17 @@ class PianoStore {
         this.instrument = instrument;
         this.updateInstrument();
     }
-    //range clamp between A0 - G#9 | midi: 21 - 127
     setMin(note) {
-        if (Note.name(note) && Note.midi(note) >= 21 && Note.midi(note) < Note.midi(this.maxNote)) {
+        note = this._normalize(note);
+        if (this.isRange(note) && (Note.midi(note) < Note.midi(this.maxNote))) {
             this.minNote = Note.simplify(note);
             this.updateKeyboard();
         }
         return this.minNote;
     }
     setMax(note) {
-        if (Note.name(note) && Note.midi(note) > Note.midi(this.minNote) && Note.midi(note) < 128) {
+        note = this._normalize(note);
+        if (this.isRange(note) && (Note.midi(note) > Note.midi(this.minNote))) {
             this.maxNote = Note.simplify(note);
             this.updateKeyboard();
         }
