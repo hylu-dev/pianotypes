@@ -33,6 +33,7 @@ function playMidi() {
     $piano.player.stop();
     if (fileBuffer){
         const seq = mm.midiToSequenceProto(fileBuffer);
+        console.log(`Playing ${seq.notes.length} notes`)
         seq.notes.forEach(note => {
             schedulePiano(note.pitch, note.velocity, note.startTime, note.endTime);
         })
@@ -71,7 +72,6 @@ function playFromQuantizedSample(sample) {
         let duration = note.quantizedEndStep*tempoMultiplier;
         let time = note.quantizedStartStep*tempoMultiplier;
         schedulePiano(note.pitch, note.velocity, time, duration);
-        //$piano.player.start({ note: note.pitch, time, duration: duration });
     })
 }
 

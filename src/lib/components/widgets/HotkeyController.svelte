@@ -66,6 +66,10 @@ function splitOffsetSubmit(e) {
         height: 2ch;
     }
 
+    .icon {
+        font-size: 1.5rem;
+    }
+
     .icon--active {
         color: var(--text-gold);
     }
