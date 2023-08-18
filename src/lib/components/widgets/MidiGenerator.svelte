@@ -142,6 +142,7 @@ function stopPiano() {
         box-sizing: border-box;
         overflow-y: auto;
         overflow-x: hidden;
+        word-wrap: break-word;
     }
 
     input[type=number] {
