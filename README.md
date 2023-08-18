@@ -4,14 +4,18 @@ A virtual piano that provides a full-range, customizable piano. The piano can be
 This serves to replace <https://github.com/hylu-dev/pianotypes_old>.
 
 The project is currently hosted on <https://pianotypes.netlify.app/>.
-An older demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
+An older video demo can be viewed on <https://www.hylu.dev/projects.html#section2>.
 
 ## Features
 
 - Visual display of piano key presses
 - Multiple instrument sounds from [smplr](https://github.com/danigb/smplr)
 - Adjustable key bind positioning and piano size
-- Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS)
+- Split hotkey bindings to play across a larger range
+- Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS) with media controls
+  - Midi input is fed into piano in real-time
+- MagentaJS music generation via midi
+  - Includes improved scheduled midi playback at the cost of real-time input
 
 ## Controls
 
@@ -27,8 +31,8 @@ App is largely interactable through mouse. The following are keyboard hotkeys.
 
 ## Roadmap
 
-- Sostenuto Pedal
-- Music Generation
+- Instruction Dialogues
+- Draggable Number Inputs
 - More Visualizers
 
 ---
@@ -53,5 +57,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
