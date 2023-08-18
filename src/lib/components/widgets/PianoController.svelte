@@ -1,6 +1,5 @@
 <script>
 import piano from '$lib/stores/PianoStore'
-import { Note } from "tonal";
 import { getSoundfontNames } from "smplr";
 
 function controller(e) {

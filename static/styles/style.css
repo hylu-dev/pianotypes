@@ -32,7 +32,33 @@
 
     scrollbar-color: var(--bg-dark-grey);
     scrollbar-width: thin;
-  }
+}
+
+/* ## Default Overrides */
+
+*:focus {
+    outline: none;
+}
+
+::selection {
+    background: #111;
+    color: var(--text-light);
+    border: 5px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+ /* ## General Styles */
 
 body {
     margin: 0;
@@ -136,7 +162,7 @@ select:hover {
     color: var(--text-gold);
 }
 
-/* Global Classes */
+/* ## Global Classes */
 
 .flex-col {
     display: flex;
@@ -180,16 +206,4 @@ select:hover {
 .icon:active {
     color: var(--text-gold);
     filter: brightness(.7);
-}
-
-/* Responsive Stylings */
-
-*:focus {
-    outline: none;
-}
-
-::selection {
-    background: #111;
-    color: var(--text-light);
-    border: 5px;
 }

@@ -15,10 +15,10 @@ class PianoStore {
         this.softPedal = false;
         this.sostenutoPedal = false;
         this.instrument = 'acoustic_grand_piano';
-        this.volume = 127;
+        this.volume = 100;
         this.reverb = 0.2;
-        this.velocity = 80;
-        this.softMultiplier = .6;
+        this.velocity = 100;
+        this.softMultiplier = .7;
         this.player;
         this.ac;
         this.lastPress = "";
@@ -110,7 +110,7 @@ class PianoStore {
         if (this.keyStateDict[note]) return this.keyStateDict[note].isPressed;
         return false;
     }
-    setSustainPedal(active) {
+    setSustainPedal(active=!this.sustainPedal) {
         if (active) {
             this.sustainPedal = true;
         } else {
@@ -119,7 +119,7 @@ class PianoStore {
         }
         this._store.set(this);
     }
-    setSoftPedal(active) {
+    setSoftPedal(active=!this.softPedal) {
         if (active) {
             this.softPedal = true;
         } else {
@@ -127,7 +127,7 @@ class PianoStore {
         }
         this._store.set(this);
     }
-    setSostenutoPedal(active) {
+    setSostenutoPedal(active=!this.sostenutoPedal) {
         if (active) {
             this.sostenutoPedal = true;
         } else {
@@ -145,9 +145,10 @@ class PianoStore {
         this.updateInstrument();
     }
     stepRange(interval) {
-        let newMax = Note.transpose(this.maxNote, interval);
+        let newMax = Note.simplify(Note.transpose(this.maxNote, interval));
         interval = interval.includes('-') ? interval.substr(1) : '-'+interval;
-        let newMin = Note.transpose(this.minNote, interval);
+        let newMin = Note.simplify(Note.transpose(this.minNote, interval));
+        if (Note.midi(newMax) < Note.midi(newMin)) return;
         this.isRange(newMax) ? this.maxNote = newMax : this.maxNote = Note.fromMidi(127);
         this.isRange(newMin) ? this.minNote = newMin : this.minNote = Note.fromMidi(21);
         this.updateKeyboard();

@@ -1,47 +1,43 @@
 <script>
 import piano from '$lib/stores/PianoStore'
 
-function downSustainPedal(e) {
-    if (e.key == ' ') { 
+function pressPedal(e) {
+    // Sustain
+    if (e.key === ' ') { 
         $piano.setSustainPedal(true);
-    } else if (!e.keyCode) { //if not a keypress assume click
-        $piano.sustainPedal ? $piano.setSustainPedal(false) : $piano.setSustainPedal(true);
+    }
+    // Sostenuto
+    if (e.code === 'ShiftRight') { 
+        $piano.setSostenutoPedal(true);
+    }
+    // Soft
+    if (e.code === "ShiftLeft") { 
+        $piano.setSoftPedal(true);
     }
 }
 
-function liftSustainPedal(e) {
+function liftPedal(e) {
+    // Sustain
     if (e.key == ' ' && !e.ctrlKey) {
         $piano.setSustainPedal(false);
     }
-}
-
-function downSoftPedal(e) {
-    if (e.key == "Shift") { 
-        $piano.setSoftPedal(true);
-    } else if (!e.keyCode) { //if not a keypress assume click
-        $piano.softPedal ? $piano.setSoftPedal(false) : $piano.setSoftPedal(true);
+    // Sostenuto
+    if (e.code === 'ShiftRight') { 
+        $piano.setSostenutoPedal(false);
     }
-}
-
-function liftSoftPedal(e) {
+    // Soft
     if (e.key == "Shift" && !e.ctrlKey) {
         $piano.setSoftPedal(false);
     }
 }
 </script>
 
-
-<svelte:window 
-    on:keydown={downSustainPedal} 
-    on:keyup={liftSustainPedal}
-    on:keydown={downSoftPedal}
-    on:keyup={liftSoftPedal}
-    />
+<svelte:window on:keydown={pressPedal} on:keyup={liftPedal}/>
 <div class="pedal-container">
     <div class="pedal-box">
-        <div class="icon-soft-pedal" class:pressed={$piano.softPedal} on:click={downSoftPedal} role="none"></div>
-        <div class="icon-sostenuto-pedal" class:pressed={$piano.sostenutoPedal}></div>
-        <div class="icon-sustain-pedal" class:pressed={$piano.sustainPedal} on:click={downSustainPedal} role="none"></div>
+        <div class="icon-soft-pedal" class:pressed={$piano.softPedal} on:click={() => $piano.setSoftPedal()} role="none"></div>
+        <div class="icon-sostenuto-pedal" class:pressed={$piano.sostenutoPedal} on:click={() => $piano.setSostenutoPedal()} role="none"></div>
+        <div class="icon-sustain-pedal" class:pressed={$piano.sustainPedal} on:click={() => $piano.setSustainPedal()} role="none"></div>
     </div>
 </div>
 

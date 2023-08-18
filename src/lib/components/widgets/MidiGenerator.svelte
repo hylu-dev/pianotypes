@@ -91,8 +91,8 @@ function stopPiano() {
             {/if}
         </label>
         <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
-        <button class:disabled={!fileBuffer} on:click={stopPiano}>&#9208;</button>
-        <button class:disabled={!fileBuffer} on:click={playMidiFromFile}>&#9658;</button>
+        <button class:disabled={!fileBuffer} class="hanging" on:click={stopPiano}>&#9724;</button>
+        <button class:disabled={!fileBuffer} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
     </div>
     <div class="flex-row">
         <div class="label-container">
@@ -109,7 +109,7 @@ function stopPiano() {
         </div>
     </div>
     <div class="flex-row">
-        <button class:disabled={!fileBuffer} class="temp-active" on:click={playGenerativeFromFile}>Generate</button>
+        <button class:disabled={!fileBuffer} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
     </div>
     
 </div>
@@ -117,7 +117,7 @@ function stopPiano() {
 {/if}
 
 <style>
-    .temp-active:active {
+    .hanging:active {
         filter: invert(1);
     }
 

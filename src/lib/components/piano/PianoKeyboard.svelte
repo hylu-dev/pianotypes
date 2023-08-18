@@ -11,14 +11,14 @@ onMount(() => {
 
 // Keyboard input handlers
 function pressKey(e) {
-    if (e.repeat) { return }
+    if (e.repeat || !$piano.player) return;
     let note = $hotkey.getKeyNoteBinding(e.key);
-    if (note) { $piano.pressKey(note); }
+    if (note) $piano.pressKey(note);
 }
 function releaseKey(e) {
-    if (e.repeat) { return }
+    if (e.repeat || !$piano.player) return;
     let note = $hotkey.getKeyNoteBinding(e.key);
-    if (note) { $piano.releaseKey(note); }
+    if (note) $piano.releaseKey(note);
 }
 
 // Seperate handlers for mouse click event
@@ -27,8 +27,7 @@ function clickPressKey(e) {
 }
 function clickReleaseKey(e) {
     $piano.releaseKey(e.detail);
-}   
-
+}
 </script>
 
 <svelte:window on:keydown={pressKey} on:keyup={releaseKey}/>
