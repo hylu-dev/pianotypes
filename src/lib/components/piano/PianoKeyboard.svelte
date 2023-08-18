@@ -13,9 +13,7 @@ onMount(() => {
 function pressKey(e) {
     if (e.repeat) { return }
     let note = $hotkey.getKeyNoteBinding(e.key);
-    let velocity = 80;
-    //$hotkey.isLeftHand(e.key) ? velocity = 60 : null; // left hand quieter
-    if (note) { $piano.pressKey(note, velocity); } 
+    if (note) { $piano.pressKey(note); }
 }
 function releaseKey(e) {
     if (e.repeat) { return }

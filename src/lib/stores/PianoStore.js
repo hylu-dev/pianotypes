@@ -17,6 +17,7 @@ class PianoStore {
         this.instrument = 'acoustic_grand_piano';
         this.volume = 127;
         this.reverb = 0.2;
+        this.velocity = 80;
         this.softMultiplier = .6;
         this.player;
         this.ac;
@@ -50,21 +51,31 @@ class PianoStore {
             this._store.set(this)
         });
     }
+    setVolume(value) {
+        this.volume = value;
+        this.player.output.setVolume(value);
+    }
+    setVelocity(value) {
+        this.velocity = value;
+    }
+    setReverb(value) {
+        this.reverb = value;
+        this.player.output.sendEffect("reverb", value);
+    }
     isRange(note) {
         return (Note.midi(note) >= Note.midi(this.minNote) && Note.midi(note) <= Note.midi(this.maxNote))
     }
     //keys
-    pressKey(note, velocity=80) {
+    pressKey(note, velocity=this.velocity) {
         if (!Note.name(note)) note = Note.fromMidi(note);
-        if (!this.isRange(note)) return
-        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = true;
         velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
         this.player.start({ note: note, velocity: velocity });
-        this.lastPress = note;  
-        this._store.set(this);
+        this.dryPressKey(note);
     }
     dryPressKey(note) {
         if (!Note.name(note)) note = Note.fromMidi(note);
+        if (Note.midi(note) < Note.midi(this.minNote)) this.setMin(note);
+        if (Note.midi(note) > Note.midi(this.maxNote)) this.setMax(note);
         if (!this.isRange(note)) return
         this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
         this._store.set(this);
@@ -74,15 +85,11 @@ class PianoStore {
     }
     releaseKey(note) {
         if (!Note.name(note)) note = Note.fromMidi(note);
-        if (!this.isRange(note)) return
-        this.keyStateDict[note].isPressed = this.keyStateDict[Note.enharmonic(note)].isPressed = false;
-
         if (!this.sustainPedal) {
             this.player.stop(note);
         }
         this.player.stop(Note.midi(note))
-        this.lastRelease = note;
-        this._store.set(this);
+        this.dryReleaseKey(note);
     }
     dryReleaseKey(note) {
         if (!Note.name(note)) note = Note.fromMidi(note);

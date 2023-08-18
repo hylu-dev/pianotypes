@@ -15,7 +15,7 @@ function controller(e) {
 }
 
 function hotkeyBaseSubmit(e) {
-    e.target.value = $hotkey.setBase(e.target.value);
+    $hotkey.setBase(e.target.value);
 }
 
 function splitOffsetSubmit(e) {
