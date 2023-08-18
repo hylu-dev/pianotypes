@@ -79,9 +79,9 @@ function playFromQuantizedSample(sample) {
 function schedulePiano(pitch, velocity, delay, duration) {
     const time = $piano.ac.currentTime;
     const timeoutId = setTimeout(() => {
-            $piano.dryPressKey(pitch, velocity);
+            $piano.dryPressKey(pitch);
         }, delay*1000);
-    $piano.player.start({ note: pitch, time: time+delay, duration: time+duration, onEnded: () => {
+    $piano.player.start({ note: pitch, velocity: velocity, time: time+delay, duration: time+duration, onEnded: () => {
         $piano.dryReleaseKey(pitch);
         clearTimeout(timeoutId);
     } });
@@ -108,16 +108,16 @@ function stopPiano() {
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <input type="number" id="steps" maxlength="3" bind:value={steps}>
-            <label for="steps" class="small-label">Steps</label>
+            <input type="number" id="steps" step="10" maxlength="3" bind:value={steps}>
+            <label for="steps">Steps</label>
         </div>
         <div class="label-container">
-            <input type="number" id="temp" maxlength="1" bind:value={temperature}>
-            <label for="temp" class="small-label">Temperature</label>
+            <input type="number" id="temp" maxlength="1" step=".1" bind:value={temperature}>
+            <label for="temp">Temperature</label>
         </div>
         <div class="label-container">
             <input id="trim" type="checkbox" bind:checked={trim}>
-            <label for="trim" class="small-label">Trim</label>    
+            <label for="trim">Trim</label>    
         </div>
     </div>
     <div class="flex-row">

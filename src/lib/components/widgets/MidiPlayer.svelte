@@ -19,8 +19,6 @@
     });
 
     midiPlayer.on('midiEvent', function(e) {
-        if (e.noteNumber < Note.midi($piano.minNote)) $piano.setMin(e.noteName);
-        if (e.noteNumber > Note.midi($piano.maxNote)) $piano.setMax(e.noteName);
         if (e.name === "Note on") {
             if (e.velocity === 0) {
                 $piano.releaseKey(e.noteName);
@@ -34,7 +32,7 @@
     });
 
     
-    midiPlayer.on('playing', function(currentTick) {
+    midiPlayer.on('playing', () => {
         songProgress = 100-midiPlayer.getSongPercentRemaining();
         updateSongTime(midiPlayer.getSongTimeRemaining());
         
