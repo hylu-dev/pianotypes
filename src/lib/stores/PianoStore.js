@@ -40,7 +40,7 @@ class PianoStore {
     updateKeyboard() {
         this.keyboard = this._baseKeyboard.slice(Note.midi(this.minNote), Note.midi(this.maxNote)+1);
         this.keyStateDict = this._baseKeyboard.reduce(
-            (arr,curr) => (arr[curr]={}, arr[Note.enharmonic(curr)]={}, arr), {});
+            (arr,curr) => (arr[curr]={}, arr), {});
         this._store.set(this);
     }
     updateInstrument() {
