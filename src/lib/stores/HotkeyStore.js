@@ -72,8 +72,8 @@ class HotkeyStore {
         this._store.set(this)
     }
 
-    toggleSplit() {
-        this.splitMode = !this.splitMode;
+    setSplit(active=!this.splitMode) {
+        this.splitMode = active;
         this.createBindings();
     }
 
@@ -115,13 +115,13 @@ class HotkeyStore {
         return this._upper.has(this.getNoteKeyBinding(note));
     }
 
-    toggleHotkeys() {
-        this.showHotkeys = !this.showHotkeys;
+    setHotkeys(active=!this.showHotkeys) {
+        this.showHotkeys = active;
         this._store.set(this)
     }
 
-    toggleGuides() {
-        this.showHotkeyGuides = !this.showHotkeyGuides;
+    setGuides(active=!this.showHotkeyGuides) {
+        this.showHotkeyGuides = active;
         this._store.set(this)
     }
 
