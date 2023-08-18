@@ -2,7 +2,7 @@
     import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
     import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
     import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
-    import OptionsPanel from '../lib/components/OptionsTray.svelte';
+    import OptionsTray from '../lib/components/OptionsTray.svelte';
 
     function handleDefaults(e) {
         // override quickfind on firefox
@@ -21,7 +21,7 @@
     <div class="icon-typing-panel-invert"></div>
     </tabs> -->
     <RibbonPanel></RibbonPanel>
-    <OptionsPanel></OptionsPanel>
+    <OptionsTray></OptionsTray>
     <NoteDisplay></NoteDisplay>
     <PianoKeyboard></PianoKeyboard>
 </div>

@@ -44,6 +44,44 @@ function toggleTray(e) {
 </div>
 
 <style>
+    #options-tray {
+        max-width: 100vw;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-self: top;
+        max-height: 160px;
+        grid-area: main-panel;
+        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    #options-wrapper {
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: rgba(33, 33, 33, .5);
+        color: var(--text-dark);
+        z-index: 2;
+        gap: 1ch;
+        padding: 1ch;
+        box-sizing: border-box;
+        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        border-radius: 0 0 .5rem .5rem;
+        flex-flow: row nowrap;
+        overflow-x: auto;
+    }
+
+    .options-block {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        background-color: var(--bg-darker);
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: .5rem;
+        gap: 1rem;
+    }
+
     .hidden {
         margin-top: -160px;
     }
@@ -72,42 +110,5 @@ function toggleTray(e) {
         background-color: var(--bg-grey);
         color: var(--text-gold);
         transform: scaleX(1.1);
-    }
-
-    #options-tray {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        align-self: top;
-        height: 160px;
-        grid-area: main-panel;
-        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-
-    #options-wrapper {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        background-color: rgba(33, 33, 33, .9);
-        color: var(--text-dark);
-        z-index: 2;
-        gap: 1ch;
-        padding: 1ch;
-        box-sizing: border-box;
-        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-        border-radius: 0 0 .5rem .5rem;
-    }
-
-    .options-block {
-        display: flex;
-        justify-content: center;
-        height: 100%;
-        background-color: var(--bg-darker);
-        padding: 1rem;
-        box-sizing: border-box;
-        border-radius: .5rem;
-        gap: 1rem;
     }
 </style>

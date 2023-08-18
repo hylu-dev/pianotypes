@@ -25,10 +25,12 @@
     display: flex;
     flex-flow: column;
     height: 100vh;
+    width: 100vw;
 }
 
 .vertical-flex-child {
-    flex: 1 0 auto;
+    height: 100%;
+    width: 100%;
 }
 
 nav {
