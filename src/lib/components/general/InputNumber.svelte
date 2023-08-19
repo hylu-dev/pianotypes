@@ -26,7 +26,7 @@ function countDecimals(value) {
 function trackValue(e) {
     if (isDragging) {
         const dist = Math.ceil(startMousePos-e.clientY);
-        let increment = step*Math.sign(dist) * Math.abs(dist)/10;
+        let increment = step*dist/10;
         let value = valueAtClick + increment;
         value = parseFloat(value.toFixed(decimals))
         if (value < min) value = min;

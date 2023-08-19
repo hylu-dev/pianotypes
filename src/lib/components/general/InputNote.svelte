@@ -3,7 +3,7 @@ import { Note } from 'tonal';
 import { inputFocused } from '$lib/stores/GlobalStore'
 import { createEventDispatcher } from 'svelte';
 
-export let id = '';
+export let id;
 export let inputNote = 'C4';
 
 const dispatch = createEventDispatcher();
@@ -15,10 +15,9 @@ let isDragging = false;
 function trackValue(e) {
     if (isDragging) {
         const dist = Math.ceil(startMousePos-e.clientY);
-        const sign = Math.sign(dist);
         startMousePos = e.clientY;
         let newNote;
-        if (sign === 1){
+        if (dist > 0){
             newNote = Note.simplify(Note.transpose(inputNote, "2m"));
         } else {
             newNote = Note.simplify(Note.transpose(inputNote, "-2m"));
