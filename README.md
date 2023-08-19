@@ -33,7 +33,6 @@ App is largely interactable through mouse. The following are keyboard hotkeys.
 ## Roadmap
 
 - Instruction Dialogues
-- Draggable Number Inputs
 - More Visualizers
 
 ---
