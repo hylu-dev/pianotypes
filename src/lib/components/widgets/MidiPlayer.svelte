@@ -1,6 +1,6 @@
 <script>
     import MidiPlayer from 'midi-player-js';
-    import { Note } from "tonal";
+
     import piano from '$lib/stores/PianoStore'
 
     const midiPlayer = new MidiPlayer.Player();
@@ -19,6 +19,7 @@
     });
 
     midiPlayer.on('midiEvent', function(e) {
+        if (e.name === "Controller Change") {}
         if (e.name === "Note on") {
             if (e.velocity === 0) {
                 $piano.releaseKey(e.noteName);
