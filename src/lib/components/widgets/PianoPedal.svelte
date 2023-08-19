@@ -3,7 +3,7 @@ import piano from '$lib/stores/PianoStore'
 import { inputFocused } from '$lib/stores/GlobalStore'
 
 function pressPedal(e) {
-    if (inputFocused) return;
+    if ($inputFocused) return;
     // Sustain
     if (e.key === ' ') { 
         $piano.setSustainPedal(true);
@@ -19,7 +19,7 @@ function pressPedal(e) {
 }
 
 function liftPedal(e) {
-    if (inputFocused) return;
+    if ($inputFocused) return;
     // Sustain
     if (e.key == ' ' && !e.ctrlKey) {
         $piano.setSustainPedal(false);
