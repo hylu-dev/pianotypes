@@ -14,14 +14,6 @@ function controller(e) {
         $piano.stepRange("-"+interval, true);
     }
 }
-
-function minNoteSubmit(e) {
-    $piano.setMin(e.detail);
-}
-
-function maxNoteSubmit(e) {
-    $piano.setMax(e.detail);
-}
 </script>
 
 <svelte:window on:keydown={controller}/>
@@ -53,9 +45,9 @@ function maxNoteSubmit(e) {
     <div class="flex-row">
         <div class="label-container">
             <div class="flex-row">
-                <InputNote id="min" inputNote={$piano.minNote} on:change={minNoteSubmit}></InputNote>
+                <InputNote id="min" inputNote={$piano.minNote} on:change={e => $piano.setMin(e.detail)}></InputNote>
                 <div class="arrow">&#10231;</div>
-                <InputNote id="max" inputNote={$piano.maxNote} on:change={maxNoteSubmit}></InputNote>
+                <InputNote id="max" inputNote={$piano.maxNote} on:change={e => $piano.setMax(e.detail)}></InputNote>
             </div>
             <label for="range">range</label>
         </div>

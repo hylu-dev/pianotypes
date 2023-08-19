@@ -1,6 +1,7 @@
 <script>
-import { createEventDispatcher } from 'svelte';
 import { Note } from 'tonal';
+import { inputFocused } from '$lib/stores/GlobalStore'
+import { createEventDispatcher } from 'svelte';
 
 export let id = '';
 export let inputNote = 'C4';
@@ -56,6 +57,8 @@ id={id}
 draggable="true"
 on:change={handleChange}
 on:mousedown={handleMouseDown}
+on:focusin={() => inputFocused.set(true)}
+on:focusout={() => inputFocused.set(false)}
 bind:value={inputNote}
 maxlength={4}
 type="text">

@@ -2,6 +2,7 @@
 import PianoKey from './PianoKey.svelte'   
 import piano, { keyboard } from '$lib/stores/PianoStore'
 import hotkey from '$lib/stores/HotkeyStore'
+import { inputFocused } from '$lib/stores/GlobalStore'
 import { onMount } from 'svelte';
 
 // Done onMount, otherwise AudioContext cannot be retrieved in Svelte
@@ -11,12 +12,12 @@ onMount(() => {
 
 // Keyboard input handlers
 function pressKey(e) {
-    if (e.repeat || !$piano.player) return;
+    if (e.repeat || $inputFocused || !$piano.player) return;
     let note = $hotkey.getKeyNoteBinding(e.key);
     if (note) $piano.pressKey(note);
 }
 function releaseKey(e) {
-    if (e.repeat || !$piano.player) return;
+    if (e.repeat || $inputFocused || !$piano.player) return;
     let note = $hotkey.getKeyNoteBinding(e.key);
     if (note) $piano.releaseKey(note);
 }

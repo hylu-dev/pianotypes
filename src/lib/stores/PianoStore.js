@@ -151,7 +151,6 @@ class PianoStore {
         let newMax = Note.simplify(Note.transpose(this.maxNote, interval));
         interval = interval.includes('-') ? interval.substr(1) : '-'+interval;
         let newMin = Note.simplify(Note.transpose(this.minNote, interval));
-        // only step white keys
         if (enforceWhite) newMax = newMax.charAt(0) + newMax.slice(-1);
         if (enforceWhite) newMin = newMin.charAt(0) + newMin.slice(-1);
         if (Note.midi(newMax) < Note.midi(newMin)) return;

@@ -134,11 +134,11 @@ class HotkeyStore {
         this._store.set(this)
     }
 
-    isLeftHand(binding) {
+    isLeftHand(key) {
         if (!this.splitMode) {
-            return [...this.r1, ...this.r2].includes(binding);
+            return [...this.r1, ...this.r2].includes(key);
         } 
-        return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(binding);
+        return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(key);
     }
 
 

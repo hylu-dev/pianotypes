@@ -1,4 +1,5 @@
 <script>
+import { inputFocused } from '$lib/stores/GlobalStore'
 import { createEventDispatcher } from 'svelte';
 
 export let id = '';
@@ -25,8 +26,7 @@ function countDecimals(value) {
 function trackValue(e) {
     if (isDragging) {
         const dist = Math.ceil(startMousePos-e.clientY);
-        let increment = step*
-            Math.sign(dist) * Math.abs(dist)/10;
+        let increment = step*Math.sign(dist) * Math.abs(dist)/10;
         let value = valueAtClick + increment;
         value = parseFloat(value.toFixed(decimals))
         if (value < min) value = min;
@@ -73,6 +73,8 @@ draggable="true"
 on:change={handleChange}
 on:mousedown={handleMouseDown}
 on:blur={() => resetIfNaN()}
+on:focusin={() => inputFocused.set(true)}
+on:focusout={() => inputFocused.set(false)}
 bind:value={inputValue}
 pattern="[0-9]+"
 type="number">
