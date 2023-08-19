@@ -6,12 +6,12 @@ import { onMount } from 'svelte'
 let mm;
 let music_rnn;
 let files = '';
-let fileBuffer;
 let temperature = .7;
 let steps = 200;
 let trim = true;
 let error = '';
 let loading = false;
+let seq;
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -26,31 +26,32 @@ function loadFile(e) {
     const reader = new FileReader();
     if (file) reader.readAsArrayBuffer(file);
     reader.onloadend = () => {
-        fileBuffer = reader.result;
+        let fileBuffer = reader.result;
+        seq = mm.midiToSequenceProto(fileBuffer);
+        seq = mm.sequences.mergeInstruments(seq);
+        seq = mm.sequences.applySustainControlChanges(seq);
+        console.log(seq);
+        console.log(`Loaded ${seq.notes.length} notes`)
     }
 }
 
 function playMidiFromFile() {
     $piano.player.stop();
-    if (fileBuffer){
-        let seq = mm.midiToSequenceProto(fileBuffer);
-        if (trim) seq = mm.sequences.trim(seq, 0, 60);
-        console.log(`Playing ${seq.notes.length} notes`)
-        seq.notes.forEach(note => {
-            $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
-        })
-    }
+    let sample = seq;
+    if (trim) sample = mm.sequences.trim(seq, 0, 60);
+    console.log(`Playing ${sample.notes.length} notes`)
+    sample.notes.forEach(note => {
+        $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
+    })
 }
 
 async function playGenerativeFromFile() {
     loading = true;
     error = '';
-    let seq, qns;
     try {
-        seq = mm.midiToSequenceProto(fileBuffer);
-        seq = mm.sequences.mergeInstruments(seq);
-        if (trim) seq = mm.sequences.trim(seq, 0, 60);
-        qns = mm.sequences.quantizeNoteSequence(seq, 4);
+        let sample = seq;
+        if (trim) sample = mm.sequences.trim(seq, 0, 60);
+        let qns = mm.sequences.quantizeNoteSequence(sample, 4);
         music_rnn
             .continueSequence(qns, steps, temperature)
             .then(sample => {
@@ -92,8 +93,8 @@ function stopPiano() {
             {/if}
         </label>
         <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
-        <button class:disabled={!fileBuffer} class="hanging" on:click={stopPiano}>&#9724;</button>
-        <button class:disabled={!fileBuffer} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
+        <button class:disabled={!seq} class="hanging" on:click={stopPiano}>&#9724;</button>
+        <button class:disabled={!seq} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
     </div>
     <div class="flex-row">
         <div class="label-container">
@@ -110,7 +111,7 @@ function stopPiano() {
         </div>
     </div>
     <div class="flex-row">
-        <button class:disabled={!fileBuffer} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
+        <button class:disabled={!seq} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
     </div>
     
 </div>
@@ -132,11 +133,6 @@ function stopPiano() {
         overflow-y: auto;
         overflow-x: hidden;
         word-wrap: break-word;
-    }
-
-    input[type=number] {
-        width: 6ch;
-        height: 2ch;
     }
 
     .flex-col {

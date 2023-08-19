@@ -59,11 +59,6 @@ function controller(e) {
         margin: none;
     }
 
-    input[type=text] {
-        width: 4ch;
-        height: 2ch;
-    }
-
     .icon {
         font-size: 1.5rem;
     }

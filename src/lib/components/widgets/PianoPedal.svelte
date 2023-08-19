@@ -22,7 +22,7 @@ function liftPedal(e) {
         $piano.setSustainPedal(false);
     }
     // Sostenuto
-    if (e.code === 'ShiftRight') { 
+    if (e.code === 'ShiftRight' && !e.ctrlKey) { 
         $piano.setSostenutoPedal(false);
     }
     // Soft

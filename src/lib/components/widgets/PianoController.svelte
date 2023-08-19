@@ -38,11 +38,11 @@ function maxNoteSubmit(e) {
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <InputNumber id="volume" max={127} min={0} inputValue={$piano.volume} on:change={e => $piano.setVolume(e.detail)}></InputNumber>
+            <InputNumber id="volume" max={127} min={0} step={2} inputValue={$piano.volume} on:change={e => $piano.setVolume(e.detail)}></InputNumber>
             <label for="volume">volume</label>
         </div>
         <div class="label-container">
-            <InputNumber id="velocity" max={127} min={0} inputValue={$piano.velocity} on:change={e => $piano.setVelocity(e.detail)}></InputNumber>
+            <InputNumber id="velocity" max={127} min={0} step={2} inputValue={$piano.velocity} on:change={e => $piano.setVelocity(e.detail)}></InputNumber>
             <label for="velocity">velocity</label>
         </div>
         <div class="label-container">
@@ -67,11 +67,6 @@ function maxNoteSubmit(e) {
         font-size: 1.5rem;
         margin-top: -2rem;
         margin-bottom: -1.6rem;
-    }
-
-    input[type=text] {
-        width: 4ch;
-        height: 2ch;
     }
 
     select {
