@@ -86,9 +86,12 @@ class HotkeyStore {
         return this.base;
     }
 
-    setOffset(offset) {
-        this.splitOffset = offset;
-        this.createBindings();
+    setSplitOffset(offset) {
+        if (!isNaN(offset)) {
+            this.splitOffset = offset;
+            this.createBindings();
+        }
+        return this.splitOffset;
     }
 
     getKeyNoteBinding(key) {

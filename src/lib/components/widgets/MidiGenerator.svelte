@@ -97,11 +97,11 @@ function stopPiano() {
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <InputNumber id="steps" max={999} min={0} step={10} initial={steps} on:change={e => steps = e.detail}></InputNumber>
+            <InputNumber id="steps" max={999} min={0} step={10} inputValue={steps} on:change={e => steps = e.detail}></InputNumber>
             <label for="steps">Steps</label>
         </div>
         <div class="label-container">
-            <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} initial={temperature} on:change={e => temperature = e.detail}></InputNumber>
+            <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} inputValue={temperature} on:change={e => temperature = e.detail}></InputNumber>
             <label for="temp">Temperature</label>
         </div>
         <div class="label-container">

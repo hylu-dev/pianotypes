@@ -3,6 +3,7 @@ import hotkey from '$lib/stores/HotkeyStore'
 import piano from '$lib/stores/PianoStore'
 import { Note } from "tonal";
 import InputNumber from '../general/InputNumber.svelte';
+import InputNote from '../general/InputNote.svelte';
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
@@ -14,17 +15,9 @@ function controller(e) {
         $hotkey.setBase(Note.transpose($hotkey.base, interval))
     } else if (e.key === '`') {
         $hotkey.setSplit();
-    } else if (e.key === 'Backspace') {
+    } else if (e.key === '\\') {
         $hotkey.setGuides();
     } 
-}
-
-function hotkeyBaseSubmit(e) {
-    $hotkey.setBase(e.target.value);
-}
-
-function splitOffsetSubmit(e) {
-    $hotkey.setOffset(e.detail);
 }
 
 </script>
@@ -38,17 +31,17 @@ function splitOffsetSubmit(e) {
         </div>
         <div class="label-container">
             <input id="guide" type="checkbox" checked={$hotkey.showHotkeyGuides} on:change={() => $hotkey.setGuides()}>
-            <label for="hotkey">Guides</label>
+            <label for="guide">Guides</label>
         </div>            
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <input type="text" id="hotkey" maxlength="4" value={$hotkey.base} on:blur={hotkeyBaseSubmit}>
+            <InputNote id="hotkey" inputNote={$hotkey.base} on:change={e => $hotkey.setBase(e.detail)}></InputNote>
             <label for="hotkey">Base</label>
         </div>
         <div class="label-container">
-            <InputNumber id="guide"--width="4ch" maxlength={2} max={88} min={0} initial={$hotkey.splitOffset} on:change={splitOffsetSubmit}></InputNumber>
-            <label for="guide">Split</label>
+            <InputNumber id="split-offset"--width="4ch" max={88} min={0} inputValue={$hotkey.splitOffset} on:change={e => $hotkey.setSplitOffset(parseInt(e.detail))}></InputNumber>
+            <label for="split-offset">Split</label>
         </div>            
     </div>
     <div class="flex-row">

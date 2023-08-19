@@ -3,7 +3,6 @@
     import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
     import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
     import OptionsTray from '$lib/components/OptionsTray.svelte';
-    import { mousePos, mouseButtonActive } from "$lib/stores/MouseStore"
 
     function handleDefaults(e) {
         // override quickfind on firefox
@@ -17,9 +16,6 @@
 <svelte:window
 on:keydown={handleDefaults}
 on:dragstart={ e => e.preventDefault()}
-on:mousemove={ e => mousePos.set([e.clientX, e.clientY]) }
-on:mousedown={ () => mouseButtonActive.set(true) }
-on:mouseup={ () => mouseButtonActive.set(false) }
 />
 <div class="grid-container">
     <!-- <tabs id="tabs">
