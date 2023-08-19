@@ -57,13 +57,16 @@ class PianoStore {
         });
     }
     setVolume(value) {
+        if (value > 127) {value = 127};
         this.volume = value;
         this.player.output.setVolume(value);
     }
     setVelocity(value) {
+        if (value > 127) {value = 127};
         this.velocity = value;
     }
     setReverb(value) {
+        if (value > 127) {value = 127};
         this.reverb = value;
         this.player.output.sendEffect("reverb", value);
     }

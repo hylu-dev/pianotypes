@@ -1,5 +1,6 @@
 <script>
 import piano from '$lib/stores/PianoStore'
+import InputNumber from '../general/InputNumber.svelte';
 import { onMount } from 'svelte'
 
 let mm;
@@ -96,11 +97,11 @@ function stopPiano() {
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <input type="number" id="steps" step="10" maxlength="3" bind:value={steps}>
+            <InputNumber id="steps" max={999} min={0} step={10} initial={steps} on:change={e => steps = e.detail}></InputNumber>
             <label for="steps">Steps</label>
         </div>
         <div class="label-container">
-            <input type="number" id="temp" maxlength="1" step=".1" bind:value={temperature}>
+            <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} initial={temperature} on:change={e => temperature = e.detail}></InputNumber>
             <label for="temp">Temperature</label>
         </div>
         <div class="label-container">

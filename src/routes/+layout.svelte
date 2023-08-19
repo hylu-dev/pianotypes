@@ -1,3 +1,8 @@
+<script>
+    import '$lib/styles/app.css'
+    import '$lib/styles/iconfonts/style.css'
+</script>
+
 <div class="vertical-flex-container">
     <nav>
         <div class="author-links">
@@ -11,7 +16,6 @@
         <div class="menu-container">
 
         </div>
-
     </nav>
 
     <div class="vertical-flex-child">

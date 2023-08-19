@@ -1,59 +1,101 @@
 <script>
-export let max = 1;
+import { createEventDispatcher } from 'svelte';
+import { mousePos, mouseButtonActive } from "$lib/stores/MouseStore"
+
+export let id = '';
+export let max = 10;
 export let min = 0;
+export let step = 1;
 export let initial = 0;
 
-let dragDist = 1000;
-let value = initial;
+const dispatch = createEventDispatcher();
+
+let decimals = countDecimals(step);
+let inputValue = initial;
+let valueAtClick = inputValue;
 let startPos = 0;
 let isDragging = false;
 
-function trackValue(e) {
+// https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
+function countDecimals(value) {
+    if (Math.floor(value) !== value)
+        return value.toString().split(".")[1].length || 0;
+    return 0;
+}
+
+// References https://codepen.io/DarkStar66/pen/eBrdrY
+function trackValue() {
     if (isDragging) {
-        let increment = ((e.clientY - startPos)/dragDist);
-        let delta = value - increment;
-        if (delta < min) {
-            //value = min;
-        } else if (delta > max) {
-            value = max;
-        } else {
-            value = delta;
-        }
-        
+        const dist = Math.ceil(startPos-$mousePos[1]);
+        let increment = step*
+            Math.sign(dist) * Math.abs(dist)/10;
+        let value = valueAtClick + increment;
+        value = parseFloat(value.toFixed(decimals))
+        if (value < min) value = min;
+        else if (value > max) value = max;
+        inputValue = value;
+        dispatch('change', inputValue)
+    }
+}
+
+function resetIfNaN() {
+    if (!Number.isFinite(inputValue)) {
+        inputValue = valueAtClick;
+        dispatch('change', inputValue)
     }
 }
 
 function handleMouseDown(e) {
+    startPos = e.clientY;
     isDragging = true;
-    startPos = e.clientY
+    valueAtClick = !Number.isFinite(valueAtClick) ? 0 : inputValue;
 }
 
-function handleMouseUp(e) {
+function handleMouseUp() {
     isDragging = false;
+    resetIfNaN();
 }
+
+function handleChange(e) {
+    let value = e.target.value;
+    if (value > max) value = max;
+    else if (value < min) value = min;
+    dispatch('change', value);
+}
+
+$: if (!($mouseButtonActive)) handleMouseUp();
+$: if (isDragging&&$mousePos) trackValue();
 </script>
 
-<svelte:window on:mousemove={trackValue} on:mouseup={handleMouseUp}/>
 <input
+id={id}
+min={min}
+max={max}
+step={step}
 draggable="true"
-on:dragstart={handleMouseDown}
-bind:value={value}
+on:change={handleChange}
+on:mousedown={handleMouseDown}
+on:blur={() => resetIfNaN()}
+bind:value={inputValue}
+pattern="[0-9]+"
 type="number">
 
 <style>
     input[type='number'] {
         cursor: n-resize;
+        width: var(--width, 6ch);
+        height: var(--height, 2ch);
     }
 
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+        -webkit-appearance: none;
+        margin: 0;
     }
 
     /* Firefox */
     input[type=number] {
-    -moz-appearance: textfield;
-}
+        -moz-appearance: textfield;
+    }
 </style>

@@ -1,6 +1,7 @@
 <script>
 import piano from '$lib/stores/PianoStore'
 import { getSoundfontNames } from "smplr";
+import InputNumber from '../general/InputNumber.svelte';
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
@@ -20,10 +21,6 @@ function minNoteSubmit(e) {
 function maxNoteSubmit(e) {
     e.target.value = $piano.setMax(e.target.value);
 }
-
-
-
-
 </script>
 
 <svelte:window on:keydown={controller}/>
@@ -40,15 +37,15 @@ function maxNoteSubmit(e) {
     </div>
     <div class="flex-row">
         <div class="label-container">
-            <input id="volume" type="number" maxlength="3"max="127" min="0" value={$piano.volume} on:change={e => $piano.setVolume(e.target.value)}>
+            <InputNumber id="volume" max={127} min={0} initial={$piano.volume} on:change={e => $piano.setVolume(e.detail)}></InputNumber>
             <label for="volume">Volume</label>
         </div>
         <div class="label-container">
-            <input id="velocity" type="number" maxlength="3"max="127" min="0" value={$piano.velocity} on:change={e => $piano.setVelocity(e.target.value)}>
+            <InputNumber id="velocity" max={127} min={0} initial={$piano.velocity} on:change={e => $piano.setVelocity(e.detail)}></InputNumber>
             <label for="velocity">velocity</label>
         </div>
         <div class="label-container">
-            <input id="reverb" type="number" maxlength="1" max="1" min="0" step=".1" value={$piano.reverb} on:change={e => $piano.setReverb(e.target.value)}>
+            <InputNumber id="reverb" max={1} min={0} step={.1} initial={$piano.reverb} on:change={e => $piano.setReverb(e.detail)}></InputNumber>
             <label for="reverb">Reverb</label>
         </div>
     </div>

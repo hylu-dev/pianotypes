@@ -1,6 +1,5 @@
 <script>
     import MidiPlayer from 'midi-player-js';
-
     import piano from '$lib/stores/PianoStore'
 
     const midiPlayer = new MidiPlayer.Player();

@@ -2,6 +2,7 @@
 import hotkey from '$lib/stores/HotkeyStore'
 import piano from '$lib/stores/PianoStore'
 import { Note } from "tonal";
+import InputNumber from '../general/InputNumber.svelte';
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2m";
@@ -23,7 +24,7 @@ function hotkeyBaseSubmit(e) {
 }
 
 function splitOffsetSubmit(e) {
-    $hotkey.setOffset(parseInt(e.target.value));
+    $hotkey.setOffset(e.detail);
 }
 
 </script>
@@ -46,7 +47,7 @@ function splitOffsetSubmit(e) {
             <label for="hotkey">Base</label>
         </div>
         <div class="label-container">
-            <input type="number" id="guide" maxlength="2" min="0" value={$hotkey.splitOffset} on:change={splitOffsetSubmit}>
+            <InputNumber id="guide"--width="4ch" maxlength={2} max={88} min={0} initial={$hotkey.splitOffset} on:change={splitOffsetSubmit}></InputNumber>
             <label for="guide">Split</label>
         </div>            
     </div>
@@ -65,7 +66,7 @@ function splitOffsetSubmit(e) {
         margin: none;
     }
 
-    input[type=text], input[type=number] {
+    input[type=text] {
         width: 4ch;
         height: 2ch;
     }
