@@ -73,6 +73,11 @@ function liftPedal(e) {
         transform: scaleY(.46);
     }
 
+    .icon-soft-pedal:active, .icon-sostenuto-pedal:active, .icon-sustain-pedal:active {
+        filter: brightness(1);
+        transform: scaleY(.46)translateY(7px);
+    }
+
     .pressed {
         color: var(--text-gold);
         transform: scaleY(.46)translateY(7px);
