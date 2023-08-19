@@ -77,13 +77,13 @@ class PianoStore {
     //keys
     pressKey(note, velocity=this.velocity, dry=false) {
         note = this._normalize(note);
-        if (Note.midi(note) < Note.midi(this.minNote)) this.setMin(note);
-        if (Note.midi(note) > Note.midi(this.maxNote)) this.setMax(note);
         if (!this.isRange(note)) return;
-        velocity = parseInt(velocity*(this.softPedal ? this.softMultiplier : 1));
-        if (!dry) this.player.start({ note: note, velocity: velocity });
+        if (Note.midi(note) <= Note.midi(this.minNote)) this.setMin(note);
+        if (Note.midi(note) >= Note.midi(this.maxNote)) this.setMax(note);
         this.keyStateDict[note].isPressed = true;
         this.lastPress = note;
+        velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
+        if (!dry) this.player.start({ note: note, velocity: velocity });
         this._store.set(this);
     }
     releaseKey(note, dry=false) {

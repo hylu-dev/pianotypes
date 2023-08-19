@@ -39,7 +39,7 @@
 
 nav {
     display: flex;
-    background: var(--bg-dark);
+    background: var(--bg-dark-grey);
     border: none;
     width: 100%;
     height: 60px;
