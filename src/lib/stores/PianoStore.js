@@ -160,7 +160,7 @@ class PianoStore {
     }
     setMin(note) {
         note = this._normalize(note);
-        if (this.isRange(note) && (Note.midi(note) < Note.midi(this.maxNote))) {
+        if (this.isRange(note) && (Note.midi(note) <= Note.midi(this.maxNote))) {
             this.minNote = Note.simplify(note);
         }
         this.updateKeyboard();
@@ -168,7 +168,7 @@ class PianoStore {
     }
     setMax(note) {
         note = this._normalize(note);
-        if (this.isRange(note) && (Note.midi(note) > Note.midi(this.minNote))) {
+        if (this.isRange(note) && (Note.midi(note) >= Note.midi(this.minNote))) {
             this.maxNote = Note.simplify(note);
         }
         this.updateKeyboard();
