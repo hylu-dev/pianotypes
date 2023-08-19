@@ -68,12 +68,12 @@ $: {
 </div>
 {/if}
 
-<style scoped>
+<style>
     .ribbon-block {
         width: 100%;
         height: 100%;
         border-radius: 3px;
-        box-shadow: 0 0 .3vw .1vw #111;
+        box-shadow: 0 0 10px black;
     }
 
     .ribbon-wrapper {

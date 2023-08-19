@@ -66,7 +66,7 @@ function liftPedal(e) {
 
     .icon-soft-pedal, .icon-sostenuto-pedal, .icon-sustain-pedal {
         font-size: 5rem;
-        color: var(--text-dark);
+        color: var(--text-grey);
         transform: scaleY(.5);
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }

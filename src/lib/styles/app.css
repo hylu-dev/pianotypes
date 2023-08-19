@@ -4,14 +4,14 @@
 :root {
     /* main palette */
     --text-gold: rgb(187, 175, 106);
-    --text-grey: #555;
+    --text-grey: #757575;
     --text-dark: #333;
     --text-light: #AAA;
-    --bg-light: rgb(60, 60, 60);
+    --bg-light: #444;
     --bg-grey: #222;
-    --bg-dark-grey: rgb(28, 28, 28);
-    --bg-dark: rgb(22,22,22);
-    --bg-darker: #111;
+    --bg-dark-grey: #161616;
+    --bg-dark: #111;
+    --bg-black: black;
 
     /* piano styling */
     --piano-height: 120px;
@@ -194,4 +194,17 @@ select:hover {
 .icon:active {
     color: var(--text-gold);
     filter: brightness(.7);
+}
+
+/* ## Patterns */
+
+.wave {
+    background-color:#222;
+    background-image:
+    radial-gradient(circle at 100% 150%, #222 24%, #111 24%, #111 28%, #222 28%, #222 36%, #111 36%, #111 40%, transparent 40%, transparent),
+    radial-gradient(circle at 0    150%, #222 24%, #111 24%, #111 28%, #222 28%, #222 36%, #111 36%, #111 40%, transparent 40%, transparent),
+    radial-gradient(circle at 50%  100%, #111 10%, #222 10%, #222 23%, #111 23%, #111 30%, #222 30%, #222 43%, #111 43%, #111 50%, #222 50%, #222 63%, #111 63%, #111 71%, transparent 71%, transparent),
+    radial-gradient(circle at 100% 50%, #111 5%, #222 5%, #222 15%, #111 15%, #111 20%, #222 20%, #222 29%, #111 29%, #111 34%, #222 34%, #222 44%, #111 44%, #111 49%, transparent 49%, transparent),
+    radial-gradient(circle at 0    50%, #111 5%, #222 5%, #222 15%, #111 15%, #111 20%, #222 20%, #222 29%, #111 29%, #111 34%, #222 34%, #222 44%, #111 44%, #111 49%, transparent 49%, transparent);
+    background-size: 100px 50px;
 }

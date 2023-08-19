@@ -75,7 +75,7 @@ function toggleTray(e) {
         display: flex;
         justify-content: center;
         height: 100%;
-        background-color: var(--bg-darker);
+        background-color: var(--bg-black);
         padding: 1rem;
         box-sizing: border-box;
         border-radius: .5rem;
@@ -92,13 +92,13 @@ function toggleTray(e) {
         position: absolute;
         width: 50px;
         height: 25px;
-        background-color: var(--bg-darker);
+        background-color: var(--bg-dark);
         border-radius: 0 0 50px 50px;
         border: none;
         bottom: -25px;
         left: calc(50% - 25px);
         z-index: 5;
-        color: var(--bg-grey);
+        color: var(--text-grey);
         font-size: 1.5rem;
         font-size: 2rem;
         padding-bottom: .8rem;

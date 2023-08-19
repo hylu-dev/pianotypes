@@ -39,14 +39,14 @@
 
 nav {
     display: flex;
-    background: var(--bg-grey);
+    background: var(--bg-dark);
     border: none;
     width: 100%;
     height: 60px;
     font-size: 1rem;
     justify-content: space-around;
     align-items: center; /* align vertical */
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px 3px black;
     user-select: none;
     padding: 5px;
     line-height: 0;

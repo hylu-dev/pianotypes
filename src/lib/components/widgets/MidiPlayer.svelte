@@ -142,8 +142,7 @@
 
     .disabled {
         pointer-events: none;
-        opacity: .5;
-        filter:contrast(2);
+        filter: brightness(.4);
     }
 
     .active {

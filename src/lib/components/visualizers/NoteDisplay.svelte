@@ -15,5 +15,6 @@ import { fade } from 'svelte/transition';
         user-select: none;
         color: var(--text-dark);
         grid-area: main-panel;
+        background-color: black;
     }
 </style>
