@@ -77,10 +77,11 @@ class HotkeyStore {
         this.createBindings();
     }
 
-    setBase(note) {
-        let n = Note.simplify(note)
-        if (Note.octave(n) >= 0) {
-            this.base = Note.simplify(n);
+    setBase(note, enforceWhite=false) {
+        note = Note.simplify(note)
+        if (enforceWhite) note = note.charAt(0) + note.slice(-1);
+        if (Note.octave(note) >= 0) {
+            this.base = Note.simplify(note);
             this.createBindings();
         }
         return this.base;

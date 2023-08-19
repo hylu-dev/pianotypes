@@ -6,13 +6,13 @@ import InputNumber from '../general/InputNumber.svelte';
 import InputNote from '../general/InputNote.svelte';
 
 function controller(e) {
-    const interval = e.ctrlKey ? "8P" : "2m";
+    const interval = e.ctrlKey ? "8P" : "2M";
     if (e.keyCode === 37) {
         $piano.updateKeyboard();
-        $hotkey.setBase(Note.transpose($hotkey.base, "-"+interval))
+        $hotkey.setBase(Note.transpose($hotkey.base, "-"+interval), true)
     } else if (e.keyCode === 39) {
         $piano.updateKeyboard();
-        $hotkey.setBase(Note.transpose($hotkey.base, interval))
+        $hotkey.setBase(Note.transpose($hotkey.base, interval), true)
     } else if (e.key === '`') {
         $hotkey.setSplit();
     } else if (e.key === '\\') {

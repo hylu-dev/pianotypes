@@ -5,13 +5,13 @@ import InputNumber from '../general/InputNumber.svelte';
 import InputNote from '../general/InputNote.svelte';
 
 function controller(e) {
-    const interval = e.ctrlKey ? "8P" : "2m";
+    const interval = e.ctrlKey ? "8P" : "2M";
     if (e.keyCode == 38) {
         $piano.updateKeyboard();
-        $piano.stepRange(interval);
+        $piano.stepRange(interval, true);
     } else if (e.keyCode == 40) {
         $piano.updateKeyboard();
-        $piano.stepRange("-"+interval);
+        $piano.stepRange("-"+interval, true);
     }
 }
 
