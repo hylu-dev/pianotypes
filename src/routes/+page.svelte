@@ -1,16 +1,17 @@
 <script>
-    import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
-    import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
-    import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
-    import OptionsTray from '$lib/components/OptionsTray.svelte';
+import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
+import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
+import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
+import OptionsTray from '$lib/components/OptionsTray.svelte';
+import { inputFocused } from '$lib/stores/GlobalStore'
 
-    function handleDefaults(e) {
-        // override quickfind on firefox
-        if ("'/".includes(e.key)) e.preventDefault();
-        if(e.shiftKey) e.preventDefault();
-        if (e.key === ' ') e.preventDefault();
-        if (e.key === 'Tab') e.preventDefault();
-    }
+function handleDefaults(e) {
+    // override quickfind on firefox
+    if ("'/".includes(e.key)) e.preventDefault();
+    if (e.shiftKey&&!$inputFocused) e.preventDefault();
+    if (e.key === ' ') e.preventDefault();
+    if (e.key === 'Tab') e.preventDefault();
+}
 </script>
 
 <svelte:window

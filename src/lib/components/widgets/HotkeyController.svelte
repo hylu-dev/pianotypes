@@ -4,8 +4,10 @@ import piano from '$lib/stores/PianoStore'
 import { Note } from "tonal";
 import InputNumber from '../general/InputNumber.svelte';
 import InputNote from '../general/InputNote.svelte';
+import { inputFocused } from '$lib/stores/GlobalStore'
 
 function controller(e) {
+    if (inputFocused) return;
     const interval = e.ctrlKey ? "8P" : "2M";
     if (e.keyCode === 37) {
         $piano.updateKeyboard();
