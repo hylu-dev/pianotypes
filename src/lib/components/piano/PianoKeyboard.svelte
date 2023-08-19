@@ -35,7 +35,10 @@ function clickReleaseKey(e) {
 <div ref="keyboard" id="piano-keyboard">
     <div class="key-container">
         {#each $keyboard as note (note)}
-            <PianoKey note={note} on:keyPress={clickPressKey} on:keyRelease={clickReleaseKey}></PianoKey>
+            <PianoKey note={note}
+            on:keyPress={clickPressKey}
+            on:keyRelease={clickReleaseKey}
+            ></PianoKey>
         {/each}
     </div>
 </div>
