@@ -1,6 +1,5 @@
 <script>
 import { createEventDispatcher } from 'svelte';
-import { mousePos, mouseButtonActive } from "$lib/stores/MouseStore"
 
 export let id = '';
 export let max = 10;
@@ -24,9 +23,9 @@ function countDecimals(value) {
 }
 
 // References https://codepen.io/DarkStar66/pen/eBrdrY
-function trackValue() {
+function trackValue(e) {
     if (isDragging) {
-        const dist = Math.ceil(startPos-$mousePos[1]);
+        const dist = Math.ceil(startPos-e.clientY);
         let increment = step*
             Math.sign(dist) * Math.abs(dist)/10;
         let value = valueAtClick + increment;
@@ -51,7 +50,7 @@ function handleMouseDown(e) {
     valueAtClick = !Number.isFinite(valueAtClick) ? 0 : inputValue;
 }
 
-function handleMouseUp() {
+function handleMouseUp(e) {
     isDragging = false;
     resetIfNaN();
 }
@@ -63,10 +62,9 @@ function handleChange(e) {
     dispatch('change', value);
 }
 
-$: if (!($mouseButtonActive)) handleMouseUp();
-$: if (isDragging&&$mousePos) trackValue();
 </script>
 
+<svelte:window on:mousemove={trackValue} on:mouseup={handleMouseUp}/>
 <input
 id={id}
 min={min}
