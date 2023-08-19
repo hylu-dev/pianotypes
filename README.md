@@ -1,5 +1,7 @@
 # Piano Types
 
+![](https://github.com/hylu-dev/pianotypes/blob/master/pianotypes-demo.gif)
+
 A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
 This serves to replace <https://github.com/hylu-dev/pianotypes_old>.
 
