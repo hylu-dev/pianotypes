@@ -11,7 +11,7 @@
     --bg-grey: #222;
     --bg-dark-grey: #161616;
     --bg-dark: #111;
-    --bg-black: black;
+    --bg-darkest: black;
 
     /* piano styling */
     --piano-height: 120px;
@@ -41,7 +41,7 @@
 }
 
 ::selection {
-    background: #111;
+    background: var(--bg-darkest);
     color: var(--text-light);
     border: 5px;
 }
@@ -50,7 +50,7 @@
 
 body {
     margin: 0;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-darkest);
     color: var(--text-grey);
     font-family: 'Source Code Pro', Helvetica, Arial, sans-serif ;
     font-weight: 400;

@@ -51,8 +51,6 @@ function clickReleaseKey(e) {
         justify-content: center;
         align-items: center;
         grid-area: piano;
-        background: var(--bg-dark);
-        box-shadow: 0 0 30px rgb(5, 5, 5);
     }
 
     .key-container {
