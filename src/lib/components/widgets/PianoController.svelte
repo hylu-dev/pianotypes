@@ -33,13 +33,13 @@ function maxNoteSubmit(e) {
                     <option on:click={e => e.target.parentElement.blur()}>{ instr }</option>
                 {/each}
             </select>
-            <label for="instrument">Instrument</label>
+            <label for="instrument">instrument</label>
         </div>
     </div>
     <div class="flex-row">
         <div class="label-container">
             <InputNumber id="volume" max={127} min={0} inputValue={$piano.volume} on:change={e => $piano.setVolume(e.detail)}></InputNumber>
-            <label for="volume">Volume</label>
+            <label for="volume">volume</label>
         </div>
         <div class="label-container">
             <InputNumber id="velocity" max={127} min={0} inputValue={$piano.velocity} on:change={e => $piano.setVelocity(e.detail)}></InputNumber>
@@ -47,7 +47,7 @@ function maxNoteSubmit(e) {
         </div>
         <div class="label-container">
             <InputNumber id="reverb" max={1} min={0} step={.1} inputValue={$piano.reverb} on:change={e => $piano.setReverb(e.detail)}></InputNumber>
-            <label for="reverb">Reverb</label>
+            <label for="reverb">reverb</label>
         </div>
     </div>
     <div class="flex-row">
@@ -57,7 +57,7 @@ function maxNoteSubmit(e) {
                 <div class="arrow">&#10231;</div>
                 <InputNote id="max" inputNote={$piano.maxNote} on:change={maxNoteSubmit}></InputNote>
             </div>
-            <label for="range">Range</label>
+            <label for="range">range</label>
         </div>
     </div>
 </div>

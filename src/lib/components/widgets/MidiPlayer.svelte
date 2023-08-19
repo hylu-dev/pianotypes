@@ -94,7 +94,7 @@
 
 <div class="flex-col">
     <div class="flex-row">
-        <small style="color: var(--text-gold)">Midi Player</small>
+        <small style="color: var(--text-gold)">midi player</small>
     </div>
     <div class="flex-row">
         <div id="progress-container">
@@ -106,7 +106,7 @@
             {#if files && files[0]}
                 <span>{files[0].name}</span>
             {:else}
-                <span>Upload Midi</span>
+                <span>upload midi</span>
             {/if}
         </label>
         <input type="file" id="file-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>

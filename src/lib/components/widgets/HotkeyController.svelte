@@ -27,21 +27,21 @@ function controller(e) {
     <div class="flex-row">
         <div class="label-container">
             <input id="hotkey" type="checkbox" checked={$hotkey.showHotkeys} on:change={() => $hotkey.setHotkeys()}>
-            <label for="hotkey">Hotkeys</label>
+            <label for="hotkey">hotkeys</label>
         </div>
         <div class="label-container">
             <input id="guide" type="checkbox" checked={$hotkey.showHotkeyGuides} on:change={() => $hotkey.setGuides()}>
-            <label for="guide">Guides</label>
+            <label for="guide">guides</label>
         </div>            
     </div>
     <div class="flex-row">
         <div class="label-container">
             <InputNote id="hotkey" inputNote={$hotkey.base} on:change={e => $hotkey.setBase(e.detail)}></InputNote>
-            <label for="hotkey">Base</label>
+            <label for="hotkey">base</label>
         </div>
         <div class="label-container">
             <InputNumber id="split-offset"--width="4ch" max={88} min={0} inputValue={$hotkey.splitOffset} on:change={e => $hotkey.setSplitOffset(parseInt(e.detail))}></InputNumber>
-            <label for="split-offset">Split</label>
+            <label for="split-offset">split</label>
         </div>            
     </div>
     <div class="flex-row">

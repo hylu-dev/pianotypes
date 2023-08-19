@@ -88,7 +88,7 @@ function stopPiano() {
             {#if files && files[0]}
                 <span>{files[0].name}</span>
             {:else}
-                <span>Upload Midi</span>
+                <span>upload midi</span>
             {/if}
         </label>
         <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
@@ -98,15 +98,15 @@ function stopPiano() {
     <div class="flex-row">
         <div class="label-container">
             <InputNumber id="steps" max={999} min={0} step={10} inputValue={steps} on:change={e => steps = e.detail}></InputNumber>
-            <label for="steps">Steps</label>
+            <label for="steps">steps</label>
         </div>
         <div class="label-container">
             <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} inputValue={temperature} on:change={e => temperature = e.detail}></InputNumber>
-            <label for="temp">Temperature</label>
+            <label for="temp">temperature</label>
         </div>
         <div class="label-container">
             <input id="trim" type="checkbox" bind:checked={trim}>
-            <label for="trim">Trim</label>    
+            <label for="trim">trim</label>    
         </div>
     </div>
     <div class="flex-row">
