@@ -141,7 +141,6 @@ class HotkeyStore {
         return [...this.lr1, ...this.lr2, ...this.lr3, ...this.lr4].includes(key);
     }
 
-
     // Anything with a subscribe function is a store
     subscribe(subscriber) {
 		return this._store.subscribe(subscriber)

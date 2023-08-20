@@ -77,9 +77,10 @@ class PianoStore {
     //keys
     pressKey(note, velocity=this.velocity, dry=false) {
         note = this._normalize(note);
-        if (!this.isRange(note)) return;
+
         if (Note.midi(note) <= Note.midi(this.minNote)) this.setMin(note);
-        if (Note.midi(note) >= Note.midi(this.maxNote)) this.setMax(note);
+        else if (Note.midi(note) >= Note.midi(this.maxNote)) this.setMax(note);
+        
         this.keyStateDict[note].isPressed = true;
         this.lastPress = note;
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
@@ -88,7 +89,6 @@ class PianoStore {
     }
     releaseKey(note, dry=false) {
         note = this._normalize(note);
-        if (!this.isRange(note)) return;
 
         this.keyStateDict[note].isPressed = false;
         this.lastRelease = note;
@@ -154,8 +154,8 @@ class PianoStore {
         if (enforceWhite) newMax = newMax.charAt(0) + newMax.slice(-1);
         if (enforceWhite) newMin = newMin.charAt(0) + newMin.slice(-1);
         if (Note.midi(newMax) < Note.midi(newMin)) return;
-        this.isRange(newMax) ? this.maxNote = newMax : this.maxNote = Note.fromMidi(127);
-        this.isRange(newMin) ? this.minNote = newMin : this.minNote = Note.fromMidi(21);
+        this.maxNote = this.isRange(newMax) ? newMax : Note.fromMidi(127);
+        this.minNote= this.isRange(newMin) ? newMin : Note.fromMidi(21);
         this.updateKeyboard();
     }
     setMin(note) {
