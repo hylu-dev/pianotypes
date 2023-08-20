@@ -18,7 +18,7 @@ function controller(e) {
 
 function handleInstrumentChange(e) {
     $piano.setInstrument(e.target.value);
-    toastMessage.set(`Instrument set to ${e.target.value.replace('_', ' ')}`)
+    toastMessage.set(`Instrument set to ${e.target.value}`)
 }
 
 </script>
