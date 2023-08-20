@@ -17,7 +17,7 @@ let isDragging = false;
 
 // https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
 function countDecimals(value) {
-    if (Math.floor(value) !== value)
+    if (~~value !== value)
         return value.toString().split(".")[1].length || 0;
     return 0;
 }
