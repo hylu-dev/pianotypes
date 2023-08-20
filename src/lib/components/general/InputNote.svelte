@@ -1,5 +1,5 @@
 <script>
-import { Note } from 'tonal';
+import { Note, Interval } from 'tonal';
 import { inputFocused } from '$lib/stores/GlobalStore'
 import { createEventDispatcher } from 'svelte';
 
@@ -9,19 +9,21 @@ export let inputNote = 'C4';
 const dispatch = createEventDispatcher();
 
 let valueAtClick = inputNote;
-let startMousePos = 0;
+let startMousePos = [0, 0];
 let isDragging = false;
 
 function trackValue(e) {
     if (isDragging) {
-        const dist = Math.ceil(startMousePos-e.clientY);
-        startMousePos = e.clientY;
+        const distY = startMousePos[1]-e.clientY;
+        const distX = e.clientX - startMousePos[0];
+        let dist = (distX+distY);
+        dist = ~~(dist/4);
+        
         let newNote;
-        if (dist > 0){
-            newNote = Note.simplify(Note.transpose(inputNote, "2m"));
-        } else {
-            newNote = Note.simplify(Note.transpose(inputNote, "-2m"));
-        }
+        let interval = Interval.fromSemitones(dist)
+        console.log(interval);
+        newNote = Note.simplify(Note.transpose(valueAtClick, interval));
+
         if (inRange(newNote)) {
             inputNote = newNote;
             dispatch('change', Note.simplify(inputNote));
@@ -30,7 +32,7 @@ function trackValue(e) {
 }
 
 function handleMouseDown(e) {
-    startMousePos = e.clientY;
+    startMousePos = [e.clientX, e.clientY];
     isDragging = true;
     valueAtClick = inputNote;
 }

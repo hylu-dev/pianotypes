@@ -12,7 +12,7 @@ const dispatch = createEventDispatcher();
 
 let decimals = countDecimals(step);
 let valueAtClick = inputValue;
-let startMousePos = 0;
+let startMousePos = [0, 0];
 let isDragging = false;
 
 // https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
@@ -25,7 +25,10 @@ function countDecimals(value) {
 // References https://codepen.io/DarkStar66/pen/eBrdrY
 function trackValue(e) {
     if (isDragging) {
-        const dist = Math.ceil(startMousePos-e.clientY);
+        const distX = e.clientX - startMousePos[0];
+        const distY = startMousePos[1]-e.clientY;
+        const dist = ~~(distX+distY);
+
         let increment = step*dist/10;
         let value = valueAtClick + increment;
         value = parseFloat(value.toFixed(decimals))
@@ -44,7 +47,7 @@ function resetIfNaN() {
 }
 
 function handleMouseDown(e) {
-    startMousePos = e.clientY;
+    startMousePos = [e.clientX, e.clientY];
     isDragging = true;
     valueAtClick = !Number.isFinite(valueAtClick) ? 0 : inputValue;
 }
