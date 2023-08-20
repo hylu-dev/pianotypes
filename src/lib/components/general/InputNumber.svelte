@@ -37,7 +37,7 @@ function trackValue(e) {
 }
 
 function resetIfNaN() {
-    if (!Number.isFinite(inputValue)) {
+    if (!Number.isFinite(parseInt(inputValue))) {
         inputValue = valueAtClick;
         dispatch('change', inputValue)
     }

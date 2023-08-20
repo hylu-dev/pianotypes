@@ -60,15 +60,18 @@ class PianoStore {
         if (value > 127) {value = 127};
         this.volume = value;
         this.player.output.setVolume(value);
+        this._store.set(this)
     }
     setVelocity(value) {
         if (value > 127) {value = 127};
         this.velocity = value;
+        this._store.set(this)
     }
     setReverb(value) {
         if (value > 127) {value = 127};
         this.reverb = value;
         this.player.output.sendEffect("reverb", value);
+        this._store.set(this)
     }
     // range clamp between A0 - G9 | midi: 21 - 127
     isRange(note) {
