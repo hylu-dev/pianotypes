@@ -48,6 +48,12 @@ function inRange(note) {
     return (Note.midi(note) >= 21 && Note.midi(note) <= 127)
 }
 
+function keyBlur(e) {
+    if (e.key === "Enter") {
+        e.target.blur();
+    }
+}
+
 </script>
 
 <svelte:window on:mousemove={trackValue} on:mouseup={handleMouseUp}/>
@@ -58,6 +64,7 @@ on:change={handleChange}
 on:mousedown={handleMouseDown}
 on:focusin={() => inputFocused.set(true)}
 on:focusout={() => inputFocused.set(false)}
+on:keypress={keyBlur}
 bind:value={inputNote}
 maxlength={4}
 type="text">

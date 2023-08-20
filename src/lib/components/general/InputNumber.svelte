@@ -61,6 +61,12 @@ function handleChange(e) {
     dispatch('change', value);
 }
 
+function keyBlur(e) {
+    if (e.key === "Enter") {
+        e.target.blur();
+    }
+}
+
 </script>
 
 <svelte:window on:mousemove={trackValue} on:mouseup={handleMouseUp}/>
@@ -75,6 +81,7 @@ on:mousedown={handleMouseDown}
 on:blur={() => resetIfNaN()}
 on:focusin={() => inputFocused.set(true)}
 on:focusout={() => inputFocused.set(false)}
+on:keypress={keyBlur}
 bind:value={inputValue}
 pattern="[0-9]+"
 type="number">
