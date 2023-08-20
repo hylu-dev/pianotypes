@@ -1,6 +1,7 @@
 <script>
     import '$lib/styles/app.css'
     import '$lib/styles/iconfonts/style.css'
+    import Toast from '$lib/components/general/Toast.svelte';
 </script>
 
 <div class="vertical-flex-container">
@@ -21,11 +22,13 @@
     <div class="vertical-flex-child">
         <slot />
     </div>
+    <Toast></Toast>
 </div>
 
 
 <style>
 .vertical-flex-container {
+    position: relative;
     display: flex;
     flex-flow: column;
     height: 100vh;

@@ -1,6 +1,7 @@
 <script>
     import MidiPlayer from 'midi-player-js';
     import piano from '$lib/stores/PianoStore'
+    import { toastMessage } from '$lib/stores/GlobalStore'
 
     const midiPlayer = new MidiPlayer.Player();
 
@@ -15,6 +16,7 @@
     midiPlayer.on('fileLoaded', function() {
         loaded = true;
         songProgress = 0;
+        toastMessage.set(`Loaded: ${files[0].name}`);
     });
 
     midiPlayer.on('midiEvent', function(e) {
@@ -62,12 +64,14 @@
     function playMidi() {
         isPlaying = true;
         midiPlayer.play();
+        toastMessage.set("Playback started");
     }
 
     function pauseMidi() {
         midiPlayer.pause();
         isPlaying = false;
         $piano.releaseAll();
+        toastMessage.set("Playback paused");
     }
 
     function skipMidi() {
@@ -75,6 +79,7 @@
             midiPlayer.skipToPercent(songProgress + 5);
             songProgress += 5;
             updateSongTime(midiPlayer.getSongTimeRemaining());
+            toastMessage.set(`Skip to ${songTime}`);
         }
         $piano.releaseAll();
         if (isPlaying) midiPlayer.play();

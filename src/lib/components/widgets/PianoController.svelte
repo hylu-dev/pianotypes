@@ -3,6 +3,7 @@ import piano from '$lib/stores/PianoStore'
 import { getSoundfontNames } from "smplr";
 import InputNumber from '../general/InputNumber.svelte';
 import InputNote from '../general/InputNote.svelte';
+import { toastMessage } from '$lib/stores/GlobalStore'
 
 function controller(e) {
     const interval = e.ctrlKey ? "8P" : "2M";
@@ -14,13 +15,19 @@ function controller(e) {
         $piano.stepRange("-"+interval, true);
     }
 }
+
+function handleInstrumentChange(e) {
+    $piano.setInstrument(e.target.value);
+    toastMessage.set(`Instrument set to ${e.target.value.replace('_', ' ')}`)
+}
+
 </script>
 
 <svelte:window on:keydown={controller}/>
 <div class="flex-col">
     <div class="flex-row">
         <div class="label-container">
-            <select value={$piano.instrument} on:change={e => $piano.setInstrument(e.target.value)} on:keydown={e => e.target.blur()}>
+            <select value={$piano.instrument} on:change={handleInstrumentChange} on:keydown={e => e.target.blur()}>
                 {#each getSoundfontNames() as instr (instr)}
                     <option on:click={e => e.target.parentElement.blur()}>{ instr }</option>
                 {/each}

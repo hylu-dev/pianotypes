@@ -2,6 +2,7 @@
 import piano from '$lib/stores/PianoStore'
 import InputNumber from '../general/InputNumber.svelte';
 import { onMount } from 'svelte'
+import { toastMessage } from '$lib/stores/GlobalStore'
 
 let mm;
 let music_rnn;
@@ -9,7 +10,6 @@ let files = '';
 let temperature = .7;
 let steps = 200;
 let trim = true;
-let error = '';
 let loading = false;
 let seq;
 
@@ -31,7 +31,7 @@ function loadFile(e) {
         seq = mm.sequences.mergeInstruments(seq);
         seq = mm.sequences.applySustainControlChanges(seq);
         console.log(seq);
-        console.log(`Loaded ${seq.notes.length} notes`)
+        toastMessage.set(`Song duration ${~~seq.totalTime}s - Loaded ${seq.notes.length} notes`);
     }
 }
 
@@ -39,7 +39,7 @@ function playMidiFromFile() {
     $piano.player.stop();
     let sample = seq;
     if (trim) sample = mm.sequences.trim(seq, 0, 60);
-    console.log(`Playing ${sample.notes.length} notes`)
+    toastMessage.set(`Scheduled ${sample.notes.length} notes`)
     sample.notes.forEach(note => {
         $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
     })
@@ -47,7 +47,6 @@ function playMidiFromFile() {
 
 async function playGenerativeFromFile() {
     loading = true;
-    error = '';
     try {
         let sample = seq;
         if (trim) sample = mm.sequences.trim(seq, 0, 60);
@@ -57,16 +56,15 @@ async function playGenerativeFromFile() {
             .then(sample => {
                 playFromQuantizedSample(sample)
             }).catch(err => {
-                console.log(err);
-                error = err;
+                toastMessage.set(`Incompatible Midi ${err}`);
             })
     } catch (err) {
-        console.log(err);
-        error = err;
+        toastMessage.set(`Incompatible Midi ${err}`);
     }
 }
 
 function playFromQuantizedSample(sample) {
+    toastMessage.set(`Scheduled ${sample.notes.length} notes`)
     const secondsPerQuarterNote = 1/(sample.tempos[0]['qpm']/60);
     const stepsPerQuarter = sample.quantizationInfo['stepsPerQuarter'];
     const tempoMultiplier = secondsPerQuarterNote/stepsPerQuarter
@@ -79,6 +77,7 @@ function playFromQuantizedSample(sample) {
 
 function stopPiano() {
     $piano.releaseAll();
+    toastMessage.set(`Stopping scheduled notes`);
 }
 </script>
 
@@ -113,26 +112,12 @@ function stopPiano() {
     <div class="flex-row">
         <button class:disabled={!seq} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
     </div>
-    
 </div>
-{#if error}<div class="flex-col error">{error}</div>{/if}
 {/if}
 
 <style>
     .hanging:active {
         filter: invert(1);
-    }
-
-    .error {
-        font-size: .5em;
-        color:red;
-        text-align: center;
-        white-space: wrap;
-        width: 50px;
-        box-sizing: border-box;
-        overflow-y: auto;
-        overflow-x: hidden;
-        word-wrap: break-word;
     }
 
     .flex-col {

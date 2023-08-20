@@ -61,7 +61,7 @@ function liftPedal(e) {
         height: 3rem;
         border-radius: 5%;
         box-sizing: border-box;
-        background: var(--bg-dark-grey);
+        background: var(--bg-grey);
     }
 
     .icon-soft-pedal, .icon-sostenuto-pedal, .icon-sustain-pedal {
