@@ -208,3 +208,13 @@ select:hover {
     radial-gradient(circle at 0    50%, #111 5%, #222 5%, #222 15%, #111 15%, #111 20%, #222 20%, #222 29%, #111 29%, #111 34%, #222 34%, #222 44%, #111 44%, #111 49%, transparent 49%, transparent);
     background-size: 100px 50px;
 }
+
+.carbon {
+    background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+    background-color:#111;
+    background-size:16px 16px;
+}
