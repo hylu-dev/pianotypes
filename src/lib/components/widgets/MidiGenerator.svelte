@@ -31,26 +31,25 @@ function loadFile(e) {
         seq = mm.sequences.mergeInstruments(seq);
         seq = mm.sequences.applySustainControlChanges(seq);
         console.log(seq);
-        toastMessage.set(`Song duration ${~~seq.totalTime}s - Loaded ${seq.notes.length} notes`);
+        toastMessage.set(`Loaded ${seq.notes.length} notes (${~~seq.totalTime} sec)`);
     }
 }
 
 function playMidiFromFile() {
     $piano.player.stop();
     let sample = seq;
-    if (trim) sample = mm.sequences.trim(seq, 0, 60);
-    
-    toastMessage.set(`Scheduled ${sample.notes.length} notes`)
-
+    if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, 60));
+    toastMessage.set(`Scheduled ${sample.notes.length} notes (${~~sample.totalTime} sec)`)
     sample.notes.forEach(note => {
         $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
     })
+    $piano.scheduleCallback(sample.totalTime, () => toastMessage.set("Playback finished"));
 }
 
 async function playGenerativeFromFile() {
     try {
         let sample = seq;
-        if (trim) sample = mm.sequences.trim(seq, 0, 60);
+        if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, 60));
         let qns = mm.sequences.quantizeNoteSequence(sample, 4);
         music_rnn
             .continueSequence(qns, steps, temperature)
@@ -65,17 +64,18 @@ async function playGenerativeFromFile() {
 }
 
 function playFromQuantizedSample(sample) {
-    toastMessage.set(`Scheduled ${sample.notes.length} notes`)
     const stepsPerSecond = mm.sequences.stepsPerQuarterToStepsPerSecond(
         sample.quantizationInfo['stepsPerQuarter'],
         sample.tempos[0]['qpm']
     );
-
+    const totalLength = sample.totalQuantizedSteps/stepsPerSecond;
+    toastMessage.set(`Scheduled ${sample.notes.length} notes (${totalLength} sec)`)
     sample.notes.forEach(note => {
         const duration = note.quantizedEndStep/stepsPerSecond;
         const time = note.quantizedStartStep/stepsPerSecond;
         $piano.scheduleKey(note.pitch, undefined, time, duration);
     })
+    $piano.scheduleCallback(totalLength, () => toastMessage.set("Playback finished"));
 }
 
 function stopPiano() {

@@ -106,19 +106,21 @@ class PianoStore {
     scheduleKey(note, velocity=this.velocity, delay, duration) {
         note = this._normalize(note);
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
-        const time = this.ac.currentTime;
+        this.scheduleCallback(delay, () => this.pressKey(note, undefined, true)); // schedule dry key press
+        this.player.start({
+            note: note,
+            velocity: velocity,
+            time: this.ac.currentTime+delay,
+            duration: duration, onEnded: () => this.releaseKey(note, true)
+        });
+    }
+    scheduleCallback(delay, callback){
         // using an empty oscillator for timing purposes
         const osc = this.timingContext.createOscillator();
-        osc.start(time+delay);
-        osc.stop(time+delay);
-        osc.onended = () => {
-            this.pressKey(note, undefined, true);
-        };
+        osc.start(this.ac.currentTime+delay);
+        osc.stop(this.ac.currentTime+delay);
+        osc.onended = callback;
         this.timingNodes.push(osc);
-
-        this.player.start({ note: note, velocity: velocity, time: time+delay, duration: duration, onEnded: () => {
-            this.releaseKey(note, true);
-        } });
     }
     getIsPressed(note) {
         if (this.keyStateDict[note]) return this.keyStateDict[note].isPressed;

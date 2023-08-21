@@ -21,7 +21,6 @@ function trackValue(e) {
         
         let newNote;
         let interval = Interval.fromSemitones(dist)
-        console.log(interval);
         newNote = Note.simplify(Note.transpose(valueAtClick, interval));
 
         if (inRange(newNote)) {
