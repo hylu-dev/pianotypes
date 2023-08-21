@@ -24,7 +24,6 @@ function releaseKey(e) {
 
 // Seperate handlers for mouse click event
 function clickPressKey(e) {
-    $piano.ac.resume();
     $piano.pressKey(e.detail); 
 }
 function clickReleaseKey(e) {

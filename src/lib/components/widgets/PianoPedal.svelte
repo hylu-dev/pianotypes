@@ -29,7 +29,7 @@ function liftPedal(e) {
         $piano.setSostenutoPedal(false);
     }
     // Soft
-    if (e.key == "Shift" && !e.ctrlKey) {
+    if (e.code == "ShiftLeft" && !e.ctrlKey) {
         $piano.setSoftPedal(false);
     }
 }
