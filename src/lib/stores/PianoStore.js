@@ -21,14 +21,16 @@ class PianoStore {
         this.softMultiplier = .7;
         this.player;
         this.ac;
+        this.timingContext;
+        this.timingNodes = [];
         this.lastPress = "";
         this.lastRelease = "";
         this._store = writable(this)
         // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
+        this.timingContext = new AudioContext();
         this.updateInstrument();
-        // generate base copies to quickly reset on updates
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
         this.updateKeyboard();
     }
@@ -44,7 +46,7 @@ class PianoStore {
     }
     updateInstrument() {
         if (this.ac) {this.player.stop();this.ac.close()};
-        this.ac = new AudioContext;
+        this.ac = new AudioContext();
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
@@ -105,20 +107,17 @@ class PianoStore {
         note = this._normalize(note);
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
         const time = this.ac.currentTime;
-
-        // const osc = this.ac.createOscillator();
-        // osc.start(time+delay);
-        // osc.stop(time+delay);
-        // osc.onended = () => {
-        //     console.log("Test");
-        // };
-
-        const timeoutId = setTimeout(() => {
+        // using an empty oscillator for timing purposes
+        const osc = this.timingContext.createOscillator();
+        osc.start(time+delay);
+        osc.stop(time+delay);
+        osc.onended = () => {
             this.pressKey(note, undefined, true);
-        }, delay*1000);
+        };
+        this.timingNodes.push(osc);
+
         this.player.start({ note: note, velocity: velocity, time: time+delay, duration: duration, onEnded: () => {
             this.releaseKey(note, true);
-            clearTimeout(timeoutId)
         } });
     }
     getIsPressed(note) {
@@ -152,7 +151,16 @@ class PianoStore {
     }
     releaseAll() {
         this.player.stop();
+        this.releaseTimingNodes();
         this.updateKeyboard();
+    }
+    releaseTimingNodes() {
+        if (this.timingNodes.length) {
+            this.timingNodes[this.timingNodes.length-1].onended = () => {
+                this.updateKeyboard();
+            }
+            this.timingNodes.forEach(node => node.stop());
+        }
     }
     //instrument
     setInstrument(instrument) {
