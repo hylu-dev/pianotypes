@@ -10,8 +10,8 @@ let files = '';
 let temperature = .7;
 let steps = 200;
 let trim = true;
-let loading = false;
 let seq;
+let intervalId = 0;
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -39,14 +39,15 @@ function playMidiFromFile() {
     $piano.player.stop();
     let sample = seq;
     if (trim) sample = mm.sequences.trim(seq, 0, 60);
+    
     toastMessage.set(`Scheduled ${sample.notes.length} notes`)
+
     sample.notes.forEach(note => {
         $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
     })
 }
 
 async function playGenerativeFromFile() {
-    loading = true;
     try {
         let sample = seq;
         if (trim) sample = mm.sequences.trim(seq, 0, 60);
@@ -65,12 +66,14 @@ async function playGenerativeFromFile() {
 
 function playFromQuantizedSample(sample) {
     toastMessage.set(`Scheduled ${sample.notes.length} notes`)
-    const secondsPerQuarterNote = 1/(sample.tempos[0]['qpm']/60);
-    const stepsPerQuarter = sample.quantizationInfo['stepsPerQuarter'];
-    const tempoMultiplier = secondsPerQuarterNote/stepsPerQuarter
+    const stepsPerSecond = mm.sequences.stepsPerQuarterToStepsPerSecond(
+        sample.quantizationInfo['stepsPerQuarter'],
+        sample.tempos[0]['qpm']
+    );
+
     sample.notes.forEach(note => {
-        let duration = note.quantizedEndStep*tempoMultiplier;
-        let time = note.quantizedStartStep*tempoMultiplier;
+        const duration = note.quantizedEndStep/stepsPerSecond;
+        const time = note.quantizedStartStep/stepsPerSecond;
         $piano.scheduleKey(note.pitch, undefined, time, duration);
     })
 }
@@ -105,7 +108,7 @@ function stopPiano() {
             <label for="temp">temperature</label>
         </div>
         <div class="label-container">
-            <input id="trim" type="checkbox" bind:checked={trim}>
+            <input id="trim" type="checkbox" bind:checked={trim} on:change={() => toastMessage.set(`Trim song to 60 seconds: ${trim}`)}>
             <label for="trim">trim</label>    
         </div>
     </div>

@@ -8,7 +8,6 @@
 
     $: {
         if ($toastMessage) {
-            console.log(`Message: ${$toastMessage}`);
             clearTimeout(timeoutId);
             show.set(true);
         }

@@ -27,7 +27,6 @@ class PianoStore {
         // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
-        this.ac = new AudioContext()
         this.updateInstrument();
         // generate base copies to quickly reset on updates
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
@@ -44,7 +43,8 @@ class PianoStore {
         this._store.set(this);
     }
     updateInstrument() {
-        // WARNING: Currently smplr starts to lag after switching instruments multiple times. Soundfonts memory leaking?
+        if (this.ac) {this.player.stop();this.ac.close()};
+        this.ac = new AudioContext;
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
@@ -88,6 +88,7 @@ class PianoStore {
         this.lastPress = note;
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
         if (!dry) this.player.start({ note: note, velocity: velocity });
+
         this._store.set(this);
     }
     releaseKey(note, dry=false) {
@@ -104,6 +105,14 @@ class PianoStore {
         note = this._normalize(note);
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
         const time = this.ac.currentTime;
+
+        // const osc = this.ac.createOscillator();
+        // osc.start(time+delay);
+        // osc.stop(time+delay);
+        // osc.onended = () => {
+        //     console.log("Test");
+        // };
+
         const timeoutId = setTimeout(() => {
             this.pressKey(note, undefined, true);
         }, delay*1000);
