@@ -73,7 +73,7 @@ $: {
         width: 100%;
         height: 100%;
         border-radius: 3px;
-        box-shadow: 0 0 10px black;
+        box-shadow: 0px 0px 3px 1px black;
     }
 
     .ribbon-wrapper {

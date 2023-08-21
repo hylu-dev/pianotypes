@@ -75,7 +75,7 @@ function toggleTray(e) {
         display: flex;
         justify-content: center;
         height: 100%;
-        background-color: black;
+        background-color: var(--bg-darkest);
         padding: 1rem;
         box-sizing: border-box;
         border-radius: .5rem;

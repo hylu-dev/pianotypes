@@ -215,6 +215,15 @@ select:hover {
     radial-gradient(black 15%, transparent 16%) 8px 8px,
     radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
     radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
-    background-color:#111;
+    background-color:#191919;
     background-size:16px 16px;
+}
+
+.brick {
+    background-image: linear-gradient(45deg, transparent 20%, black 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, black 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 75%, black 80%, transparent 0),
+    radial-gradient(#111 2px, transparent 0);
+    background-size: 30px 30px, 30px 30px;
+    background-color: #222;
 }
