@@ -29,7 +29,6 @@ class PianoStore {
         // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
     init() {
-        this.timingContext = new AudioContext();
         this.updateInstrument();
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
         this.updateKeyboard();
@@ -47,6 +46,8 @@ class PianoStore {
     updateInstrument() {
         if (this.ac) {this.player.stop();this.ac.close()};
         this.ac = new AudioContext();
+        if (this.timingContext) this.timingContext.close()
+        this.timingContext = new AudioContext();
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
         });
