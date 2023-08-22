@@ -1,6 +1,7 @@
 import { Note, Range } from "tonal";
 import { Reverb, Soundfont } from "smplr";
 import { writable, derived } from 'svelte/store';
+import { toastMessage } from "./GlobalStore";
 
 // Reactive Svelte class https://www.youtube.com/watch?v=oQY98LZIW2E - lihautan
 
@@ -56,6 +57,9 @@ class PianoStore {
             if (this.player) this.player.stop()
             this.player = soundfont
             this._store.set(this)
+            this.scheduleCallback(0, () => {
+                toastMessage.set(`Loaded ${this.instrument}`)
+            } )
         });
     }
     setVolume(value) {
@@ -117,8 +121,8 @@ class PianoStore {
     scheduleCallback(delay, callback){
         // using an empty oscillator for timing purposes
         const osc = this.timingContext.createOscillator();
-        osc.start(this.ac.currentTime+delay);
-        osc.stop(this.ac.currentTime+delay);
+        osc.start(this.timingContext.currentTime+delay);
+        osc.stop(this.timingContext.currentTime+delay);
         osc.onended = callback;
         this.timingNodes.push(osc);
     }
@@ -162,7 +166,7 @@ class PianoStore {
                 node.onended = null;
                 node.stop()
             });
-            this.scheduleCallback(() => this.updateKeyboard());
+            this.scheduleCallback(0, () => this.updateKeyboard());
         }
     }
     //instrument
