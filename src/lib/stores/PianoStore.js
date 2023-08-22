@@ -46,7 +46,7 @@ class PianoStore {
     updateInstrument() {
         if (this.ac) {this.player.stop();this.ac.close()};
         this.ac = new AudioContext();
-        if (this.timingContext) this.timingContext.close()
+        if (this.timingContext) this.timingContext.close();
         this.timingContext = new AudioContext();
         const soundfont = new Soundfont(this.ac, {
             instrument: this.instrument
