@@ -22,6 +22,7 @@ onMount(() => {
 
 function loadFile(e) {
     $piano.releaseAll();
+    $piano.updateInstrument(); // ensure AudioContext timers are synced
     const file = e.target.files[0];
     const reader = new FileReader();
     if (file) reader.readAsArrayBuffer(file);
