@@ -159,10 +159,11 @@ class PianoStore {
     }
     releaseTimingNodes() {
         if (this.timingNodes.length) {
-            this.timingNodes[this.timingNodes.length-1].onended = () => {
-                this.updateKeyboard();
-            }
-            this.timingNodes.forEach(node => node.stop());
+            this.timingNodes.forEach(node => {
+                node.onended = null;
+                node.stop()
+            });
+            this.scheduleCallback(() => this.updateKeyboard());
         }
     }
     //instrument

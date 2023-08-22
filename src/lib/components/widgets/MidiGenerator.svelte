@@ -79,8 +79,8 @@ function playFromQuantizedSample(sample) {
 }
 
 function stopPiano() {
-    $piano.releaseAll();
     toastMessage.set(`Stopping scheduled notes`);
+    $piano.releaseAll();
 }
 </script>
 
