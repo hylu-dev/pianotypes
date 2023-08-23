@@ -47,6 +47,7 @@ function resetIfNaN() {
 }
 
 function handleMouseDown(e) {
+    e.target.select();
     startMousePos = [e.clientX, e.clientY];
     isDragging = true;
     valueAtClick = !Number.isFinite(valueAtClick) ? 0 : inputValue;
@@ -92,7 +93,7 @@ type="number">
 <style>
     input[type='number'] {
         cursor: n-resize;
-        width: var(--width, 6ch);
+        width: var(--width, 4ch);
         height: var(--height, 2ch);
     }
 

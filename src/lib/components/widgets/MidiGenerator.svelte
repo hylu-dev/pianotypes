@@ -9,7 +9,8 @@ let music_rnn;
 let files = '';
 let temperature = .7;
 let steps = 200;
-let trim = true;
+let trim = false;
+let trimLength = 60;
 let seq;
 let intervalId = 0;
 
@@ -39,7 +40,7 @@ function loadFile(e) {
 function playMidiFromFile() {
     $piano.player.stop();
     let sample = seq;
-    if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, 60));
+    if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, trimLength));
     toastMessage.set(`Scheduled ${sample.notes.length} notes (${~~sample.totalTime} sec)`)
     sample.notes.forEach(note => {
         $piano.scheduleKey(note.pitch, parseInt(note.velocity), note.startTime, note.endTime-note.startTime);
@@ -50,7 +51,7 @@ function playMidiFromFile() {
 async function playGenerativeFromFile() {
     try {
         let sample = seq;
-        if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, 60));
+        if (trim) sample = mm.sequences.trim(seq, 0, Math.min(sample.totalTime, trimLength));
         let qns = mm.sequences.quantizeNoteSequence(sample, 4);
         music_rnn
             .continueSequence(qns, steps, temperature)
@@ -86,46 +87,70 @@ function stopPiano() {
 </script>
 
 {#if mm}
-<div class="flex-col container">
+<div class="flex-col">
     <div class="flex-row">
-        <label for="midi-upload" class="file-input">
-            {#if files && files[0]}
-                <span>{files[0].name}</span>
-            {:else}
-                <span>upload midi</span>
-            {/if}
-        </label>
-        <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
-        <button class:disabled={!seq} class="hanging" on:click={stopPiano}>&#9724;</button>
-        <button class:disabled={!seq} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
+        <small style="color: var(--text-gold)">magenta.js</small>
     </div>
     <div class="flex-row">
-        <div class="label-container">
-            <InputNumber id="steps" max={999} min={0} step={10} inputValue={steps} on:change={e => steps = e.detail}></InputNumber>
-            <label for="steps">steps</label>
+        <div class="flex-col half-col">
+            <label for="midi-upload" class="file-input">
+                {#if files && files[0]}
+                    <span>{files[0].name}</span>
+                {:else}
+                    <span>upload midi</span>
+                {/if}
+            </label>
+            <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
+            <div class="flex-row">
+                <button class:disabled={!seq} class="hanging" on:click={stopPiano}>&#9724;</button>
+                <button class:disabled={!seq} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
+            </div>
+            <div class="flex-row">
+                <div class="label-container">
+                    <input id="trim" type="checkbox" bind:checked={trim} on:change={() => trim ? toastMessage.set(`Trim song to ${trimLength} seconds`):null}>
+                    <label for="trim">trim</label>    
+                </div>
+                <div class="label-container" class:disabled={!trim}>
+                    <InputNumber id="trim-length" max={999} min={0} step={1} inputValue={trimLength} on:change={ e => trimLength = e.detail}></InputNumber>
+                    <label for="trim-length">length</label>    
+                </div>
+            </div>
         </div>
-        <div class="label-container">
-            <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} inputValue={temperature} on:change={e => temperature = e.detail}></InputNumber>
-            <label for="temp">temperature</label>
+        <div class="vertical-line-break"></div>
+        <div class="flex-col half-col">
+            <div class="label-container">
+                <InputNumber id="steps" max={999} min={0} step={10} inputValue={steps} on:change={e => steps = e.detail}></InputNumber>
+                <label for="steps">steps</label>
+            </div>
+            <div class="label-container">
+                <InputNumber id="temp" --width="4ch" max={99} min={0} step={.1} inputValue={temperature} on:change={e => temperature = e.detail}></InputNumber>
+                <label for="temp">temperature</label>
+            </div>
+            <button class:disabled={!seq} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
         </div>
-        <div class="label-container">
-            <input id="trim" type="checkbox" bind:checked={trim} on:change={() => toastMessage.set(`Trim song to 60 seconds: ${trim}`)}>
-            <label for="trim">trim</label>    
-        </div>
-    </div>
-    <div class="flex-row">
-        <button class:disabled={!seq} class="hanging" on:click={playGenerativeFromFile}>Generate</button>
     </div>
 </div>
 {/if}
 
 <style>
+    .vertical-line-break {
+        width: 0;
+        height: 100%;
+        border-radius: 5px;
+        border: solid 1px var(--bg-dark-grey);
+    }
+
     .hanging:active {
         filter: invert(1);
     }
 
+    .half-col {
+        width: 50%;
+    }
+
     .flex-col {
         max-width: 150px;
+        gap: 0.4rem;
     }
 
     .flex-row {

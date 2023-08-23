@@ -31,6 +31,7 @@ function trackValue(e) {
 }
 
 function handleMouseDown(e) {
+    e.target.select();
     startMousePos = [e.clientX, e.clientY];
     isDragging = true;
     valueAtClick = inputNote;
@@ -73,7 +74,7 @@ type="text">
 <style>
     input {
         cursor: n-resize;
-        width: var(--width, 4ch);
+        width: var(--width, 3ch);
         height: var(--height, 2ch);
     }
 
