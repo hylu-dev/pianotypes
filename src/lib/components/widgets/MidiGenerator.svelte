@@ -12,7 +12,6 @@ let steps = 200;
 let trim = false;
 let trimLength = 60;
 let seq;
-let intervalId = 0;
 
 onMount(() => {
     // Hacky way to get magentajs through cdn since I can't import it as an esModule :/
@@ -23,7 +22,6 @@ onMount(() => {
 
 function loadFile(e) {
     $piano.releaseAll();
-    $piano.updateInstrument(); // ensure AudioContext timers are synced
     const file = e.target.files[0];
     const reader = new FileReader();
     if (file) reader.readAsArrayBuffer(file);

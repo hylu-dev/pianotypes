@@ -1,41 +1,106 @@
 <script>
+import OptionsBlock from "./OptionsBlock.svelte";
 import PianoController from "./widgets/PianoController.svelte";
 import HotkeyController from "./widgets/HotkeyController.svelte";
 import PianoPedal from "./widgets/PianoPedal.svelte";
 import MidiPlayer from "./widgets/MidiPlayer.svelte";
 import MidiGenerator from "./widgets/MidiGenerator.svelte";
 
-let hidden = true;
+let hideTray = true;
 
 function toggleTray(e) {
     if (e.key === 'Tab') {
-        hidden = !hidden
+        hideTray = !hideTray
     }
 }
 
 </script> 
 
 <svelte:window on:keydown={toggleTray}/>
-<div id="options-tray" class:hidden>
+<div id="options-tray" class:hideTray>
     <div id="options-wrapper">
-        <div class="options-block">
-            <PianoPedal></PianoPedal>
-        </div>
-        <div class="options-block">
-            <PianoController></PianoController>
-        </div>
-        <div class="options-block">
-            <HotkeyController></HotkeyController>
-        </div>
-        <div class="options-block">
-            <MidiPlayer></MidiPlayer>
-        </div>
-        <div class="options-block">
-            <MidiGenerator></MidiGenerator>
-        </div>
+        <OptionsBlock>
+            <PianoPedal slot="content"></PianoPedal>
+            <div slot="info">
+                <p>
+                    piano pedalling
+                </p>
+                <ul>
+                     <li><b>sustain pedal</b> <em>space</em>: holds the duration of played notes</li>
+                     <li><b>sostenuto pedal</b> <em>rshift</em>: <b>unimplemented</b></li>   
+                     <li><b>soft pedal</b> <em>rshift</em>: softens velocity of played notes</li>   
+                </ul>
+            </div>
+        </OptionsBlock>
+        <OptionsBlock>
+            <PianoController slot="content"></PianoController>
+            <div slot="info">
+                <p>
+                    control piano sound and range
+                </p>
+                <ul>
+                     <li><b>instrument</b>: instrument selection from soundfont</li>
+                     <li><b>volume</b>: loudness of piano </li>   
+                     <li><b>velocity</b>: how hard notes are played. Can effect quality of sound in addition to loudness</li>
+                     <li><b>reverb</b>: sound decay</li>   
+                     <li><b>range</b> <em>up/down</em>: Lowest and highest notes in piano range</li>   
+                </ul>
+            </div>
+        </OptionsBlock>
+        <OptionsBlock>
+            <HotkeyController slot="content"></HotkeyController>
+            <div slot="info">
+                <p>
+                    control hotkey arrangement
+                </p>
+                <ul>
+                     <li><b>hotkeys</b>: whether hotkeys are visible</li>
+                     <li><b>guides</b>: darkens unbound notes, highlights hotkeys bound to upper rows of keyboard keys </li>   
+                     <li><b>base</b> <em>left/right</em>: the lowest note hotkeys are bound from</li>
+                     <li><b>split</b>: semitone gap for split mode</li>   
+                     <li><b>normal mode</b>: binds keys by row on keyboard</li>   
+                     <li><b>split mode</b>: binds keys by with left hand on left side of keyboard and right hands on right sde</li>   
+                </ul>
+            </div>
+        </OptionsBlock>
+        <OptionsBlock>
+            <MidiPlayer slot="content"></MidiPlayer>
+            <div slot="info">
+                <p>
+                    plays midi files by directing midi events to the piano in real-time
+                </p>
+                <ul>
+                    <li>instrument changes and pedalling apply in real-time</li>
+                    <li>user can play along during playback</li>
+                    <li>full media controls</li>
+                </ul>
+            </div>
+        </OptionsBlock>
+        <OptionsBlock --info-size="250px">
+            <MidiGenerator slot="content"></MidiGenerator>
+            <div slot="info">
+                <b style="color:darkred">WARNING WIP: BROWSER WILL FREEZE DURING GENERATION</b>
+                <p>
+                    ai music generation using a given midi file. also includes scheduled midi playback
+                </p>
+                <ul>
+                    <li><b>midi playback</b>: this midi playback uses web audio scheduling and is therefore much more accurately timed</li>
+                    <ul>
+                        <li>does not allow real-time influencing like pedalling or instrument changes</li>
+                        <li>user playing may interfere with this playback</li>
+                    </ul>
+                    <li><b>steps</b>: affects the amount of generated music</li>
+                    <ul>
+                        <li>high values may increase loadtime</li>
+                    </ul>
+                    <li><b>temperature</b>: introduces randomness to music generation</li>
+                    <li><b>generate</b>: generates and plays music from supplied midi</li>
+               </ul>
+            </div>
+        </OptionsBlock>
     </div>
-    <button id="pull-tab" on:click={() => hidden = !hidden}>
-        {#if hidden}
+    <button id="pull-tab" on:click={() => hideTray = !hideTray}>
+        {#if hideTray}
             <span>&#9207</span>
         {:else}
             <span>&#9206</span>
@@ -50,7 +115,7 @@ function toggleTray(e) {
         display: flex;
         justify-content: center;
         align-self: top;
-        max-height: 160px;
+        max-height: 180px;
         grid-area: main-panel;
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
@@ -71,19 +136,8 @@ function toggleTray(e) {
         overflow-x: auto;
     }
 
-    .options-block {
-        display: flex;
-        justify-content: center;
-        height: 100%;
-        background-color: var(--bg-darkest);
-        padding: 1rem;
-        box-sizing: border-box;
-        border-radius: .5rem;
-        gap: 1rem;
-    }
-
-    .hidden {
-        margin-top: -160px;
+    .hideTray {
+        margin-top: -180px;
     }
 
     #pull-tab {

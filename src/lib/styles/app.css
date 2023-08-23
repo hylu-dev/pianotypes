@@ -41,7 +41,7 @@
 }
 
 ::selection {
-    background: var(--bg-darkest);
+    background: var(--bg-light);
     color: var(--text-light);
     border: 5px;
 }
@@ -82,6 +82,27 @@ h3 {
     color: var(--text-grey);
     font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
     font-weight: 400;
+}
+
+b, em  {
+    color: var(--text-gold);
+    font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
+}
+
+em::before {
+    content: '<'
+}
+
+em::after {
+    content: '>'
+}
+
+ul {
+    list-style-position: inside;
+    padding-left: 1ch;
+}
+
+ul li {
 }
 
 a {
