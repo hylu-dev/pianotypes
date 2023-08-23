@@ -114,7 +114,6 @@ function stopPiano() {
                 </div>
             </div>
         </div>
-        <div class="vertical-line-break"></div>
         <div class="flex-col half-col">
             <div class="label-container">
                 <InputNumber id="steps" max={999} min={0} step={10} inputValue={steps} on:change={e => steps = e.detail}></InputNumber>
@@ -132,9 +131,9 @@ function stopPiano() {
 
 <style>
     .vertical-line-break {
-        width: 0;
-        height: 100%;
-        border-radius: 5px;
+        width: 1px;
+        min-width: none;height: 100%;
+        border-radius: 2px;
         border: solid 1px var(--bg-dark-grey);
     }
 
