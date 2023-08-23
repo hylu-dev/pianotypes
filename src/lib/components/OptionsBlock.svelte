@@ -51,9 +51,11 @@
         width: 1.5ch;
         right: 1px;
         bottom: 1px;
+        color: var(--text-dark-grey);
     }
 
     button:hover {
+        color: var(--text-light);
         background-color: var(--bg-light);
     }
 </style>
