@@ -2,12 +2,11 @@
     let showInfo = false;
 </script>
 
-<svelte:window on:keydown={() => showInfo = false}/>
 <div class="options-block">
     {#if !showInfo}
         <div class="content">
             <slot name="content">
-                <div style="font-size: 5rem;">?</div>
+                <div style="font-size: 5rem;">&#63;</div>
             </slot>
         </div>
     {:else}

@@ -130,13 +130,6 @@ function stopPiano() {
 {/if}
 
 <style>
-    .vertical-line-break {
-        width: 1px;
-        min-width: none;height: 100%;
-        border-radius: 2px;
-        border: solid 1px var(--bg-dark-grey);
-    }
-
     .hanging:active {
         filter: invert(1);
     }
