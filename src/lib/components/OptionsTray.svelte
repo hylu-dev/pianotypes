@@ -86,11 +86,11 @@ function toggleTray(e) {
                     ai music generation using a given midi file. also includes scheduled midi playback
                 </p>
                 <ul>
-                    <li><b>midi playback</b>: this midi playback uses web audio scheduling for better timing but the following caveats</li>
+                    <li><b>midi playback</b>: uses web audio scheduling for better timing but the following caveats</li>
                     <ul>
                         <li>does not allow real-time influencing like pedalling or instrument changes</li>
-                        <li>user playing may interfere with this playback</li>
-                        <li>large midi files may overload the playback</li>
+                        <li>user playing may interfere playback</li>
+                        <li>large midi files may overload web audio</li>
                     </ul>
                     <li><b>trim</b>: truncate midi length for both playback and generation</li>
                     <li><b>steps</b>: affects the amount of generated music</li>
