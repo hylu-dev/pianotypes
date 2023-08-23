@@ -27,8 +27,8 @@ function toggleTray(e) {
                 </p>
                 <ul>
                      <li><b>sustain pedal</b> <em>space</em>: holds the duration of played notes</li>
-                     <li><b>sostenuto pedal</b> <em>rshift</em>: <b>unimplemented</b></li>   
-                     <li><b>soft pedal</b> <em>rshift</em>: softens velocity of played notes</li>   
+                     <li><b>sostenuto pedal</b> <em>rshift</em>: unimplemented</li>
+                     <li><b>soft pedal</b> <em>lshift</em>: softens velocity of played notes</li>   
                 </ul>
             </div>
         </OptionsBlock>
@@ -67,32 +67,33 @@ function toggleTray(e) {
             <MidiPlayer slot="content"></MidiPlayer>
             <div slot="info">
                 <p>
-                    plays midi files by directing midi events to the piano in real-time
+                    <b>midi playback</b> by directing midi events to the piano in real-time
                 </p>
                 <ul>
                     <li>instrument changes and pedalling apply in real-time</li>
                     <li>user can play along during playback</li>
                     <li>full media controls</li>
+                    <li>may have timing issues for many midi events</li>
                 </ul>
             </div>
         </OptionsBlock>
         <OptionsBlock --info-size="250px">
             <MidiGenerator slot="content"></MidiGenerator>
             <div slot="info">
-                <b style="color:darkred">WARNING WIP: BROWSER WILL FREEZE DURING GENERATION</b>
+                <p style="color:darkred"><b>WARNING WIP:</b> BROWSER WILL FREEZE DURING GENERATION</p>
+                <p style="color:darkred"><b>WARNING WIP:</b> CHROMIUM BROWSERS WILL HAVE PLAYBACK ISSUES FOR LONG MIDIS. CONSIDER TRIMMING</p>
                 <p>
                     ai music generation using a given midi file. also includes scheduled midi playback
                 </p>
                 <ul>
-                    <li><b>midi playback</b>: this midi playback uses web audio scheduling and is therefore much more accurately timed</li>
+                    <li><b>midi playback</b>: this midi playback uses web audio scheduling for better timing but the following caveats</li>
                     <ul>
                         <li>does not allow real-time influencing like pedalling or instrument changes</li>
                         <li>user playing may interfere with this playback</li>
+                        <li>large midi files may overload the playback</li>
                     </ul>
+                    <li><b>trim</b>: truncate midi length for both playback and generation</li>
                     <li><b>steps</b>: affects the amount of generated music</li>
-                    <ul>
-                        <li>high values may increase loadtime</li>
-                    </ul>
                     <li><b>temperature</b>: introduces randomness to music generation</li>
                     <li><b>generate</b>: generates and plays music from supplied midi</li>
                </ul>
