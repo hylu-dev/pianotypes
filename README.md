@@ -5,7 +5,7 @@
 A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
 This serves to replace <https://github.com/hylu-dev/pianotypes_old>.
 
-The project is currently hosted on <https://pianotypes.netlify.app/> and is a work in progress.
+The project is currently hosted on <https://pianotypes.netlify.app/> and is in development.
 
 ## Features
 
@@ -23,12 +23,12 @@ The project is currently hosted on <https://pianotypes.netlify.app/> and is a wo
 
 App is largely interactable through mouse. The following are keyboard hotkeys.
 
-> **Note** that due to variable key rollover, most keyboards will be limited to registering a fixed amount of simultaneous key presses. Look into keyboards with *n-key rollover* to bypass this limitation.
+> Note that due to variable key rollover, many keyboards will be limited to registering a fixed amount of simultaneous key presses. Look into keyboards with *n-key rollover* to bypass this limitation.
 
 
 - **Tab**: Open top widget panel.
 - **Keyboard**: to press the corresponding keys on the piano.
-- **Space**: initiates the sutain pedal.
+- **Space**: initiates the sustain pedal.
 - **Shift**: initiates the soft pedal.
 - **←→ arrow keys**: move the keybindings across the piano one key at a time.
 - **↓↑ arrow keys**: adds and removes keys to the piano range.
