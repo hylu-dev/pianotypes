@@ -3,23 +3,24 @@
 </script>
 
 <div class="options-block">
-    {#if !showInfo}
-        <div class="content">
-            <slot name="content">
-                <div style="font-size: 5rem;">&#63;</div>
-            </slot>
-        </div>
-    {:else}
-        <div class="info">
-            <slot name="info">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eius quaerat voluptatibus perferendis ad facilis id, nesciunt aperiam ex illum beatae fugiat aspernatur expedita, eaque ipsum dolore et. Quidem, earum?
-            </slot>
-        </div>
-    {/if}
+    <div class="content" class:hidden={showInfo}>
+        <slot name="content">
+            <div style="font-size: 5rem;">&#63;</div>
+        </slot>
+    </div>
+    <div class="info" class:hidden={!showInfo}>
+        <slot name="info">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eius quaerat voluptatibus perferendis ad facilis id, nesciunt aperiam ex illum beatae fugiat aspernatur expedita, eaque ipsum dolore et. Quidem, earum?
+        </slot>
+    </div>
     <button on:click={() => showInfo = !showInfo}>&#63;</button>
 </div>
 
 <style>
+    .hidden {
+        display: none;
+    }
+
     .info {
         width: var(--info-size, 180px);;
         overflow-y: auto;
