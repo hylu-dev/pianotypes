@@ -22,6 +22,8 @@ The project is currently hosted on <https://pianotypes.netlify.app/> and is a wo
 ## Controls
 
 App is largely interactable through mouse. The following are keyboard hotkeys.
+**Note** that due to variable key rollover, most keyboards will be limited to registering a fixed amount of simultaneous key presses. Look into keyboards with *n-key rollover* to bypass this limitation.
+
 
 - **Tab**: Open top widget panel.
 - **Keyboard**: to press the corresponding keys on the piano.
