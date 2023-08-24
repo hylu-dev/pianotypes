@@ -37,7 +37,8 @@ App is largely interactable through mouse. The following are keyboard hotkeys.
 ## Roadmap
 
 - Replace Ribbon Visualizer DOM elements with faster Canvas2D
-- More Visualizers
+- Support for external midi input
+- More visualizers
 
 ---
 
