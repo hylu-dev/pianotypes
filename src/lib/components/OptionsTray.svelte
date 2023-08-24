@@ -29,6 +29,7 @@ function toggleTray(e) {
                      <li><b>sustain pedal</b> <em>space</em>: holds the duration of played notes</li>
                      <li><b>sostenuto pedal</b> <em>rshift</em>: unimplemented</li>
                      <li><b>soft pedal</b> <em>lshift</em>: softens velocity of played notes</li>   
+                     <li>Hold <em>ctrl</em> with any of the above to lock a pedal</li>
                 </ul>
             </div>
         </OptionsBlock>
@@ -41,9 +42,12 @@ function toggleTray(e) {
                 <ul>
                      <li><b>instrument</b>: instrument selection from soundfont</li>
                      <li><b>volume</b>: loudness of piano </li>   
-                     <li><b>velocity</b>: how hard notes are played. Can effect quality of sound in addition to loudness</li>
+                     <li><b>velocity</b>: how hard notes are played. can effect quality of sound in addition to loudness</li>
                      <li><b>reverb</b>: sound decay</li>   
-                     <li><b>range</b> <em>up/down</em>: Lowest and highest notes in piano range</li>   
+                     <li><b>range</b> <em>up/down</em>: adjust lowest and highest notes in piano range</li>   
+                     <ul>
+                        <li>Hold <em>ctrl</em> as well to adjust by octaves</li>
+                     </ul>
                 </ul>
             </div>
         </OptionsBlock>
@@ -57,9 +61,12 @@ function toggleTray(e) {
                      <li><b>hotkeys</b>: whether hotkeys are visible</li>
                      <li><b>guides</b>: darkens unbound notes, highlights hotkeys bound to upper rows of keyboard keys </li>   
                      <li><b>base</b> <em>left/right</em>: the lowest note hotkeys are bound from</li>
+                     <ul>
+                        <li>Hold <em>ctrl</em> as well to adjust by octaves</li>
+                     </ul>
                      <li><b>split</b>: semitone gap for split mode</li>   
                      <li><b>normal mode</b>: binds keys by row on keyboard</li>   
-                     <li><b>split mode</b>: binds keys by with left hand on left side of keyboard and right hands on right sde</li>   
+                     <li><b>split mode</b>: binds keys by left hand and right hand</li>   
                 </ul>
             </div>
         </OptionsBlock>
@@ -70,6 +77,7 @@ function toggleTray(e) {
                     <b>midi playback</b> by directing midi events to the piano in real-time
                 </p>
                 <ul>
+                    <li><b>upload file</b> accepts *.mid/.midi files</li>
                     <li>instrument changes and pedalling apply in real-time</li>
                     <li>user can play along during playback</li>
                     <li>full media controls</li>
