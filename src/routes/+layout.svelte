@@ -1,13 +1,14 @@
 <script>
-    import '$lib/styles/app.css'
-    import '$lib/styles/iconfonts/style.css'
+    import '$lib/assets/app.css'
+    import '$lib/assets/iconfonts/style.css'
     import Toast from '$lib/components/general/Toast.svelte';
+    import Github from "$lib/assets/icons/github-mark.svg"
 </script>
 
 <div class="vertical-flex-container">
     <nav>
         <div class="author-links">
-
+            <a href="https://github.com/hylu-dev/pianotypes" target="_blank"><img src={Github} alt="github"></a>
         </div>
 
         <div class="title-link">
@@ -15,7 +16,7 @@
         </div>
 
         <div class="menu-container">
-
+            
         </div>
     </nav>
 
@@ -27,6 +28,26 @@
 
 
 <style>
+
+img {
+    height: 1.5rem;
+    fill: #BBAF6A;
+    filter: saturate(0)brightness(.5);
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+img:hover {
+    filter: saturate(1);
+}
+
+img:active {
+    filter: brightness(.5)
+}
+
+.author-links {
+    justify-content: flex-start;
+}
+
 .vertical-flex-container {
     position: relative;
     display: flex;
@@ -41,6 +62,7 @@
 }
 
 nav {
+    box-sizing: border-box;
     display: flex;
     background: var(--bg-dark-grey);
     border: none;
@@ -51,9 +73,16 @@ nav {
     align-items: center; /* align vertical */
     box-shadow: 0 0 10px 3px black;
     user-select: none;
-    padding: 5px;
+    padding: 5px 20px;
     line-height: 0;
     z-index: 3;
+}
+
+nav > * {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
 }
 
 nav h1 {
@@ -63,17 +92,6 @@ nav h1 {
 
 nav h1:focus {
     outline: 4px solid var(--text-gold);
-}
-
-.author-links {
-    display: flex;
-}
-
-.menu-container {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 2rem;
-    gap: 1rem;
 }
 </style>
 
