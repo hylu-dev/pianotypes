@@ -15,8 +15,9 @@ The project is currently hosted on <https://pianotypes.netlify.app/> and is a wo
 - Split hotkey bindings to play across a larger range
 - Midi playback through [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS) with media controls
   - Midi input is fed into piano in real-time
-- MagentaJS music generation via midi
+- [magenta.js](https://github.com/magenta/magenta-js) music generation via midi
   - Includes improved scheduled midi playback at the cost of real-time input
+  - Tunable parameters for music generation
 
 ## Controls
 
