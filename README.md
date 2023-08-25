@@ -23,7 +23,7 @@ The project is currently hosted on <https://pianotypes.netlify.app/> and is in d
 
 App is largely interactable through mouse. The following are keyboard hotkeys.
 
-> Note that due to variable key rollover, many keyboards will be limited to registering a fixed amount of simultaneous key presses. Look into keyboards with *n-key rollover* to bypass this limitation.
+> Note that due to variable key rollover, many keyboards can only register a fixed amount of simultaneous key presses. Look into keyboards with *n-key rollover* to bypass this limitation.
 
 
 - **Tab**: Open top widget panel.
@@ -36,7 +36,7 @@ App is largely interactable through mouse. The following are keyboard hotkeys.
 
 ## Roadmap
 
-- Replace Ribbon Visualizer DOM elements with faster Canvas2D
+- Replace Ribbon DOM elements with faster Canvas2D
 - Support for external midi input
 - More visualizers
 
