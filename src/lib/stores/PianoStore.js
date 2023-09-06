@@ -27,8 +27,8 @@ class PianoStore {
         this.lastPress = "";
         this.lastRelease = "";
         this._store = writable(this)
-        // this.init() because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     }
+    // Must be called after mounting. Because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     init() {
         this.timingContext = new AudioContext();
         this.updateInstrument();
@@ -62,6 +62,10 @@ class PianoStore {
             } )
         });
     }
+    setInstrument(instrument) {
+        this.instrument = instrument;
+        this.updateInstrument();
+    }
     setVolume(value) {
         if (value > 127) {value = 127};
         this.volume = value;
@@ -79,11 +83,12 @@ class PianoStore {
         this.player.output.sendEffect("reverb", value);
         this._store.set(this)
     }
-    // range clamp between A0 - G9 | midi: 21 - 127
-    isRange(note) {
+    _isRange(note) {
+        // range clamp between A0 - G9 | midi: 21 - 127
         return (Note.midi(note) >= 21 && Note.midi(note) <= 127)
     }
-    //keys
+
+    // Piano Keys
     pressKey(note, velocity=this.velocity, dry=false) {
         note = this._normalize(note);
 
@@ -130,6 +135,8 @@ class PianoStore {
         if (this.keyStateDict[note]) return this.keyStateDict[note].isPressed;
         return false;
     }
+
+    // Pedals
     setSustainPedal(active=!this.sustainPedal) {
         if (active) {
             this.sustainPedal = true;
@@ -169,11 +176,8 @@ class PianoStore {
             this.scheduleCallback(0, () => this.updateKeyboard());
         }
     }
-    //instrument
-    setInstrument(instrument) {
-        this.instrument = instrument;
-        this.updateInstrument();
-    }
+
+    // Piano Range
     stepRange(interval, enforceWhite=false) {
         let newMax = Note.simplify(Note.transpose(this.maxNote, interval));
         interval = interval.includes('-') ? interval.substr(1) : '-'+interval;
@@ -181,13 +185,13 @@ class PianoStore {
         if (enforceWhite) newMax = newMax.charAt(0) + newMax.slice(-1);
         if (enforceWhite) newMin = newMin.charAt(0) + newMin.slice(-1);
         if (Note.midi(newMax) < Note.midi(newMin)) return;
-        this.maxNote = this.isRange(newMax) ? newMax : Note.fromMidi(127);
-        this.minNote= this.isRange(newMin) ? newMin : Note.fromMidi(21);
+        this.maxNote = this._isRange(newMax) ? newMax : Note.fromMidi(127);
+        this.minNote= this._isRange(newMin) ? newMin : Note.fromMidi(21);
         this.updateKeyboard();
     }
     setMin(note) {
         note = this._normalize(note);
-        if (this.isRange(note) && (Note.midi(note) <= Note.midi(this.maxNote))) {
+        if (this._isRange(note) && (Note.midi(note) <= Note.midi(this.maxNote))) {
             this.minNote = Note.simplify(note);
         }
         this.updateKeyboard();
@@ -195,7 +199,7 @@ class PianoStore {
     }
     setMax(note) {
         note = this._normalize(note);
-        if (this.isRange(note) && (Note.midi(note) >= Note.midi(this.minNote))) {
+        if (this._isRange(note) && (Note.midi(note) >= Note.midi(this.minNote))) {
             this.maxNote = Note.simplify(note);
         }
         this.updateKeyboard();

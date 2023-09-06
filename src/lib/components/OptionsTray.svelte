@@ -85,39 +85,56 @@ function toggleTray(e) {
                 </ul>
             </div>
         </OptionsBlock>
-        <OptionsBlock --info-size="250px">
-            <MidiGenerator slot="content"></MidiGenerator>
-            <div slot="info">
-                <p style="color:darkred"><b>WARNING WIP:</b> BROWSER WILL FREEZE DURING GENERATION</p>
-                <p style="color:darkred"><b>WARNING WIP:</b> CHROMIUM BROWSERS WILL HAVE PLAYBACK ISSUES FOR LONG MIDIS. CONSIDER TRIMMING</p>
-                <p>
-                    ai music generation using a given midi file. also includes scheduled midi playback
-                </p>
-                <ul>
-                    <li><b>midi playback</b>: uses web audio scheduling for better timing but the following caveats</li>
+        <fieldset class="experimental">
+            <legend>experimental</legend>
+            <OptionsBlock --info-size="250px">
+                <MidiGenerator slot="content"></MidiGenerator>
+                <div slot="info">
+                    <p style="color:darkred"><b>WARNING WIP:</b> BROWSER WILL FREEZE DURING GENERATION</p>
+                    <p style="color:darkred"><b>WARNING WIP:</b> CHROMIUM BROWSERS WILL HAVE PLAYBACK ISSUES FOR LONG MIDIS. CONSIDER TRIMMING</p>
+                    <p>
+                        <b>ai music generation</b> using a given midi file. also includes scheduled midi playback
+                    </p>
                     <ul>
-                        <li>does not allow real-time influencing like pedalling or instrument changes</li>
-                        <li>user playing may interfere playback</li>
-                        <li>large midi files may overload web audio</li>
-                    </ul>
-                    <li><b>trim</b>: truncate midi length for both playback and generation</li>
-                    <li><b>steps</b>: affects the amount of generated music</li>
-                    <li><b>temperature</b>: introduces randomness to music generation</li>
-                    <li><b>generate</b>: generates and plays music from supplied midi</li>
-               </ul>
-            </div>
-        </OptionsBlock>
+                        <li><b>midi playback</b>: uses web audio scheduling for better timing but the following caveats</li>
+                        <ul>
+                            <li>does not allow real-time influencing like pedalling or instrument changes</li>
+                            <li>user playing may interfere playback</li>
+                            <li>large midi files may overload web audio</li>
+                        </ul>
+                        <li><b>trim</b>: truncate midi length for both playback and generation</li>
+                        <li><b>steps</b>: affects the amount of generated music</li>
+                        <li><b>temperature</b>: introduces randomness to music generation</li>
+                        <li><b>generate</b>: generates and plays music from supplied midi</li>
+                   </ul>
+                </div>
+            </OptionsBlock>
+        </fieldset>
     </div>
     <button id="pull-tab" on:click={() => hideTray = !hideTray}>
         {#if hideTray}
-            <span>&#9207</span>
+            <span>&#9662;</span>
         {:else}
-            <span>&#9206</span>
+            <span>&#9652;</span>
         {/if}
     </button>
 </div>
 
 <style>
+    .experimental legend {
+        color: #ff88aa;
+    }
+
+    .experimental {
+        padding: 0 !important;
+        margin: 0 !important;
+        border-color: #ff88aa;
+        font-size: xx-small;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+    }
+
     #options-tray {
         max-width: 100vw;
         position: relative;
@@ -143,6 +160,7 @@ function toggleTray(e) {
         border-radius: 0 0 .5rem .5rem;
         flex-flow: row nowrap;
         overflow-x: auto;
+        scrollbar-width: thin;
     }
 
     .hideTray {
@@ -164,7 +182,7 @@ function toggleTray(e) {
         color: var(--text-grey);
         font-size: 1.5rem;
         font-size: 2rem;
-        padding-bottom: .8rem;
+        padding-bottom: .7rem;
         line-height: 0px;
         transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }

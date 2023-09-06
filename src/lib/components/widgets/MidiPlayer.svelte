@@ -99,7 +99,7 @@
 
 <div class="flex-col">
     <div class="flex-row">
-        <small style="color: var(--text-gold)">midi player</small>
+        <h3 style="font-size: small;">midi player</h3>
     </div>
     <div class="flex-row">
         <div id="progress-container">
@@ -119,7 +119,7 @@
     <div class="flex-row">
         <button class:disabled={!loaded} disabled={!loaded} on:click={reverseMidi}>&#171;</button>
         <button class:active={!isPlaying&&loaded} class:disabled={!loaded} disabled={!loaded} on:click={pauseMidi}>&#9208;</button>
-        <button class:active={isPlaying} class:disabled={!loaded} disabled={!loaded} on:click={playMidi}>&#9658;</button>
+        <button class:active={isPlaying} class:disabled={!loaded} disabled={!loaded} on:click={playMidi}>&#9205;</button>
         <button class:disabled={!loaded} disabled={!loaded} on:click={skipMidi}>&#187;</button>
     </div>
 </div>

@@ -87,7 +87,7 @@ function stopPiano() {
 {#if mm}
 <div class="flex-col">
     <div class="flex-row">
-        <small style="color: var(--text-gold)">magenta.js</small>
+        <h3>music generation</h3>
     </div>
     <div class="flex-row">
         <div class="flex-col half-col">
@@ -101,7 +101,7 @@ function stopPiano() {
             <input type="file" id="midi-upload" name="midi" accept=".mid,.midi" bind:files={files} on:change={loadFile}>
             <div class="flex-row">
                 <button class:disabled={!seq} class="hanging" on:click={stopPiano}>&#9724;</button>
-                <button class:disabled={!seq} class="hanging" on:click={playMidiFromFile}>&#9658;</button>
+                <button class:disabled={!seq} class="hanging" on:click={playMidiFromFile}>&#9654;</button>
             </div>
             <div class="flex-row">
                 <div class="label-container">
