@@ -28,11 +28,12 @@ $: if ($isPressed) incrementIds();
 <div class='key-wrapper' class:black-proxy={!isWhiteKey}>
     <div class="ribbon-lane" class:white-key={isWhiteKey} class:black-key={!isWhiteKey}>
         <!-- each ribbon block is tracked with an increasing id for removal -->
+        <!-- note that once a ribbon is released, unreleasing will have not effect -->
         {#each Array.from(ribbons) as id (`${note}${id}`)}
             <RibbonBlock
             ribbonID={id}
             isWhiteKey={isWhiteKey}
-            released={!$piano.getIsPressed(note)}
+            released={!$piano.getIsPressed(note)} 
             on:destroy={destroyRibbon}
             ></RibbonBlock>
         {/each}

@@ -25,6 +25,7 @@
         width: var(--info-size, 180px);;
         overflow-y: auto;
         overflow-x: hidden;
+        scrollbar-color: var(--bg-dark-grey);
         scrollbar-width: thin;
         font-size: .7rem;
         color: var(--text-light);
@@ -56,6 +57,5 @@
 
     button:hover {
         color: var(--text-light);
-        background-color: var(--bg-light);
     }
 </style>

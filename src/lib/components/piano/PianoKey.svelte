@@ -11,6 +11,7 @@
 
     const dispatch = createEventDispatcher();
 
+    let el = null;
     let isHover = false;
     let isWhiteKey = Note.accidentals(note) ? false : true;
     
@@ -19,16 +20,26 @@
     const isUpper = derived(hotkey, ($hotkey) => $hotkey.isUpper(note));
 
     function dispatchKeyPress(e) {
-        if (e.buttons > 0) dispatch('keyPress', note);
+        if (e.buttons > 0) {
+            dispatch('keyPress', note);
+        }
+        
     }
 
     function dispatchKeyRelease(e) {
         if (e.type == "mouseup" || e.buttons > 0) dispatch('keyRelease', note);
     }
+
+    // $: {
+    //     if ($isPressed&&el) {
+    //         setKeyEvent(note, el.offsetLeft, 0, el.clientWidth, 50);
+    //         console.log(el);
+    //     }
+    // }
 </script>
 
 <!-- Outer div serves as either an ineffectual wrapper for white keys or relative positioning point for black keys without affecting white key spacing -->
-<div class='key-wrapper' class:black-proxy={!isWhiteKey}>
+<div bind:this={el} class='key-wrapper' class:black-proxy={!isWhiteKey}>
     <div class="piano-key"
         transition:fly={{ delay: 0, duration: 300, x: 0, y: 100, opacity: 0, easing: cubicOut }}
         class:upper-hotkey={$isUpper&&$hotkey.showHotkeyGuides}

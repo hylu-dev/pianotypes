@@ -3,6 +3,7 @@ import PianoKeyboard from '$lib/components/piano/PianoKeyboard.svelte'
 import RibbonPanel from '$lib/components/visualizers/ribbon/RibbonPanel.svelte'
 import NoteDisplay from '$lib/components/visualizers/NoteDisplay.svelte'
 import OptionsTray from '$lib/components/OptionsTray.svelte';
+import RibbonCanvas from '../lib/components/visualizers/RibbonCanvas.svelte';
 import { inputFocused } from '$lib/stores/GlobalStore'
 
 function handleDefaults(e) {
@@ -19,12 +20,8 @@ on:keydown={handleDefaults}
 on:dragstart={ e => e.preventDefault()}
 />
 <div class="grid-container">
-    <!-- <tabs id="tabs">
-    <div class="icon-filled-panel"></div>
-    <div class="icon-ribbon-panel-invert"></div>
-    <div class="icon-typing-panel-invert"></div>
-    </tabs> -->
     <RibbonPanel></RibbonPanel>
+    <!-- <RibbonCanvas></RibbonCanvas> -->
     <OptionsTray></OptionsTray>
     <NoteDisplay></NoteDisplay>
     <PianoKeyboard></PianoKeyboard>
@@ -39,10 +36,5 @@ on:dragstart={ e => e.preventDefault()}
     grid-template-areas: 
     "main-panel"
     "piano";
-}
-
-.icon-filled-panel, .icon-ribbon-panel-invert, .icon-typing-panel-invert {
-    font-size: 2rem;
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 </style>

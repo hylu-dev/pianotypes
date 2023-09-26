@@ -79,7 +79,8 @@ h2 {
 }
 
 h3 {
-    color: var(--text-grey);
+    margin: 0;
+    color: var(--text-gold);
     font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
     font-weight: 400;
 }
