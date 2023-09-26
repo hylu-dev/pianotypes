@@ -1,8 +1,11 @@
 <script>
 import { onMount } from 'svelte';
+import keyEvent from '$lib/stores/KeyEventStore.js'
 
 let canvas;
 let ctx;
+const borderRadius = 4;
+const ribbonSpeed = 3;
 
 /*
 type Ribbon {
@@ -13,22 +16,46 @@ type Ribbon {
     released: boolean;
 }
 */
-let whiteRibbons = [
+
+let onRibbons = {
+    'A': {
+        'x': 50,
+        'y': 0,
+        'width': 50,
+        'height': 0
+    }
+};
+
+let offRibbons = [
     {
-        x: 50,
+        x: 100,
         y: 0,
         width: 50,
-        height: 200,
-        released: false
+        height: 200
     }
 ];
 
-let blackRibbons = [
+$: handleEvent($keyEvent);
 
-];
-
-const borderRadius = 4;
-const ribbonSpeed = 2;
+function handleEvent(event) {
+    if (Object.keys(event).length === 0) return
+    if (event.on) {
+        onRibbons[event.note] = {
+            'x': event.x,
+            'y': event.y,
+            'width': event.width,
+            'height': event.height
+        }
+    } else {
+        offRibbons.push({
+            'x': onRibbons[event.note].x,
+            'y': onRibbons[event.note].y,
+            'width': onRibbons[event.note].width,
+            'height': onRibbons[event.note].height
+        })
+        delete onRibbons[event.note]
+    }
+}
 
 onMount(() => {
     fitToContainer(canvas);
@@ -38,10 +65,23 @@ onMount(() => {
 
 function draw () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.shadowColor = "black";
-    ctx.shadowBlur = 10;
+    //ctx.shadowColor = "black";
+    //ctx.shadowBlur = 10;
+    offRibbons = offRibbons.filter((r) => canvas.height-r.y > -r.height);
 
-    for (let ribbon of whiteRibbons) {
+    for (let ribbon of Object.values(onRibbons)) {
+        const xPos = ribbon.x;
+        const yPos = canvas.height-ribbon.y-ribbon.height;
+        ctx.fillStyle = "rgb(120, 200, 110)";
+        ctx.beginPath();
+        ctx.roundRect(
+            xPos, yPos, ribbon.width, ribbon.height, borderRadius
+        );
+        ctx.fill();
+        ribbon.height += ribbonSpeed;
+    }
+
+    for (let ribbon of offRibbons) {
         const xPos = ribbon.x;
         const yPos = canvas.height-ribbon.y-ribbon.height;
         ctx.fillStyle = "rgb(120, 200, 110)";
@@ -51,16 +91,7 @@ function draw () {
         );
         ctx.fill();
         
-        // Extend or flyout ribbon
-        if (ribbon.released) {
-            ribbon.y += ribbonSpeed;
-        } else {
-            ribbon.height += ribbonSpeed;
-        }
-        // Clear ribbon
-        if (yPos+ribbon.height < 0) {
-            whiteRibbons = [];
-        }
+        ribbon.y += ribbonSpeed;
     }
 
     requestAnimationFrame(draw);
@@ -84,6 +115,5 @@ function fitToContainer(canvas){
     #canvas {
         box-sizing: border-box;
         grid-area: main-panel;
-        background-color: #222;
     }
 </style>

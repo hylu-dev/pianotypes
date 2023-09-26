@@ -20,8 +20,8 @@ on:keydown={handleDefaults}
 on:dragstart={ e => e.preventDefault()}
 />
 <div class="grid-container">
-    <!-- <RibbonPanel></RibbonPanel> -->
-    <RibbonCanvas></RibbonCanvas>
+    <RibbonPanel></RibbonPanel>
+    <!-- <RibbonCanvas></RibbonCanvas> -->
     <OptionsTray></OptionsTray>
     <NoteDisplay></NoteDisplay>
     <PianoKeyboard></PianoKeyboard>
