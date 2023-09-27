@@ -24,7 +24,7 @@
     }
 
     function dispatchKeyRelease(e) {
-        if (e.type == "mouseup" || e.buttons > 0) dispatch('keyRelease', note);
+        dispatch('keyRelease', note);
     }
 </script>
 
