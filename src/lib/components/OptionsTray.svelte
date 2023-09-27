@@ -5,6 +5,7 @@ import HotkeyController from "./widgets/HotkeyController.svelte";
 import PianoPedal from "./widgets/PianoPedal.svelte";
 import MidiPlayer from "./widgets/MidiPlayer.svelte";
 import MidiGenerator from "./widgets/MidiGenerator.svelte";
+import PianoGenie from "./widgets/PianoGenie.svelte";
 
 let hideTray = true;
 
@@ -109,6 +110,14 @@ function toggleTray(e) {
                    </ul>
                 </div>
             </OptionsBlock>
+            <OptionsBlock>
+                <PianoGenie slot="content"></PianoGenie>
+                <div slot="info">
+                    <p>
+                        <b>ai piano input</b> predicts desirable piano output given any user input
+                    </p>
+                </div>
+            </OptionsBlock>
         </fieldset>
     </div>
     <button id="pull-tab" on:click={() => hideTray = !hideTray}>
@@ -126,8 +135,11 @@ function toggleTray(e) {
     }
 
     .experimental {
+        display: flex;
+        gap: 2ch;
         padding: 0 !important;
         margin: 0 !important;
+        max-width: 1000px;
         border-color: #ff88aa;
         font-size: xx-small;
         border-bottom: none;
@@ -160,6 +172,7 @@ function toggleTray(e) {
         border-radius: 0 0 .5rem .5rem;
         flex-flow: row nowrap;
         overflow-x: auto;
+        overflow-y: hidden;
         scrollbar-width: thin;
     }
 

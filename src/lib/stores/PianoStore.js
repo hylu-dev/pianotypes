@@ -104,11 +104,10 @@ class PianoStore {
     }
     releaseKey(note, dry=false) {
         note = this._normalize(note);
-
         this.keyStateDict[note].isPressed = false;
         this.lastRelease = note;
         if (!this.sustainPedal && !dry) {
-            this.player.stop(note);
+            this.player.stop(Note.midi(note));
         }
         this._store.set(this);
     }

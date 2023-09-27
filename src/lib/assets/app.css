@@ -30,7 +30,7 @@
     --key-label-font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
     --key-label-font-weight: 400;
 
-    scrollbar-color: var(--bg-dark-grey);
+    scrollbar-color: var(--bg-light) var(--bg-dark);
     scrollbar-width: thin;
 }
 

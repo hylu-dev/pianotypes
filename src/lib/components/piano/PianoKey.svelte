@@ -20,22 +20,12 @@
     const isUpper = derived(hotkey, ($hotkey) => $hotkey.isUpper(note));
 
     function dispatchKeyPress(e) {
-        if (e.buttons > 0) {
-            dispatch('keyPress', note);
-        }
-        
+        if (e.buttons > 0) dispatch('keyPress', note);    
     }
 
     function dispatchKeyRelease(e) {
         if (e.type == "mouseup" || e.buttons > 0) dispatch('keyRelease', note);
     }
-
-    // $: {
-    //     if ($isPressed&&el) {
-    //         setKeyEvent(note, el.offsetLeft, 0, el.clientWidth, 50);
-    //         console.log(el);
-    //     }
-    // }
 </script>
 
 <!-- Outer div serves as either an ineffectual wrapper for white keys or relative positioning point for black keys without affecting white key spacing -->
