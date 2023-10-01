@@ -22,15 +22,12 @@ class PianoStore {
         this.softMultiplier = .7;
         this.player;
         this.ac;
-        this.timingContext;
-        this.timingNodes = [];
         this.lastPress = "";
         this.lastRelease = "";
         this._store = writable(this)
     }
     // Must be called after mounting. Because of server side rendering, client AudioContexts aren't accessible unless first mounted.
     init() {
-        this.timingContext = new AudioContext();
         this.updateInstrument();
         this._baseKeyboard = Note.sortedNames(Range.chromatic([Note.fromMidi(0), Note.fromMidi(127)]));
         this.updateKeyboard();
@@ -114,21 +111,23 @@ class PianoStore {
     scheduleKey(note, velocity=this.velocity, delay, duration) {
         note = this._normalize(note);
         velocity = velocity*(this.softPedal ? this.softMultiplier : 1);
-        this.scheduleCallback(delay, () => this.pressKey(note, undefined, true)); // schedule dry key press
         this.player.start({
             note: note,
             velocity: velocity,
             time: this.ac.currentTime+delay,
-            duration: duration, onEnded: () => this.releaseKey(note, true)
+            duration: duration,
+            onStart: () => this.pressKey(note, undefined, true),
+            onEnded: () => this.releaseKey(note, true)
         });
     }
     scheduleCallback(delay, callback){
-        // using an empty oscillator for timing purposes
-        const osc = this.timingContext.createOscillator();
-        osc.start(this.timingContext.currentTime+delay);
-        osc.stop(this.timingContext.currentTime+delay);
-        osc.onended = callback;
-        this.timingNodes.push(osc);
+        this.player.start({
+            note: 0,
+            velocity: 0,
+            time: this.ac.currentTime+delay,
+            duration: .1,
+            onEnded: callback,
+        });
     }
     getIsPressed(note) {
         if (this.keyStateDict[note]) return this.keyStateDict[note].isPressed;
@@ -163,17 +162,7 @@ class PianoStore {
     }
     releaseAll() {
         this.player.stop();
-        this.releaseTimingNodes();
         this.updateKeyboard();
-    }
-    releaseTimingNodes() {
-        if (this.timingNodes.length) {
-            this.timingNodes.forEach(node => {
-                node.onended = null;
-                node.stop()
-            });
-            this.scheduleCallback(0, () => this.updateKeyboard());
-        }
     }
 
     // Piano Range
