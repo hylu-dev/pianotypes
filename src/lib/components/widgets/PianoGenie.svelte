@@ -16,10 +16,19 @@ onMount(() => {
 })
 
 function startGenie() {
-    genie = new mm.PianoGenie(GENIE_CHECKPOINT);
-    genie.initialize().then(() => {
+    if (!genie) {
+        genie = new mm.PianoGenie(GENIE_CHECKPOINT);
+        genie.initialize().then(() => {
+            ready = true;
+        });
+    } else {
         ready = true;
-    });
+    }
+    
+}
+
+function disableGenie() {
+    ready = false;
 }
 </script>
 
@@ -29,52 +38,18 @@ function startGenie() {
         <h3>piano genie</h3>
     </div>
     <div class="flex-row">
+        {#if !ready}
         <button on:click={startGenie}>Enable</button>
+        {:else}
+        <button class="disabled" on:click={disableGenie}>Disable</button>
+        {/if}
+        
     </div>
 </div>
 {/if}
 
 <style>
-    .hanging:active {
-        filter: invert(1);
-    }
-
-    .half-col {
-        width: 50%;
-    }
-
-    .flex-col {
-        max-width: 150px;
-        gap: 0.4rem;
-    }
-
-    .flex-row {
-        justify-content: center;
-    }
-
     .disabled {
-        pointer-events: none;
-        filter: brightness(.4);
-    }
-
-    .file-input {
-        background: var(--bg-dark);
-        color: var(--text-grey);
-        border-radius: 2px;
-        font-family: 'Source Code Pro', Helvetica, Arial, sans-serif;
-        border: solid 2px var(--bg-light);
-        text-align: center;
-        padding: .8ch;
-        font-size: .5rem;
-        box-sizing: border-box;
-        width: 100%;
-        white-space: nowrap;
-        text-align: center;
-        overflow:hidden;
-    }
-
-    .file-input:hover {
-        background: var(--bg-grey);
-        color: var(--text-gold);
+        background-color: #441111;
     }
 </style>

@@ -110,14 +110,14 @@ function toggleTray(e) {
                    </ul>
                 </div>
             </OptionsBlock>
-            <OptionsBlock>
+            <!-- <OptionsBlock>
                 <PianoGenie slot="content"></PianoGenie>
                 <div slot="info">
                     <p>
                         <b>ai piano input</b> predicts desirable piano output given any user input
                     </p>
                 </div>
-            </OptionsBlock>
+            </OptionsBlock> -->
         </fieldset>
     </div>
     <button id="pull-tab" on:click={() => hideTray = !hideTray}>
