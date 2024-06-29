@@ -2,7 +2,7 @@
 
 ![pianotypes-demo](https://github.com/hylu-dev/pianotypes/blob/master/pianotypes-demo.gif)
 
-[Video Demo](https://www.hylu.dev/images/golden-hour-pianotypes.mp4)
+[Video Demo](https://hylu.dev/posts/2024/06/pianotypes/demo.mp4)
 
 A virtual piano that provides a full-range, customizable piano. The piano can be played either using your mouse or with your keyboard.
 This serves to replace <https://github.com/hylu-dev/pianotypes_old>.
