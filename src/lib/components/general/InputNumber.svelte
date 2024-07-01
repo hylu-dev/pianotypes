@@ -92,7 +92,7 @@ type="number">
 
 <style>
     input[type='number'] {
-        cursor: n-resize;
+        cursor: ew-resize;
         width: var(--width, 4ch);
         height: var(--height, 2ch);
     }

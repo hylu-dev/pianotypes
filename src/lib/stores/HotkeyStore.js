@@ -22,7 +22,7 @@ class HotkeyStore {
         this.splitMode = false;
         this.maxNote = "G#9";
         this.base = base; // the lowest note to start mapping keybinds from
-        this.splitOffset = 5; // for split mode
+        this.splitOffset = 0; // offset of upper bindings
         this.showHotkeys = true;
         this.showHotkeyGuides = false;
         this._store = writable(this)
@@ -61,6 +61,7 @@ class HotkeyStore {
         let chromatic = Scale.rangeOf('C chromatic')(this.base, this.maxNote);
         if (!this.splitMode) {
             let index = this.__bindToScale(this.r1, this.r2, chromatic, 0);
+            index+=this.splitOffset;
             this.__bindToScale(this.r3, this.r4, chromatic, index);
         } else {
             let index = this.__bindToScale(this.lr3, this.lr4, chromatic, 0);

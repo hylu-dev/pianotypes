@@ -73,7 +73,7 @@ type="text">
 
 <style>
     input {
-        cursor: n-resize;
+        cursor: ew-resize;
         width: var(--width, 3ch);
         height: var(--height, 2ch);
     }
