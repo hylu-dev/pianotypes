@@ -1,4 +1,4 @@
-# Piano Types
+# PianoTypes
 
 ![pianotypes-demo](https://github.com/hylu-dev/pianotypes/blob/master/pianotypes-demo.gif)
 
